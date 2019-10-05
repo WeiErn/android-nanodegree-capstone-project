@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "948170839360",
+    "firebase_url": "https://findaflight-eb2ac.firebaseio.com",
+    "project_id": "findaflight-eb2ac",
+    "storage_bucket": "findaflight-eb2ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948170839360:android:37b5957f1c5e390d2c96a5",
+        "android_client_info": {
+          "package_name": "com.udacity.findaflight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948170839360-6un21o3gl0fplhlk6fgr2rtqr3rfrgd4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV5u04nJx3LxSKP5i0tM1MpDmr8vqVjwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948170839360-6un21o3gl0fplhlk6fgr2rtqr3rfrgd4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
