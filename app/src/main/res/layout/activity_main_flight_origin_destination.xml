@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF1FCBF2">
+
+    <TextView
+        android:id="@+id/textViewOrigin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="FROM"
+        android:textColor="#FFE6F0F2"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/textViewOriginAirport"
+        app:layout_constraintStart_toStartOf="@id/textViewOriginAirport"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewOriginAirport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="8dp"
+        android:text="SIN"
+        android:textColor="#FFFFFFFF"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOrigin"
+        tools:text="SIN" />
+
+    <TextView
+        android:id="@+id/textViewOriginCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="SINGAPORE"
+        android:textColor="#FFFFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/textViewOriginAirport"
+        app:layout_constraintStart_toStartOf="@id/textViewOriginAirport"
+        app:layout_constraintTop_toBottomOf="@id/textViewOriginAirport"
+        tools:text="SINGAPORE" />
+
+    <ImageView
+        android:id="@+id/imagePlane"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/art_plane_white"
+        android:rotation="90"
+        app:layout_constraintBottom_toTopOf="@+id/textViewOriginAirport"
+        app:layout_constraintEnd_toStartOf="@id/textViewDestinationAirport"
+        app:layout_constraintStart_toEndOf="@id/textViewOriginAirport"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOriginAirport" />
+
+    <TextView
+        android:id="@+id/textViewDestination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="TO"
+        android:textColor="#FFE6F0F2"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewDestinationAirport"
+        app:layout_constraintStart_toStartOf="@+id/textViewDestinationAirport"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewDestinationAirport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
+        android:text="JFK"
+        android:textColor="#FFFFFFFF"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDestination"
+        tools:text="JFK" />
+
+    <TextView
+        android:id="@+id/textViewDestinationCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="USA"
+        android:textColor="#FFFFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/textViewDestinationAirport"
+        app:layout_constraintStart_toStartOf="@id/textViewDestinationAirport"
+        app:layout_constraintTop_toBottomOf="@id/textViewDestinationAirport"
+        tools:text="USA" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="411dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="412dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="414dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
