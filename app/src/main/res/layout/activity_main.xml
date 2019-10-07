@@ -41,8 +41,8 @@
         app:layout_constraintStart_toStartOf="@+id/textViewDepartLabel"
         app:layout_constraintTop_toBottomOf="@+id/textViewDepartLabel" />
 
-    <TextView
-        android:id="@+id/textViewDepartDate"
+    <EditText
+        android:id="@+id/editTextDepartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -50,20 +50,25 @@
         app:layout_constraintBottom_toTopOf="@+id/imagePlaneDepart"
         app:layout_constraintStart_toEndOf="@id/imagePlaneDepart"
         app:layout_constraintTop_toBottomOf="@+id/imagePlaneDepart"
+        android:textColor="#FF1FCBF2"
         android:textSize="24sp"
-        tools:text="01 OCT"
-        android:text="01 OCT"/>
+        tools:text="SELECT"
+        android:text="SELECT"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:background="@null"/>
 
     <TextView
         android:id="@+id/textViewDepartDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TUESDAY"
+        android:text="DAY OF THE WEEK"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/imagePlaneDepart"
         app:layout_constraintTop_toBottomOf="@+id/imagePlaneDepart"
-        tools:text="TUESDAY" />
+        tools:text="DAY OF THE WEEK" />
 
     <TextView
         android:id="@+id/textViewReturnLabel"
@@ -90,8 +95,8 @@
         app:layout_constraintStart_toStartOf="@+id/textViewReturnLabel"
         app:layout_constraintTop_toBottomOf="@+id/textViewReturnLabel" />
 
-    <TextView
-        android:id="@+id/textViewReturnDate"
+    <EditText
+        android:id="@+id/editTextReturnDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -102,7 +107,12 @@
         android:textColor="#FF1FCBF2"
         android:textSize="24sp"
         tools:text="SELECT"
-        android:text="SELECT"/>
+        android:text="SELECT"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:background="@null"
+        />
 
     <TextView
         android:id="@+id/textViewReturnDay"
@@ -147,12 +157,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_selector_dates"
+            android:textColor="@color/button_selector_state"
             android:button="@android:color/transparent"
             android:gravity="center"
             android:padding="18dp"
-            android:text="DATES"/>
+            android:text="DATES"
+            android:checked="true" />
 
         <View
+            android:id="@+id/leftRadioGroupDivider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#FF1FCBF2"
@@ -164,12 +177,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_selector_prices"
+            android:textColor="@color/button_selector_state"
             android:button="@android:color/transparent"
             android:gravity="center"
             android:padding="18dp"
             android:text="PRICES"/>
 
         <View
+            android:id="@+id/rightRadioGroupDivider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#FF1FCBF2"
@@ -181,6 +196,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_selector_routes"
+            android:textColor="@color/button_selector_state"
             android:button="@android:color/transparent"
             android:gravity="center"
             android:padding="18dp"
@@ -192,6 +208,8 @@
         android:id="@+id/button_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
         android:background="@drawable/search_button_round_border"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
