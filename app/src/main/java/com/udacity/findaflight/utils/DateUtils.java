@@ -11,7 +11,7 @@ public final class DateUtils {
     public static String getDateInDayMonthFormat(int day, int month, int year) throws ParseException {
         DateFormat originalFormat = new SimpleDateFormat("d M yyyy", Locale.ENGLISH);
         DateFormat targetFormat = new SimpleDateFormat("dd MMM,EEEE");
-        String originalDate = day + " " + (month + 1) + " " + year;
+        String originalDate = day + " " + month + " " + year;
         Date date = originalFormat.parse(originalDate);
         String formattedDate = targetFormat.format(date).toUpperCase();
 

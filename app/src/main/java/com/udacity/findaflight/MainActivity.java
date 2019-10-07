@@ -22,7 +22,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.textViewReturnDay) TextView returnDay;
     @BindView(R.id.editTextDepartDate) EditText departDate;
     @BindView(R.id.textViewDepartDay) TextView departDay;
+
     Calendar calendar = Calendar.getInstance();
+
+    String mDepartureDate;
+    String mReturnDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     String dayInWeek = null;
 
                     try {
-                        selectedDate = getDateInDayMonthFormat(dayOfMonth, monthOfYear, year);
+                        selectedDate = getDateInDayMonthFormat(dayOfMonth, monthOfYear + 1, year);
                         String[] dateTokens = selectedDate.split(",");
                         dayMonth = dateTokens[0];
                         dayInWeek = dateTokens[1];
@@ -65,11 +69,13 @@ public class MainActivity extends AppCompatActivity {
                             ((EditText) v).setText(dayMonth);
                             ((EditText) v).setTextColor(Color.parseColor("#323232"));
                             departDay.setText(dayInWeek);
+                            mDepartureDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
                             break;
                         case R.id.editTextReturnDate:
                             ((EditText) v).setText(dayMonth);
                             ((EditText) v).setTextColor(Color.parseColor("#323232"));
                             returnDay.setText(dayInWeek);
+                            mReturnDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
                             break;
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
