@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+
                     switch (v.getId()) {
                         case R.id.editTextDepartDate:
                             ((EditText) v).setText(dayMonth);
