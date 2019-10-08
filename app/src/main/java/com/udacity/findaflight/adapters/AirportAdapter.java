@@ -11,15 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.udacity.findaflight.R;
 
-import butterknife.BindView;
-
 public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportViewHolder> {
 
+    private int mEditTextAirportId;
     private String[] mAirports;
     private final AirportAdapterOnClickHandler mClickHandler;
 
     public interface AirportAdapterOnClickHandler {
-        void onAirportClick(String airport);
+        void onAirportClick(String airport, int editTextAirportId);
 //        void onAirportClick(Airport airport);
     }
 
@@ -39,11 +38,12 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            mClickHandler.onAirportClick(mAirports[adapterPosition]);
+            mClickHandler.onAirportClick(mAirports[adapterPosition], mEditTextAirportId);
         }
     }
 
-    public AirportAdapter(String[] airports, AirportAdapterOnClickHandler clickHandler) {
+    public AirportAdapter(int id, String[] airports, AirportAdapterOnClickHandler clickHandler) {
+        mEditTextAirportId = id;
         mAirports = airports;
         mClickHandler = clickHandler;
     }

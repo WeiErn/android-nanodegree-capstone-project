@@ -1,27 +1,24 @@
 package com.udacity.findaflight;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.udacity.findaflight.adapters.AirportAdapter;
 
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements
 
     String mDepartureDate;
     String mReturnDate;
+    String mDepartureAirport;
+    String mReturnAirport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,26 +131,38 @@ public class MainActivity extends AppCompatActivity implements
         airportOptions.setLayoutManager(layoutManager);
 
         String[] airportsArray = {"SIN", "JFK", "LAX", "SEA", "BOS"};
+        int editTextAirportId = v.getId();
         // specify an adapter (see also next example)
-        RecyclerView.Adapter mAdapter = new AirportAdapter(airportsArray, this);
+        RecyclerView.Adapter mAdapter = new AirportAdapter(editTextAirportId, airportsArray, this);
         airportOptions.setAdapter(mAdapter);
         airportOptions.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-//        Spinner airportOptions = (Spinner) myView .findViewById(R.id.airportOptions);
-
-//        List airportsList = Arrays.asList(airportsArray);
-
-//        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-//                android.R.layout.simple_spinner_item, airportsList);
-
-//        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        airportOptions.setAdapter(dataAdapter);
+//        dialogBuilder
+//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // do something
+//                    }
+//                })
+//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.dismiss();
+//                    }
+//                });
 
         dialogBuilder.show();
     }
 
+    @SuppressLint("ResourceType")
     @Override
-    public void onAirportClick(String airport) {
-
+    public void onAirportClick(String airport, int editTextAirportId) {
+        System.out.println(airport);
+        switch (editTextAirportId) {
+            case R.id.editTextDepartAirport:
+                mDepartureAirport = airport;
+                break;
+            case R.id.editTextReturnAirport:
+                mReturnAirport = airport;
+                break;
+        }
     }
 }
