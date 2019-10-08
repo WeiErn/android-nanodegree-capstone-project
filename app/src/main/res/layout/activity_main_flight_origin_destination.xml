@@ -7,42 +7,46 @@
     android:background="#FF1FCBF2">
 
     <TextView
-        android:id="@+id/textViewOrigin"
+        android:id="@+id/textViewDepart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:text="FROM"
         android:textColor="#FFE6F0F2"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/textViewOriginAirport"
-        app:layout_constraintStart_toStartOf="@id/textViewOriginAirport"
+        app:layout_constraintEnd_toEndOf="@id/editTextDepartAirport"
+        app:layout_constraintStart_toStartOf="@id/editTextDepartAirport"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewOriginAirport"
+    <EditText
+        android:id="@+id/editTextDepartAirport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
         android:layout_marginTop="8dp"
+        android:background="@null"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
         android:text="SIN"
         android:textColor="#FFFFFFFF"
         android:textSize="32sp"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOrigin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDepart"
         tools:text="SIN" />
 
     <TextView
-        android:id="@+id/textViewOriginCountry"
+        android:id="@+id/textViewDepartCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="SINGAPORE"
         android:textColor="#FFFFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/textViewOriginAirport"
-        app:layout_constraintStart_toStartOf="@id/textViewOriginAirport"
-        app:layout_constraintTop_toBottomOf="@id/textViewOriginAirport"
+        app:layout_constraintEnd_toEndOf="@id/editTextDepartAirport"
+        app:layout_constraintStart_toStartOf="@id/editTextDepartAirport"
+        app:layout_constraintTop_toBottomOf="@id/editTextDepartAirport"
         tools:text="SINGAPORE" />
 
     <ImageView
@@ -51,69 +55,53 @@
         android:layout_height="wrap_content"
         android:background="@drawable/art_plane_white"
         android:rotation="90"
-        app:layout_constraintBottom_toTopOf="@+id/textViewOriginAirport"
-        app:layout_constraintEnd_toStartOf="@id/textViewDestinationAirport"
-        app:layout_constraintStart_toEndOf="@id/textViewOriginAirport"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOriginAirport" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextDepartAirport"
+        app:layout_constraintEnd_toStartOf="@id/editTextReturnAirport"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toEndOf="@id/editTextDepartAirport"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDepartAirport" />
 
     <TextView
-        android:id="@+id/textViewDestination"
+        android:id="@+id/textViewReturn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:text="TO"
         android:textColor="#FFE6F0F2"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewDestinationAirport"
-        app:layout_constraintStart_toStartOf="@+id/textViewDestinationAirport"
+        app:layout_constraintEnd_toEndOf="@+id/editTextReturnAirport"
+        app:layout_constraintStart_toStartOf="@+id/editTextReturnAirport"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewDestinationAirport"
+    <EditText
+        android:id="@+id/editTextReturnAirport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginRight="80dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:background="@null"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
         android:text="JFK"
         android:textColor="#FFFFFFFF"
         android:textSize="32sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDestination"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewReturn"
         tools:text="JFK" />
 
     <TextView
-        android:id="@+id/textViewDestinationCountry"
+        android:id="@+id/textViewReturnCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="USA"
         android:textColor="#FFFFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/textViewDestinationAirport"
-        app:layout_constraintStart_toStartOf="@id/textViewDestinationAirport"
-        app:layout_constraintTop_toBottomOf="@id/textViewDestinationAirport"
+        app:layout_constraintEnd_toEndOf="@id/editTextReturnAirport"
+        app:layout_constraintStart_toStartOf="@id/editTextReturnAirport"
+        app:layout_constraintTop_toBottomOf="@id/editTextReturnAirport"
         tools:text="USA" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="411dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="412dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="414dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

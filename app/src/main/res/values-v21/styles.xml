@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="buttonStyle">@style/MyButton</item>
         <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogTheme</item> <!-- https://stackoverflow.com/questions/28738089/change-datepicker-dialog-color-for-android-5-0 -->
+        <!--<item name="android:alertDialogTheme">@style/MyAlertDialogTheme</item>-->
     </style>
 
     <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorAccent">@color/date_picker_header_bg_color</item>
     </style>
+
+    <!--<style name="MyAlertDialogTheme">-->
+        <!--<item name="android:background">-->
+            <!--@drawable/radio_group_round_border-->
+        <!--</item>-->
+    <!--</style>-->
 
 </resources>
