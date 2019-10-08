@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/airport_name"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
-        android:paddingLeft="24dp"
-        />
-</RelativeLayout>
+        android:layout_weight="1"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/imageview_tick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check_grey"
+        android:visibility="gone" />
+</LinearLayout>

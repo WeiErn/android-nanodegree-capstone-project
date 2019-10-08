@@ -159,9 +159,11 @@ public class MainActivity extends AppCompatActivity implements
         switch (editTextAirportId) {
             case R.id.editTextDepartAirport:
                 mDepartureAirport = airport;
+                System.out.println(mDepartureAirport);
                 break;
             case R.id.editTextReturnAirport:
                 mReturnAirport = airport;
+                System.out.println(mReturnAirport);
                 break;
         }
     }
