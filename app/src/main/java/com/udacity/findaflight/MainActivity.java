@@ -78,6 +78,16 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
+    private void setOnClickListenerToDialogButton(View dialogView, AlertDialog alertDialog, int buttonId) {
+        dialogView.findViewById(buttonId)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+    }
+
     private void openDatePickerDialog(View v) {
         // Get Current Date
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
@@ -118,10 +128,10 @@ public class MainActivity extends AppCompatActivity implements
 
     private void displayAirportOptions(View v) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        final View myView = getLayoutInflater().inflate(R.layout.airports_dialog, null);
-        dialogBuilder.setView(myView);
+        final View dialogView = getLayoutInflater().inflate(R.layout.airports_dialog, null);
+        dialogBuilder.setView(dialogView);
 
-        RecyclerView airportOptions = myView.findViewById(R.id.recyclerview_airports);
+        RecyclerView airportOptions = dialogView.findViewById(R.id.recyclerview_airports);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         airportOptions.setHasFixedSize(true);
@@ -137,33 +147,22 @@ public class MainActivity extends AppCompatActivity implements
         airportOptions.setAdapter(mAdapter);
         airportOptions.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-//        dialogBuilder
-//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // do something
-//                    }
-//                })
-//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        dialog.dismiss();
-//                    }
-//                });
+        final AlertDialog alertDialog = dialogBuilder.show();
 
-        dialogBuilder.show();
+        setOnClickListenerToDialogButton(dialogView, alertDialog, R.id.btn_positive);
+        setOnClickListenerToDialogButton(dialogView, alertDialog, R.id.btn_negative);
     }
+
 
     @SuppressLint("ResourceType")
     @Override
     public void onAirportClick(String airport, int editTextAirportId) {
-        System.out.println(airport);
         switch (editTextAirportId) {
             case R.id.editTextDepartAirport:
                 mDepartureAirport = airport;
-                System.out.println(mDepartureAirport);
                 break;
             case R.id.editTextReturnAirport:
                 mReturnAirport = airport;
-                System.out.println(mReturnAirport);
                 break;
         }
     }
