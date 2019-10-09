@@ -57,7 +57,6 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
                     tickImageView.setVisibility(View.GONE);
                 }
             }
-
             airportTextView.setText(airport);
         }
     }

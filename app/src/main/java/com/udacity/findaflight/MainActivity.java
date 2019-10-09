@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -45,8 +44,10 @@ public class MainActivity extends AppCompatActivity implements
 
     String mDepartureDate;
     String mReturnDate;
-    String mDepartureAirport;
+    String mDepartAirport;
     String mReturnAirport;
+
+    RecyclerView.Adapter mDepartAirportAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +57,16 @@ public class MainActivity extends AppCompatActivity implements
 
         setOnClickListenerToDate(departDate);
         setOnClickListenerToDate(returnDate);
+
+        setupDepartAirportAdapter();
+
         setOnClickListenerToAirport(departAirport);
         setOnClickListenerToAirport(returnAirport);
+    }
+
+    private void setupDepartAirportAdapter() {
+        String[] airportsArray = {"SIN", "JFK", "LAX", "SEA", "BOS"};
+        mDepartAirportAdapter = new AirportAdapter(R.id.editTextDepartAirport, airportsArray, this);
     }
 
     private void setOnClickListenerToAirport(EditText airport) {
@@ -140,14 +149,10 @@ public class MainActivity extends AppCompatActivity implements
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         airportOptions.setLayoutManager(layoutManager);
 
-        String[] airportsArray = {"SIN", "JFK", "LAX", "SEA", "BOS"};
-        int editTextAirportId = v.getId();
-        // specify an adapter (see also next example)
-        RecyclerView.Adapter mAdapter = new AirportAdapter(editTextAirportId, airportsArray, this);
-        airportOptions.setAdapter(mAdapter);
+        airportOptions.setAdapter(mDepartAirportAdapter);
         airportOptions.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        final AlertDialog alertDialog = dialogBuilder.show();
+        AlertDialog alertDialog = dialogBuilder.show();
 
         setOnClickListenerToDialogButton(dialogView, alertDialog, R.id.btn_positive);
         setOnClickListenerToDialogButton(dialogView, alertDialog, R.id.btn_negative);
@@ -159,10 +164,12 @@ public class MainActivity extends AppCompatActivity implements
     public void onAirportClick(String airport, int editTextAirportId) {
         switch (editTextAirportId) {
             case R.id.editTextDepartAirport:
-                mDepartureAirport = airport;
+                mDepartAirport = airport;
+                System.out.println(mDepartAirport);
                 break;
             case R.id.editTextReturnAirport:
                 mReturnAirport = airport;
+                System.out.println(mReturnAirport);
                 break;
         }
     }
