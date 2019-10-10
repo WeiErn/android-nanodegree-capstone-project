@@ -11,6 +11,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -44,10 +45,14 @@ public class MainActivity extends AppCompatActivity implements
 
     String mDepartureDate;
     String mReturnDate;
-    String mDepartAirport;
-    String mReturnAirport;
+
+    String mSelectedDepartAirport;
+    String mSelectedReturnAirport;
+    String mChosenDepartAirport;
+    String mChosenReturnAirport;
 
     RecyclerView.Adapter mDepartAirportAdapter;
+    RecyclerView.Adapter mReturnAirportAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +63,24 @@ public class MainActivity extends AppCompatActivity implements
         setOnClickListenerToDate(departDate);
         setOnClickListenerToDate(returnDate);
 
-        setupDepartAirportAdapter();
+        setupDepartAirportAdapter(R.id.editTextDepartAirport);
+        setupDepartAirportAdapter(R.id.editTextReturnAirport);
 
         setOnClickListenerToAirport(departAirport);
         setOnClickListenerToAirport(returnAirport);
     }
 
-    private void setupDepartAirportAdapter() {
+    private void setupDepartAirportAdapter(int editTextId) {
         String[] airportsArray = {"SIN", "JFK", "LAX", "SEA", "BOS"};
-        mDepartAirportAdapter = new AirportAdapter(R.id.editTextDepartAirport, airportsArray, this);
+
+        switch (editTextId) {
+            case R.id.editTextDepartAirport:
+                mDepartAirportAdapter = new AirportAdapter(editTextId, airportsArray, this);
+                break;
+            case R.id.editTextReturnAirport:
+                mReturnAirportAdapter = new AirportAdapter(editTextId, airportsArray, this);
+                break;
+        }
     }
 
     private void setOnClickListenerToAirport(EditText airport) {
@@ -87,14 +101,20 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
-    private void setOnClickListenerToDialogButton(View dialogView, AlertDialog alertDialog, int buttonId) {
-        dialogView.findViewById(buttonId)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
+    private void setOnClickListenerToDialogButton(AlertDialog alertDialog, Button button) {
+        button
+            .setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (v.getId()) {
+                        case R.id.btn_positive:
+                            break;
+                        case R.id.btn_negative:
+                            break;
                     }
-                });
+                    alertDialog.dismiss();
+                }
+            });
     }
 
     private void openDatePickerDialog(View v) {
@@ -139,6 +159,10 @@ public class MainActivity extends AppCompatActivity implements
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         final View dialogView = getLayoutInflater().inflate(R.layout.airports_dialog, null);
         dialogBuilder.setView(dialogView);
+        AlertDialog alertDialog = dialogBuilder.create();
+
+        Button buttonPositive = dialogView.findViewById(R.id.btn_positive);
+        Button buttonNegative = dialogView.findViewById(R.id.btn_negative);
 
         RecyclerView airportOptions = dialogView.findViewById(R.id.recyclerview_airports);
         // use this setting to improve performance if you know that changes
@@ -149,13 +173,23 @@ public class MainActivity extends AppCompatActivity implements
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         airportOptions.setLayoutManager(layoutManager);
 
-        airportOptions.setAdapter(mDepartAirportAdapter);
+        switch (v.getId()) {
+            case R.id.editTextDepartAirport:
+                airportOptions.setAdapter(mDepartAirportAdapter);
+                setOnClickListenerToDialogButton(alertDialog, buttonPositive);
+                setOnClickListenerToDialogButton(alertDialog, buttonNegative);
+                break;
+            case R.id.editTextReturnAirport:
+                airportOptions.setAdapter(mReturnAirportAdapter);
+                setOnClickListenerToDialogButton(alertDialog, buttonPositive);
+                setOnClickListenerToDialogButton(alertDialog, buttonNegative);
+                break;
+        }
+
         airportOptions.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        AlertDialog alertDialog = dialogBuilder.show();
+        alertDialog.show();
 
-        setOnClickListenerToDialogButton(dialogView, alertDialog, R.id.btn_positive);
-        setOnClickListenerToDialogButton(dialogView, alertDialog, R.id.btn_negative);
     }
 
 
@@ -164,12 +198,12 @@ public class MainActivity extends AppCompatActivity implements
     public void onAirportClick(String airport, int editTextAirportId) {
         switch (editTextAirportId) {
             case R.id.editTextDepartAirport:
-                mDepartAirport = airport;
-                System.out.println(mDepartAirport);
+                mSelectedDepartAirport = airport;
+                System.out.println(mSelectedDepartAirport);
                 break;
             case R.id.editTextReturnAirport:
-                mReturnAirport = airport;
-                System.out.println(mReturnAirport);
+                mSelectedReturnAirport = airport;
+                System.out.println(mSelectedReturnAirport);
                 break;
         }
     }
