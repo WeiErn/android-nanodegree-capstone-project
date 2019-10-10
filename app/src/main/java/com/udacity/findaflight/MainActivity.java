@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.udacity.findaflight.adapters.AirportAdapter;
 
@@ -51,8 +53,13 @@ public class MainActivity extends AppCompatActivity implements
     String mChosenDepartAirport;
     String mChosenReturnAirport;
 
-    RecyclerView.Adapter mDepartAirportAdapter;
-    RecyclerView.Adapter mReturnAirportAdapter;
+    int mSelectedDepartAirportPosition;
+    int mSelectedReturnAirportPosition;
+    int mChosenDepartAirportPosition;
+    int mChosenReturnAirportPosition;
+
+    AirportAdapter mDepartAirportAdapter;
+    AirportAdapter mReturnAirportAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +70,14 @@ public class MainActivity extends AppCompatActivity implements
         setOnClickListenerToDate(departDate);
         setOnClickListenerToDate(returnDate);
 
-        setupDepartAirportAdapter(R.id.editTextDepartAirport);
-        setupDepartAirportAdapter(R.id.editTextReturnAirport);
+        setupAirportAdapter(R.id.editTextDepartAirport);
+        setupAirportAdapter(R.id.editTextReturnAirport);
 
         setOnClickListenerToAirport(departAirport);
         setOnClickListenerToAirport(returnAirport);
     }
 
-    private void setupDepartAirportAdapter(int editTextId) {
+    private void setupAirportAdapter(int editTextId) {
         String[] airportsArray = {"SIN", "JFK", "LAX", "SEA", "BOS"};
 
         switch (editTextId) {
@@ -101,20 +108,44 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
-    private void setOnClickListenerToDialogButton(AlertDialog alertDialog, Button button) {
+    private void setOnClickListenerToDepartDialogButton(AlertDialog alertDialog, Button button) {
         button
-            .setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (v.getId()) {
-                        case R.id.btn_positive:
-                            break;
-                        case R.id.btn_negative:
-                            break;
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.btn_positive:
+                                mChosenDepartAirport = mSelectedDepartAirport;
+                                mChosenDepartAirportPosition = mSelectedDepartAirportPosition;
+                                mDepartAirportAdapter.setCheckedPosition(mChosenDepartAirportPosition);
+                                break;
+                            case R.id.btn_negative:
+                                mDepartAirportAdapter.setCheckedPosition(mChosenDepartAirportPosition);
+                                break;
+                        }
+                        alertDialog.dismiss();
                     }
-                    alertDialog.dismiss();
-                }
-            });
+                });
+    }
+
+    private void setOnClickListenerToReturnDialogButton(AlertDialog alertDialog, Button button) {
+        button
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.btn_positive:
+                                mChosenReturnAirport = mSelectedReturnAirport;
+                                mChosenReturnAirportPosition = mSelectedReturnAirportPosition;
+                                mReturnAirportAdapter.setCheckedPosition(mChosenReturnAirportPosition);
+                                break;
+                            case R.id.btn_negative:
+                                mReturnAirportAdapter.setCheckedPosition(mChosenReturnAirportPosition);
+                                break;
+                        }
+                        alertDialog.dismiss();
+                    }
+                });
     }
 
     private void openDatePickerDialog(View v) {
@@ -150,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
         datePickerDialog.show();
     }
@@ -175,35 +205,52 @@ public class MainActivity extends AppCompatActivity implements
 
         switch (v.getId()) {
             case R.id.editTextDepartAirport:
+                mChosenDepartAirportPosition = mDepartAirportAdapter.getCheckPosition();
                 airportOptions.setAdapter(mDepartAirportAdapter);
-                setOnClickListenerToDialogButton(alertDialog, buttonPositive);
-                setOnClickListenerToDialogButton(alertDialog, buttonNegative);
+                setOnClickListenerToDepartDialogButton(alertDialog, buttonPositive);
+                setOnClickListenerToDepartDialogButton(alertDialog, buttonNegative);
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        mDepartAirportAdapter.setCheckedPosition(mChosenDepartAirportPosition);
+                        dialog.dismiss();
+                    }
+                });
+
                 break;
             case R.id.editTextReturnAirport:
+                mChosenReturnAirportPosition = mReturnAirportAdapter.getCheckPosition();
                 airportOptions.setAdapter(mReturnAirportAdapter);
-                setOnClickListenerToDialogButton(alertDialog, buttonPositive);
-                setOnClickListenerToDialogButton(alertDialog, buttonNegative);
+                setOnClickListenerToReturnDialogButton(alertDialog, buttonPositive);
+                setOnClickListenerToReturnDialogButton(alertDialog, buttonNegative);
+
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        mReturnAirportAdapter.setCheckedPosition(mChosenReturnAirportPosition);
+                        dialog.dismiss();
+                    }
+                });
                 break;
         }
 
         airportOptions.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
         alertDialog.show();
-
     }
 
 
     @SuppressLint("ResourceType")
     @Override
-    public void onAirportClick(String airport, int editTextAirportId) {
+    public void onAirportClick(String airport, int adapterPosition, int editTextAirportId) {
         switch (editTextAirportId) {
             case R.id.editTextDepartAirport:
                 mSelectedDepartAirport = airport;
-                System.out.println(mSelectedDepartAirport);
+                mSelectedDepartAirportPosition = adapterPosition;
                 break;
             case R.id.editTextReturnAirport:
                 mSelectedReturnAirport = airport;
-                System.out.println(mSelectedReturnAirport);
+                mSelectedReturnAirportPosition = adapterPosition;
                 break;
         }
     }

@@ -20,7 +20,7 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
     private int mCheckedPosition = -1;
 
     public interface AirportAdapterOnClickHandler {
-        void onAirportClick(String airport, int editTextAirportId);
+        void onAirportClick(String airport, int adapterPosition, int editTextAirportId);
 //        void onAirportClick(Airport airport);
     }
 
@@ -44,7 +44,7 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
                 mCheckedPosition = getAdapterPosition();
             }
             int adapterPosition = getAdapterPosition();
-            mClickHandler.onAirportClick(mAirports[adapterPosition], mEditTextAirportId);
+            mClickHandler.onAirportClick(mAirports[adapterPosition], adapterPosition, mEditTextAirportId);
         }
 
         void bind(final String airport) {
@@ -93,4 +93,17 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
 //        mAirports = airports;
 //        notifyDataSetChanged();
 //    }
+
+    public int getCheckPosition() {
+        return mCheckedPosition;
+    }
+
+    public void setCheckedPosition(int position) {
+        mCheckedPosition = position;
+        notifyItemChanged(mCheckedPosition);
+    }
+
+    public String getAirport(int position) {
+        return mAirports[position];
+    }
 }
