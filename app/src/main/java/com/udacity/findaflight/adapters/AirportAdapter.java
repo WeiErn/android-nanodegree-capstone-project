@@ -82,7 +82,6 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
 
     @Override
     public void onBindViewHolder(@NonNull AirportAdapter.AirportViewHolder holder, int position) {
-//        holder.airportTextView.setText(mAirports[position]);
         holder.bind(mAirports.get(position));
     }
 

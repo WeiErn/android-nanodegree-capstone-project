@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements
     EditText departCountry;
     @BindView(R.id.editTextReturnCountry)
     EditText returnCountry;
-
 
     Calendar calendar = Calendar.getInstance();
 
@@ -117,15 +118,6 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
-    private void setOnClickListenerToDate(EditText date) {
-        date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDatePickerDialog(v);
-            }
-        });
-    }
-
     private void setOnClickListenerToDepartDialogButton(AlertDialog alertDialog, Button button) {
         button
                 .setOnClickListener(new View.OnClickListener() {
@@ -172,43 +164,6 @@ public class MainActivity extends AppCompatActivity implements
                         alertDialog.dismiss();
                     }
                 });
-    }
-
-    private void openDatePickerDialog(View v) {
-        // Get Current Date
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                (view, year, monthOfYear, dayOfMonth) -> {
-                    String selectedDate = null;
-                    String dayMonth = null;
-                    String dayInWeek = null;
-
-                    try {
-                        selectedDate = getDateInDayMonthFormat(dayOfMonth, monthOfYear + 1, year);
-                        String[] dateTokens = selectedDate.split(",");
-                        dayMonth = dateTokens[0];
-                        dayInWeek = dateTokens[1];
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    switch (v.getId()) {
-                        case R.id.editTextDepartDate:
-                            ((EditText) v).setText(dayMonth);
-                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
-                            departDay.setText(dayInWeek);
-                            mDepartureDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                            break;
-                        case R.id.editTextReturnDate:
-                            ((EditText) v).setText(dayMonth);
-                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
-                            returnDay.setText(dayInWeek);
-                            mReturnDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                            break;
-                    }
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-        datePickerDialog.show();
     }
 
     private void displayAirportOptions(View v) {
@@ -267,7 +222,6 @@ public class MainActivity extends AppCompatActivity implements
         alertDialog.show();
     }
 
-
     @SuppressLint("ResourceType")
     @Override
     public void onAirportClick(Airport airport, int adapterPosition, int editTextAirportId) {
@@ -283,5 +237,59 @@ public class MainActivity extends AppCompatActivity implements
                 mSelectedReturnAirportPosition = adapterPosition;
                 break;
         }
+    }
+
+    private void setOnClickListenerToDate(EditText date) {
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDatePickerDialog(v);
+            }
+        });
+    }
+
+    private void openDatePickerDialog(View v) {
+        // Get Current Date
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    String selectedDate = null;
+                    String dayMonth = null;
+                    String dayInWeek = null;
+
+                    try {
+                        selectedDate = getDateInDayMonthFormat(dayOfMonth, monthOfYear + 1, year);
+                        String[] dateTokens = selectedDate.split(",");
+                        dayMonth = dateTokens[0];
+                        dayInWeek = dateTokens[1];
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    switch (v.getId()) {
+                        case R.id.editTextDepartDate:
+                            ((EditText) v).setText(dayMonth);
+                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
+                            departDay.setText(dayInWeek);
+                            mDepartureDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                            break;
+                        case R.id.editTextReturnDate:
+                            ((EditText) v).setText(dayMonth);
+                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
+                            returnDay.setText(dayInWeek);
+                            mReturnDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                            break;
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+        datePickerDialog.show();
+    }
+
+    public void onSearchButtonClick(View v) {
+        Intent intent = new Intent(this, SearchResultsActivity.class);
+        intent.putExtra("departureDate", mDepartureDate);
+        intent.putExtra("returnDate", mReturnDate);
+
+        startActivity(intent);
     }
 }

@@ -10,7 +10,7 @@
         android:id="@+id/flight_origin_destination"
         layout="@layout/activity_main_flight_origin_destination"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="270dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -232,6 +232,7 @@
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flightSearchOptions" />
+        app:layout_constraintTop_toBottomOf="@id/flightSearchOptions"
+        android:onClick="onSearchButtonClick"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
