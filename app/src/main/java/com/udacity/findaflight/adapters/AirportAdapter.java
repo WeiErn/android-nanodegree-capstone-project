@@ -18,14 +18,12 @@ import java.util.List;
 public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportViewHolder> {
 
     private int mEditTextAirportId;
-//    private String[] mAirports;
     private List<Airport> mAirports;
     private final AirportAdapterOnClickHandler mClickHandler;
     private int mCheckedPosition = -1;
 
     public interface AirportAdapterOnClickHandler {
         void onAirportClick(Airport airport, int adapterPosition, int editTextAirportId);
-//        void onAirportClick(Airport airport);
     }
 
     public class AirportViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -94,10 +92,6 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
         return mAirports.size();
     }
 
-//    public void setAirports(ArrayList<Airport> airports) {
-//        mAirports = airports;
-//        notifyDataSetChanged();
-//    }
 
     public int getCheckPosition() {
         return mCheckedPosition;

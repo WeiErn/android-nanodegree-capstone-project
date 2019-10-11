@@ -10,7 +10,7 @@
         android:id="@+id/flight_origin_destination"
         layout="@layout/activity_main_flight_origin_destination"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="250dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -18,46 +18,47 @@
         android:id="@+id/textViewDepartLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="55dp"
-        android:layout_marginRight="55dp"
+        android:layout_marginBottom="16dp"
         android:text="DEPART ON"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/textViewReturnLabel"
+        app:layout_constraintBottom_toTopOf="@id/departDateGroup"
+        app:layout_constraintStart_toStartOf="@id/departDateGroup" />
+
+    <LinearLayout
+        android:id="@+id/departDateGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toStartOf="@+id/returnDateGroup"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flight_origin_destination" />
+        app:layout_constraintTop_toBottomOf="@id/flight_origin_destination">
 
-    <ImageView
-        android:id="@+id/imagePlaneDepart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/art_plane_turquoise"
-        android:rotation="90"
-        app:layout_constraintStart_toStartOf="@+id/textViewDepartLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDepartLabel" />
+        <ImageView
+            android:id="@+id/imagePlaneDepart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/art_plane_turquoise"
+            android:rotation="90" />
 
-    <EditText
-        android:id="@+id/editTextDepartDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/imagePlaneDepart"
-        app:layout_constraintStart_toEndOf="@id/imagePlaneDepart"
-        app:layout_constraintTop_toBottomOf="@+id/imagePlaneDepart"
-        android:textColor="#FF1FCBF2"
-        android:textSize="24sp"
-        tools:text="SELECT"
-        android:text="SELECT"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:background="@null"/>
+        <EditText
+            android:id="@+id/editTextDepartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="@null"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:text="SELECT"
+            android:textColor="#FF1FCBF2"
+            android:textSize="24sp"
+            tools:text="SELECT" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textViewDepartDay"
@@ -66,53 +67,56 @@
         android:layout_marginTop="16dp"
         android:text="DAY OF THE WEEK"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/imagePlaneDepart"
-        app:layout_constraintTop_toBottomOf="@+id/imagePlaneDepart"
+        app:layout_constraintStart_toStartOf="@id/departDateGroup"
+        app:layout_constraintTop_toBottomOf="@+id/departDateGroup"
         tools:text="DAY OF THE WEEK" />
 
     <TextView
         android:id="@+id/textViewReturnLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginBottom="16dp"
         android:text="RETURN ON"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/returnDateGroup"
+        app:layout_constraintStart_toStartOf="@+id/returnDateGroup" />
+
+    <LinearLayout
+        android:id="@+id/returnDateGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59dp"
+        android:layout_marginLeft="59dp"
+        android:layout_marginTop="64dp"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textViewDepartLabel"
-        app:layout_constraintTop_toBottomOf="@+id/flight_origin_destination" />
+        app:layout_constraintStart_toEndOf="@+id/departDateGroup"
+        app:layout_constraintTop_toBottomOf="@id/flight_origin_destination">
 
-    <ImageView
-        android:id="@+id/imagePlaneReturn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/art_plane_turquoise"
-        android:rotation="270"
-        app:layout_constraintStart_toStartOf="@+id/textViewReturnLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textViewReturnLabel" />
+        <ImageView
+            android:id="@+id/imagePlaneReturn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/art_plane_turquoise"
+            android:rotation="270" />
 
-    <EditText
-        android:id="@+id/editTextReturnDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/imagePlaneReturn"
-        app:layout_constraintStart_toEndOf="@id/imagePlaneReturn"
-        app:layout_constraintTop_toBottomOf="@+id/imagePlaneReturn"
-        android:textColor="#FF1FCBF2"
-        android:textSize="24sp"
-        tools:text="SELECT"
-        android:text="SELECT"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:background="@null"
-        />
+        <EditText
+            android:id="@+id/editTextReturnDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="@null"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:text="SELECT"
+            android:textColor="#FF1FCBF2"
+            android:textSize="24sp"
+            tools:text="SELECT" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textViewReturnDay"
@@ -121,35 +125,40 @@
         android:layout_marginTop="16dp"
         android:text="ONE WAY FLIGHT"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/imagePlaneReturn"
-        app:layout_constraintTop_toBottomOf="@+id/imagePlaneReturn"
+        app:layout_constraintStart_toStartOf="@id/returnDateGroup"
+        app:layout_constraintTop_toBottomOf="@+id/returnDateGroup"
         tools:text="ONE WAY FLIGHT" />
 
     <ImageView
         android:id="@+id/divider"
-        android:background="#E6E6E6"
-        android:layout_height="1dp"
         android:layout_width="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDepartDay"
-        android:layout_marginTop="24dp"
+        android:layout_height="1dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:background="#E6E6E6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDepartDay" />
 
     <RadioGroup
         android:id="@+id/flightSearchOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/radio_group_round_border"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider">
 
         <RadioButton
             android:id="@+id/searchOptionDates"
@@ -157,12 +166,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_selector_dates"
-            android:textColor="@color/button_selector_state"
             android:button="@android:color/transparent"
+            android:checked="true"
             android:gravity="center"
             android:padding="18dp"
             android:text="DATES"
-            android:checked="true" />
+            android:textColor="@color/button_selector_state" />
 
         <View
             android:id="@+id/leftRadioGroupDivider"
@@ -177,11 +186,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_selector_prices"
-            android:textColor="@color/button_selector_state"
             android:button="@android:color/transparent"
             android:gravity="center"
             android:padding="18dp"
-            android:text="PRICES"/>
+            android:text="PRICES"
+            android:textColor="@color/button_selector_state" />
 
         <View
             android:id="@+id/rightRadioGroupDivider"
@@ -196,11 +205,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_selector_routes"
-            android:textColor="@color/button_selector_state"
             android:button="@android:color/transparent"
             android:gravity="center"
             android:padding="18dp"
-            android:text="ROUTES"/>
+            android:text="ROUTES"
+            android:textColor="@color/button_selector_state" />
 
     </RadioGroup>
 
@@ -208,21 +217,21 @@
         android:id="@+id/button_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:foreground="?attr/selectableItemBackground"
-        android:background="@drawable/search_button_round_border"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flightSearchOptions"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:background="@drawable/search_button_round_border"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="Search"
         android:textColor="#FFFFFF"
-        android:textSize="22sp"/>
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flightSearchOptions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

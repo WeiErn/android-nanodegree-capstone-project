@@ -30,14 +30,14 @@
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"
-        android:text="SIN"
+        android:text="SELECT"
         android:textColor="#FFFFFFFF"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@+id/imagePlane"
         app:layout_constraintEnd_toStartOf="@+id/imagePlane"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imagePlane"
-        tools:text="SIN" />
+        tools:text="SELECT" />
 
     <EditText
         android:id="@+id/editTextDepartCountry"
@@ -48,13 +48,11 @@
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"
-        android:text="SINGAPORE"
         android:textColor="#FFFFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/editTextDepartAirport"
         app:layout_constraintStart_toStartOf="@id/editTextDepartAirport"
-        app:layout_constraintTop_toBottomOf="@id/editTextDepartAirport"
-        tools:text="SINGAPORE" />
+        app:layout_constraintTop_toBottomOf="@id/editTextDepartAirport" />
 
     <ImageView
         android:id="@+id/imagePlane"
@@ -97,14 +95,14 @@
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"
-        android:text="JFK"
+        android:text="SELECT"
         android:textColor="#FFFFFFFF"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@+id/imagePlane"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imagePlane"
         app:layout_constraintTop_toTopOf="@+id/imagePlane"
-        tools:text="JFK" />
+        tools:text="SELECT" />
 
     <EditText
         android:id="@+id/editTextReturnCountry"
@@ -115,12 +113,10 @@
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"
-        android:text="USA"
         android:textColor="#FFFFFFFF"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/editTextReturnAirport"
         app:layout_constraintStart_toStartOf="@id/editTextReturnAirport"
-        app:layout_constraintTop_toBottomOf="@id/editTextReturnAirport"
-        tools:text="USA" />
+        app:layout_constraintTop_toBottomOf="@id/editTextReturnAirport" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
