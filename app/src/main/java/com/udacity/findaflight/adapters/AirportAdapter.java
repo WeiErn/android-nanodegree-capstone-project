@@ -11,16 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.udacity.findaflight.R;
+import com.udacity.findaflight.data.Airport;
+
+import java.util.List;
 
 public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportViewHolder> {
 
     private int mEditTextAirportId;
-    private String[] mAirports;
+//    private String[] mAirports;
+    private List<Airport> mAirports;
     private final AirportAdapterOnClickHandler mClickHandler;
     private int mCheckedPosition = -1;
 
     public interface AirportAdapterOnClickHandler {
-        void onAirportClick(String airport, int adapterPosition, int editTextAirportId);
+        void onAirportClick(Airport airport, int adapterPosition, int editTextAirportId);
 //        void onAirportClick(Airport airport);
     }
 
@@ -44,10 +48,10 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
                 mCheckedPosition = getAdapterPosition();
             }
             int adapterPosition = getAdapterPosition();
-            mClickHandler.onAirportClick(mAirports[adapterPosition], adapterPosition, mEditTextAirportId);
+            mClickHandler.onAirportClick(mAirports.get(adapterPosition), adapterPosition, mEditTextAirportId);
         }
 
-        void bind(final String airport) {
+        void bind(final Airport airport) {
             if (mCheckedPosition == -1) {
                 tickImageView.setVisibility(View.GONE);
             } else {
@@ -57,11 +61,11 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
                     tickImageView.setVisibility(View.GONE);
                 }
             }
-            airportTextView.setText(airport);
+            airportTextView.setText(airport.getIataCode());
         }
     }
 
-    public AirportAdapter(int id, String[] airports, AirportAdapterOnClickHandler clickHandler) {
+    public AirportAdapter(int id, List airports, AirportAdapterOnClickHandler clickHandler) {
         mEditTextAirportId = id;
         mAirports = airports;
         mClickHandler = clickHandler;
@@ -81,12 +85,13 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
     @Override
     public void onBindViewHolder(@NonNull AirportAdapter.AirportViewHolder holder, int position) {
 //        holder.airportTextView.setText(mAirports[position]);
-        holder.bind(mAirports[position]);
+        holder.bind(mAirports.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mAirports.length;
+        if (null == mAirports) return 0;
+        return mAirports.size();
     }
 
 //    public void setAirports(ArrayList<Airport> airports) {
@@ -103,7 +108,7 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
         notifyItemChanged(mCheckedPosition);
     }
 
-    public String getAirport(int position) {
-        return mAirports[position];
+    public Airport getAirport(int position) {
+        return mAirports.get(position);
     }
 }

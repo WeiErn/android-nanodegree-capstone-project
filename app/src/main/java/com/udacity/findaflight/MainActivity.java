@@ -18,9 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.udacity.findaflight.adapters.AirportAdapter;
+import com.udacity.findaflight.data.Airport;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements
     EditText departAirport;
     @BindView(R.id.editTextReturnAirport)
     EditText returnAirport;
+    @BindView(R.id.editTextDepartCountry)
+    EditText departCountry;
+    @BindView(R.id.editTextReturnCountry)
+    EditText returnCountry;
 
 
     Calendar calendar = Calendar.getInstance();
@@ -48,15 +55,18 @@ public class MainActivity extends AppCompatActivity implements
     String mDepartureDate;
     String mReturnDate;
 
-    String mSelectedDepartAirport;
-    String mSelectedReturnAirport;
-    String mChosenDepartAirport;
-    String mChosenReturnAirport;
+    Airport mSelectedDepartAirport;
+    Airport mSelectedReturnAirport;
+    Airport mChosenDepartAirport;
+    Airport mChosenReturnAirport;
 
     int mSelectedDepartAirportPosition;
     int mSelectedReturnAirportPosition;
     int mChosenDepartAirportPosition;
     int mChosenReturnAirportPosition;
+
+    int mDepartClickCount;
+    int mReturnClickCount;
 
     AirportAdapter mDepartAirportAdapter;
     AirportAdapter mReturnAirportAdapter;
@@ -78,14 +88,22 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void setupAirportAdapter(int editTextId) {
-        String[] airportsArray = {"SIN", "JFK", "LAX", "SEA", "BOS"};
+        String[] airportsIataArray = {"SIN", "JFK", "LAX", "SEA", "BOS"};
+        String[] airportsCountryArray = {"SINGAPORE", "USA", "USA", "USA", "USA"};
+        List<Airport> airportsList = new ArrayList<>();
+
+        for (int i = 0; i < airportsIataArray.length; i++) {
+            String iataCode = airportsIataArray[i];
+            String country = airportsCountryArray[i];
+            airportsList.add(new Airport(iataCode, country));
+        }
 
         switch (editTextId) {
             case R.id.editTextDepartAirport:
-                mDepartAirportAdapter = new AirportAdapter(editTextId, airportsArray, this);
+                mDepartAirportAdapter = new AirportAdapter(editTextId, airportsList, this);
                 break;
             case R.id.editTextReturnAirport:
-                mReturnAirportAdapter = new AirportAdapter(editTextId, airportsArray, this);
+                mReturnAirportAdapter = new AirportAdapter(editTextId, airportsList, this);
                 break;
         }
     }
@@ -115,9 +133,13 @@ public class MainActivity extends AppCompatActivity implements
                     public void onClick(View v) {
                         switch (v.getId()) {
                             case R.id.btn_positive:
-                                mChosenDepartAirport = mSelectedDepartAirport;
-                                mChosenDepartAirportPosition = mSelectedDepartAirportPosition;
-                                mDepartAirportAdapter.setCheckedPosition(mChosenDepartAirportPosition);
+                                if (mDepartClickCount != 0) {
+                                    mChosenDepartAirport = mSelectedDepartAirport;
+                                    mChosenDepartAirportPosition = mSelectedDepartAirportPosition;
+                                    mDepartAirportAdapter.setCheckedPosition(mChosenDepartAirportPosition);
+                                    departAirport.setText(mChosenDepartAirport.getIataCode());
+                                    departCountry.setText(mChosenDepartAirport.getCountry());
+                                }
                                 break;
                             case R.id.btn_negative:
                                 mDepartAirportAdapter.setCheckedPosition(mChosenDepartAirportPosition);
@@ -135,9 +157,13 @@ public class MainActivity extends AppCompatActivity implements
                     public void onClick(View v) {
                         switch (v.getId()) {
                             case R.id.btn_positive:
-                                mChosenReturnAirport = mSelectedReturnAirport;
-                                mChosenReturnAirportPosition = mSelectedReturnAirportPosition;
-                                mReturnAirportAdapter.setCheckedPosition(mChosenReturnAirportPosition);
+                                if (mReturnClickCount != 0) {
+                                    mChosenReturnAirport = mSelectedReturnAirport;
+                                    mChosenReturnAirportPosition = mSelectedReturnAirportPosition;
+                                    mReturnAirportAdapter.setCheckedPosition(mChosenReturnAirportPosition);
+                                    returnAirport.setText(mChosenReturnAirport.getIataCode());
+                                    returnCountry.setText(mChosenReturnAirport.getCountry());
+                                }
                                 break;
                             case R.id.btn_negative:
                                 mReturnAirportAdapter.setCheckedPosition(mChosenReturnAirportPosition);
@@ -205,6 +231,7 @@ public class MainActivity extends AppCompatActivity implements
 
         switch (v.getId()) {
             case R.id.editTextDepartAirport:
+                mDepartClickCount = 0;
                 mChosenDepartAirportPosition = mDepartAirportAdapter.getCheckPosition();
                 airportOptions.setAdapter(mDepartAirportAdapter);
                 setOnClickListenerToDepartDialogButton(alertDialog, buttonPositive);
@@ -220,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements
 
                 break;
             case R.id.editTextReturnAirport:
+                mReturnClickCount = 0;
                 mChosenReturnAirportPosition = mReturnAirportAdapter.getCheckPosition();
                 airportOptions.setAdapter(mReturnAirportAdapter);
                 setOnClickListenerToReturnDialogButton(alertDialog, buttonPositive);
@@ -242,13 +270,15 @@ public class MainActivity extends AppCompatActivity implements
 
     @SuppressLint("ResourceType")
     @Override
-    public void onAirportClick(String airport, int adapterPosition, int editTextAirportId) {
+    public void onAirportClick(Airport airport, int adapterPosition, int editTextAirportId) {
         switch (editTextAirportId) {
             case R.id.editTextDepartAirport:
+                mDepartClickCount++;
                 mSelectedDepartAirport = airport;
                 mSelectedDepartAirportPosition = adapterPosition;
                 break;
             case R.id.editTextReturnAirport:
+                mReturnClickCount++;
                 mSelectedReturnAirport = airport;
                 mSelectedReturnAirportPosition = adapterPosition;
                 break;
