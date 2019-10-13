@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements
     EditText departCountry;
     @BindView(R.id.editTextReturnCountry)
     EditText returnCountry;
+    @BindView(R.id.flightSearchOptions)
+    RadioGroup flightSearchOptionsRadioGroup;
 
     Calendar calendar = Calendar.getInstance();
 
@@ -287,8 +291,20 @@ public class MainActivity extends AppCompatActivity implements
 
     public void onSearchButtonClick(View v) {
         Intent intent = new Intent(this, SearchResultsActivity.class);
+
+//        TODO: Check if values are null
         intent.putExtra("departureDate", mDepartureDate);
         intent.putExtra("returnDate", mReturnDate);
+        if (mChosenDepartAirport != null) {
+            intent.putExtra("departureAirport", mChosenDepartAirport.getIataCode());
+        }
+        if (mChosenReturnAirport != null ) {
+            intent.putExtra("returnAirport", mChosenReturnAirport.getIataCode());
+        }
+        int selectedFlightSearchOptionId = flightSearchOptionsRadioGroup.getCheckedRadioButtonId();
+        RadioButton selectedFlightSearchOptionButton = (RadioButton) findViewById(selectedFlightSearchOptionId);
+        String selectedFlightSearchOption = ((String) selectedFlightSearchOptionButton.getText()).toLowerCase();
+        intent.putExtra("flightOption", selectedFlightSearchOption);
 
         startActivity(intent);
     }

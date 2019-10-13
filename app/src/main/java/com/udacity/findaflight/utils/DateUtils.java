@@ -17,4 +17,12 @@ public final class DateUtils {
 
         return formattedDate;
     }
+
+    public static Date getDateFromString(String dateString) throws ParseException {
+        return new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+    }
+
+    public static Date getDateTimeFromString(String dateTimeString) throws ParseException {
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(dateTimeString);
+    }
 }
