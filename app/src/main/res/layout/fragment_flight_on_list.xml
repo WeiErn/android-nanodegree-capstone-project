@@ -31,7 +31,7 @@
         tools:text="Singapore Airlines"/>
 
     <TextView
-        android:id="@+id/departStartTime"
+        android:id="@+id/outboundStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -41,14 +41,14 @@
         tools:text="7:30p" />
 
     <TextView
-        android:id="@+id/departStartAirport"
+        android:id="@+id/outboundStartAirport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/departStartTime"
-        app:layout_constraintTop_toTopOf="@+id/departStartTime"
+        app:layout_constraintStart_toStartOf="@+id/outboundStartTime"
+        app:layout_constraintTop_toTopOf="@+id/outboundStartTime"
         tools:text="SIN" />
 
     <ImageView
@@ -57,13 +57,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/departStartAirport"
-        app:layout_constraintStart_toStartOf="@+id/departStartAirport"
-        app:layout_constraintTop_toTopOf="@+id/departStartAirport"
+        app:layout_constraintBottom_toBottomOf="@+id/outboundStartAirport"
+        app:layout_constraintStart_toStartOf="@+id/outboundStartAirport"
+        app:layout_constraintTop_toTopOf="@+id/outboundStartAirport"
         app:srcCompat="@drawable/ic_right_arrow" />
 
     <TextView
-        android:id="@+id/departEndTime"
+        android:id="@+id/outboundEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -75,24 +75,26 @@
         tools:text="11:18p" />
 
     <TextView
-        android:id="@+id/departEndAirport"
+        android:id="@+id/outboundEndAirport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/departEndTime"
-        app:layout_constraintTop_toTopOf="@+id/departEndTime"
+        app:layout_constraintStart_toStartOf="@+id/outboundEndTime"
+        app:layout_constraintTop_toTopOf="@+id/outboundEndTime"
         tools:text="LAX" />
 
     <TextView
-        android:id="@+id/returnEndTime"
+        android:id="@+id/inboundEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/departStartTime"
-        app:layout_constraintTop_toBottomOf="@+id/departStartTime"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/outboundStartTime"
+        app:layout_constraintTop_toBottomOf="@+id/outboundStartTime"
         tools:text="11:00a" />
 
     <ImageView
@@ -102,24 +104,24 @@
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:rotation="180"
-        app:layout_constraintBottom_toBottomOf="@+id/returnEndAirport"
-        app:layout_constraintStart_toStartOf="@+id/returnEndAirport"
-        app:layout_constraintTop_toTopOf="@+id/returnEndAirport"
+        app:layout_constraintBottom_toBottomOf="@+id/inboundEndAirport"
+        app:layout_constraintStart_toStartOf="@+id/inboundEndAirport"
+        app:layout_constraintTop_toTopOf="@+id/inboundEndAirport"
         app:srcCompat="@drawable/ic_right_arrow" />
 
     <TextView
-        android:id="@+id/returnEndAirport"
+        android:id="@+id/inboundEndAirport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/returnEndTime"
-        app:layout_constraintTop_toTopOf="@+id/returnEndTime"
+        app:layout_constraintStart_toStartOf="@+id/inboundEndTime"
+        app:layout_constraintTop_toTopOf="@+id/inboundEndTime"
         tools:text="SIN" />
 
     <TextView
-        android:id="@+id/returnStartTime"
+        android:id="@+id/inboundStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -131,14 +133,14 @@
         tools:text="11:09p" />
 
     <TextView
-        android:id="@+id/returnStartAirport"
+        android:id="@+id/inboundStartAirport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/returnStartTime"
-        app:layout_constraintTop_toTopOf="@+id/returnStartTime"
+        app:layout_constraintStart_toStartOf="@+id/inboundStartTime"
+        app:layout_constraintTop_toTopOf="@+id/inboundStartTime"
         tools:text="LAX" />
 
     <TextView
@@ -148,9 +150,9 @@
         android:text="$539"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/returnStartAirport"
+        app:layout_constraintBottom_toBottomOf="@+id/inboundStartAirport"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="@+id/departEndAirport"
-        app:layout_constraintTop_toTopOf="@+id/departEndAirport" />
+        app:layout_constraintStart_toStartOf="@+id/outboundEndAirport"
+        app:layout_constraintTop_toTopOf="@+id/outboundEndAirport" />
 </androidx.constraintlayout.widget.ConstraintLayout>

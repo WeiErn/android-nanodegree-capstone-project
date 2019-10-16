@@ -1,11 +1,8 @@
 package com.udacity.findaflight.utils;
 
-import com.udacity.findaflight.data.OutboundLeg;
-import com.udacity.findaflight.data.SearchResultCarrier;
-import com.udacity.findaflight.data.SearchResultCurrency;
-import com.udacity.findaflight.data.SearchResultDate;
-import com.udacity.findaflight.data.SearchResultPlace;
-import com.udacity.findaflight.data.SearchResultQuote;
+import com.udacity.findaflight.data.FlightRoute;
+import com.udacity.findaflight.data.FlightSearchResult;
+import com.udacity.findaflight.data.ParcelableArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,119 +13,128 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.udacity.findaflight.utils.DateUtils.getDateFromString;
-import static com.udacity.findaflight.utils.DateUtils.getDateTimeFromString;
+import static com.udacity.findaflight.utils.DateUtils.getDateTimeFromUnixTime;
+
 
 public final class JsonUtils {
 
     public static List getFlightsByPriceFromJson(String jsonStr) throws JSONException, ParseException {
-        List<SearchResultDate> searchResultDates = new ArrayList<>();
-        List<SearchResultQuote> searchResultQuotes = new ArrayList<>();
-        List<SearchResultPlace> searchResultPlaces = new ArrayList<>();
-        List<SearchResultCarrier> searchResultCarriers = new ArrayList<>();
-        List<SearchResultCurrency> searchResultCurrencies = new ArrayList<>();
+        List searchResults = new ArrayList();
 
-        JSONObject flightResult = new JSONObject(jsonStr);
+        JSONObject searchResult = new JSONObject(jsonStr);
+        JSONArray flights = searchResult.getJSONArray("data");
 
-        getDates(searchResultDates, flightResult);
-        getQuotes(searchResultQuotes, flightResult);
-        getPlaces(searchResultPlaces, flightResult);
-        getCarriers(searchResultCarriers, flightResult);
-        getCurrencies(searchResultCurrencies, flightResult);
+        for (int i = 0; i < flights.length(); i++) {
+            JSONObject flight = flights.getJSONObject(i);
 
-        return null;
-    }
+            String idsString = flight.getString("id");
+            String[] ids = idsString.split("|");
 
-    private static void getCurrencies(List<SearchResultCurrency> searchResultCurrencies, JSONObject flightResult) throws JSONException {
-        JSONArray currencies = flightResult.getJSONArray("Currencies");
-        for (int i = 0; i < currencies.length(); i++) {
-            JSONObject currency = currencies.getJSONObject(i);
+            int price = flight.getInt("price");
 
-            String code = currency.getString("Code");
-            String symbol = currency.getString("Symbol");
-            String thousandsSeparator = currency.getString("ThousandsSeparator");
-            String decimalSeparator = currency.getString("DecimalSeparator");
-            boolean symbolOnLeft = currency.getBoolean("SymbolOnLeft");
-            boolean spaceBetweenAmountAndSymbol = currency.getBoolean("SpaceBetweenAmountAndSymbol");
-            int roundingCoefficient = currency.getInt("RoundingCoefficient");
-            int decimalDigits = currency.getInt("DecimalDigits");
+            List<FlightRoute> outboundRoutes = new ArrayList<>();
+            List<FlightRoute> inboundRoutes = new ArrayList<>();
+            JSONArray routeJsonArr = flight.getJSONArray("route");
+            for (int routeJsonArrIdx = 0; routeJsonArrIdx < routeJsonArr.length(); routeJsonArrIdx++) {
+                JSONObject route = routeJsonArr.getJSONObject(routeJsonArrIdx);
 
-            searchResultCurrencies.add(new SearchResultCurrency(code, symbol, thousandsSeparator, decimalSeparator, symbolOnLeft, spaceBetweenAmountAndSymbol, roundingCoefficient, decimalDigits));
-        }
-    }
+                String routeId = route.getString("id");
 
-    private static void getCarriers(List<SearchResultCarrier> searchResultCarriers, JSONObject flightResult) throws JSONException {
-        JSONArray carriers = flightResult.getJSONArray("Carriers");
-        for (int i = 0; i < carriers.length(); i++) {
-            JSONObject carrier = carriers.getJSONObject(i);
-            int carrierId = carrier.getInt("CarrierId");
-            String name = carrier.getString("Name");
+                // Unix Time
+                Date departureDateTime = getDateTimeFromUnixTime(route.getLong("dTime"));
+                Date arrivalDateTime = getDateTimeFromUnixTime(route.getLong("aTime"));
 
-            searchResultCarriers.add(new SearchResultCarrier(carrierId, name));
-        }
-    }
+                String arrivalCity = route.getString("cityTo");
+                String departureCity = route.getString("cityFrom");
 
-    private static void getPlaces(List<SearchResultPlace> searchResultPlaces, JSONObject flightResult) throws JSONException {
-        JSONArray places = flightResult.getJSONArray("Places");
-        for (int i = 0; i < places.length(); i++) {
-            JSONObject place = places.getJSONObject(i);
+                // IATA Airport
+                String arrivalAirport = route.getString("flyTo");
+                String departureAirport = route.getString("flyFrom");
+                String airline = route.getString("airline");
+                String operatingCarrier = route.getString("operating_carrier");
+                int flightNum = route.getInt("flight_no");
+                String operatingFlightNum = route.getString("operating_flight_no");
 
-            int placeId = place.getInt("PlaceId");
-            String iataCode = place.getString("IataCode");
-            String name = place.getString("Name");
-            String type = place.getString("Type");
-            String skyscannerCode = place.getString("SkyscannerCode");
-            String cityName = place.getString("CityName");
-            String cityId = place.getString("CityId");
-            String countryName = place.getString("CountryName");
+                String fareClasses = route.getString("fare_classes");
+                String fareBasis = route.getString("fare_basis");
+                String fareFamily = route.getString("fare_family");
+                String fareCategory = route.getString("fare_category");
 
-            searchResultPlaces.add(new SearchResultPlace(placeId, iataCode, name, type, skyscannerCode, cityName, cityId, countryName));
-        }
-    }
+                boolean isReturnRoute = route.getInt("return") == 1;
 
-    private static void getQuotes(List<SearchResultQuote> searchResultQuotes, JSONObject flightResult) throws JSONException, ParseException {
-        JSONArray quotes = flightResult.getJSONArray("Quotes");
-        for (int i = 0; i < quotes.length(); i++) {
-            JSONObject quote = quotes.getJSONObject(i);
+                FlightRoute flightRoute = new FlightRoute(routeId,
+                        departureDateTime, arrivalDateTime,
+                        departureCity, arrivalCity,
+                        departureAirport, arrivalAirport,
+                        airline, operatingCarrier,
+                        flightNum, operatingFlightNum,
+                        fareClasses, fareBasis, fareFamily, fareCategory, isReturnRoute);
 
-            int quoteId = quote.getInt("QuoteId");
-            int minPrice = quote.getInt("MinPrice");
-            boolean isDirect = quote.getBoolean("Direct");
-
-            JSONObject outboundLegJSONObj = quote.getJSONObject("OutboundLeg");
-            JSONArray carrierIds = outboundLegJSONObj.getJSONArray("CarrierIds");
-            List<Integer> carrierIdsList = new ArrayList<>();
-            for (int j = 0; j < carrierIds.length(); j++) {
-                carrierIdsList.add((Integer) carrierIds.get(j));
-            }
-            int originId = outboundLegJSONObj.getInt("OriginId");
-            int destinationId = outboundLegJSONObj.getInt("DestinationId");
-            Date departureDate = getDateTimeFromString(outboundLegJSONObj.getString("DepartureDate"));
-
-            OutboundLeg outboundLeg = new OutboundLeg(carrierIdsList, originId, destinationId, departureDate);
-
-            Date quoteDateTime = getDateTimeFromString(quote.getString("QuoteDateTime"));
-
-            searchResultQuotes.add(new SearchResultQuote(quoteId, minPrice, isDirect, outboundLeg, quoteDateTime));
-        }
-    }
-
-    private static void getDates(List<SearchResultDate> searchResultDates, JSONObject flightResult) throws JSONException, ParseException {
-        JSONArray dates = flightResult.getJSONObject("Dates").getJSONArray("OutboundDates");
-        for (int i = 0; i < dates.length(); i++) {
-            JSONObject outboundDate = dates.getJSONObject(i);
-            Date partialDate = getDateFromString(outboundDate.getString("PartialDate"));
-
-            JSONArray quoteIds = outboundDate.getJSONArray("QuoteIds");
-            List<Integer> quoteIdsList = new ArrayList<>();
-            for (int j = 0; j < quoteIds.length(); j++) {
-                quoteIdsList.add((Integer) quoteIds.get(j));
+                if (isReturnRoute) {
+                    inboundRoutes.add(flightRoute);
+                } else {
+                    outboundRoutes.add(flightRoute);
+                }
             }
 
-            int price = outboundDate.getInt("Price");
-            Date quoteDateTime = getDateTimeFromString(outboundDate.getString("QuoteDateTime"));
+            List airlinesList = new ArrayList();
+            JSONArray airlinesJsonArr = flight.getJSONArray("airlines");
+            for (int airlinesJsonArrIdx = 0; airlinesJsonArrIdx < airlinesJsonArr.length(); airlinesJsonArrIdx++) {
+                airlinesList.add(airlinesJsonArr.getString(airlinesJsonArrIdx));
+            }
 
-            searchResultDates.add(new SearchResultDate(partialDate, quoteIdsList, price, quoteDateTime));
+            List transfersList = new ArrayList();
+            JSONArray transfersJsonArr = flight.getJSONArray("transfers");
+            for (int transfersJsonArrIdx = 0; transfersJsonArrIdx < transfersJsonArr.length(); transfersJsonArrIdx++) {
+                transfersList.add(transfersJsonArr.getString(transfersJsonArrIdx));
+            }
+
+            boolean hasAirportChange = flight.getBoolean("has_airport_change");
+
+            // unix time in the time zone of the departure airport
+            Date departureDateTime = getDateTimeFromUnixTime(flight.getLong("dTime"));
+            Date arrivalDateTime = getDateTimeFromUnixTime(flight.getLong("aTime"));
+
+            // IATA code of airport
+            String departureAirport = flight.getString("flyFrom");
+            String arrivalAirport = flight.getString("flyTo");
+            String departureCity = flight.getString("cityFrom");
+            String arrivalCity = flight.getString("cityTo");
+
+            JSONObject countryFrom = flight.getJSONObject("countryFrom");
+            String countryFromCode = countryFrom.getString("code");
+            String countryFromName = countryFrom.getString("name");
+
+            JSONObject countryTo = flight.getJSONObject("countryTo");
+            String countryToCode = countryTo.getString("code");
+            String countryToName = countryTo.getString("name");
+
+            List<ParcelableArrayList> routesList = new ArrayList<>();
+            JSONArray routesJSONArr = flight.getJSONArray("routes");
+            for (int routeIdx = 0; routeIdx < routesJSONArr.length(); routeIdx++) {
+                ParcelableArrayList route = new ParcelableArrayList();
+                JSONArray routeJSONArr = routesJSONArr.getJSONArray(routeIdx);
+                for (int routeJSONArrIdx = 0; routeJSONArrIdx < routeJSONArr.length(); routeJSONArrIdx++) {
+                    route.add(routeJSONArr.getString(routeJSONArrIdx));
+                }
+                routesList.add(route);
+            }
+
+            String outboundFlightDuration = flight.getString("fly_duration");
+            String inboundFlightDuration = flight.getString("return_duration");
+
+            String linkToKiwi = flight.getString("deep_link");
+            searchResults.add(new FlightSearchResult(ids, price,
+                    outboundRoutes, inboundRoutes,
+                    airlinesList, transfersList, hasAirportChange,
+                    departureDateTime, arrivalDateTime,
+                    departureAirport, arrivalAirport,
+                    departureCity, arrivalCity,
+                    countryFromCode, countryFromName,
+                    countryToCode, countryToName,
+                    routesList,
+                    outboundFlightDuration, inboundFlightDuration, linkToKiwi));
         }
+        return searchResults;
     }
 }

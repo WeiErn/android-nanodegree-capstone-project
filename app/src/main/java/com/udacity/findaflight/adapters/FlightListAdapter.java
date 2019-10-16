@@ -11,18 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.udacity.findaflight.R;
-import com.udacity.findaflight.data.Flight;
+import com.udacity.findaflight.data.FlightSearchResult;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.FlightListAdapterViewHolder> {
 
     public static final String TAG = FlightListAdapter.class.getSimpleName();
-    private List<Flight> mFlightData;
+    private List<FlightSearchResult> mFlightData;
     private final FlightListAdapterOnClickHandler mClickHandler;
 
     public interface FlightListAdapterOnClickHandler {
-        void onFlightClick(Flight flight);
+        void onFlightClick(FlightSearchResult flight);
     }
 
     public FlightListAdapter(FlightListAdapterOnClickHandler clickHandler) {
@@ -33,15 +36,26 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
 
         public TextView mAirline;
         public ImageView airlineIcon;
-        public TextView mDepartureStart;
-        public TextView mDepartureEnd;
-        public TextView mReturnStart;
-        public TextView mReturnEnd;
+        @BindView(R.id.outboundStartAirport)
+        public TextView mOutboundStartAirport;
+        @BindView(R.id.outboundStartTime)
+        public TextView mOutboundStartTime;
+        @BindView(R.id.outboundEndAirport)
+        public TextView mOutboundEndAirport;
+        @BindView(R.id.outboundEndTime)
+        public TextView mOutboundEndTime;
+        @BindView(R.id.inboundStartAirport)
+        public TextView mInboundStartAirport;
+        @BindView(R.id.inboundStartTime)
+        public TextView mInboundStartTime;
+        @BindView(R.id.inboundEndAirport)
+        public TextView mInboundEndAirport;
+        @BindView(R.id.inboundEndTime)
+        public TextView mInboundEndTime;
 
         public FlightListAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            mAirline = itemView.findViewById(R.id.airline);
-
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
@@ -66,16 +80,23 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
 
     @Override
     public void onBindViewHolder(@NonNull FlightListAdapterViewHolder holder, int position) {
-        Flight flightSelected = mFlightData.get(position);
-        holder.mAirline.setText(flightSelected.getAirline());
+        FlightSearchResult flightSelected = mFlightData.get(position);
+//        holder.mAirline.setText(flightSelected.getArrivalAirport());
+        String departureTime = flightSelected.getDepartureTime();
+        String arrivalTime = flightSelected.getArrivalTime();
+        holder.mOutboundStartTime.setText(flightSelected.getDepartureTime());
+        holder.mOutboundStartAirport.setText(flightSelected.getDepartureAirport());
+        holder.mOutboundEndTime.setText(flightSelected.getArrivalTime());
+        holder.mOutboundEndAirport.setText(flightSelected.getArrivalAirport());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (null == mFlightData) return 0;
+        return mFlightData.size();
     }
 
-    public void setFlightData(List<Flight> flightData) {
+    public void setFlightData(List<FlightSearchResult> flightData) {
         mFlightData = flightData;
         notifyDataSetChanged();
     }

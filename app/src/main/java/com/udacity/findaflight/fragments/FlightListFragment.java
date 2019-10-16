@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,12 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.udacity.findaflight.R;
 import com.udacity.findaflight.adapters.FlightListAdapter;
-import com.udacity.findaflight.data.Flight;
+import com.udacity.findaflight.data.FlightSearchResult;
 import com.udacity.findaflight.utils.JsonUtils;
 import com.udacity.findaflight.utils.NetworkUtils;
 
@@ -33,7 +35,7 @@ import static com.udacity.findaflight.utils.NetworkUtils.isOnline;
 
 public class FlightListFragment extends Fragment implements
         FlightListAdapter.FlightListAdapterOnClickHandler,
-        LoaderManager.LoaderCallbacks<List<Flight>> {
+        LoaderManager.LoaderCallbacks<List<FlightSearchResult>> {
 
     @BindView(R.id.list_flights)
     RecyclerView mFlightListRecyclerView;
@@ -55,8 +57,8 @@ public class FlightListFragment extends Fragment implements
 
     public static final int FLIGHT_LOADER_ID = 0;
     public static final String ARG_FLIGHT_LAYOUT_ID = "flight_layout";
-    //    private int mFlightLayoutId;
-    private List<Flight> mFlights;
+    private int mFlightLayoutId;
+    private List<FlightSearchResult> mFlights;
 
     public FlightListFragment() {
     }
@@ -73,7 +75,7 @@ public class FlightListFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            mFlightLayoutId = getArguments().getInt(ARG_FLIGHT_LAYOUT_ID);
+            mFlightLayoutId = getArguments().getInt(ARG_FLIGHT_LAYOUT_ID);
         }
     }
 
@@ -88,6 +90,8 @@ public class FlightListFragment extends Fragment implements
 
         mLayoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
 
+        mFlightListRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL));
         mFlightListRecyclerView.setLayoutManager(mLayoutManager);
         mFlightListRecyclerView.setHasFixedSize(true);
         mFlightListAdapter = new FlightListAdapter(this);
@@ -112,7 +116,7 @@ public class FlightListFragment extends Fragment implements
 
     private void initLoader() {
         int loaderId = FLIGHT_LOADER_ID;
-        LoaderManager.LoaderCallbacks<List<Flight>> callback = this;
+        LoaderManager.LoaderCallbacks<List<FlightSearchResult>> callback = this;
         Bundle bundleForLoader = new Bundle();
         getLoaderManager().initLoader(loaderId, bundleForLoader, callback);
     }
@@ -134,15 +138,15 @@ public class FlightListFragment extends Fragment implements
     }
 
     @Override
-    public void onFlightClick(Flight flight) {
-
+    public void onFlightClick(FlightSearchResult flight) {
+        System.out.println("CLICKED");
     }
 
     @NonNull
     @Override
-    public Loader<List<Flight>> onCreateLoader(int id, @Nullable Bundle args) {
-        return new AsyncTaskLoader<List<Flight>>(getActivity()) {
-            List<Flight> mFlightData = null;
+    public Loader<List<FlightSearchResult>> onCreateLoader(int id, @Nullable Bundle args) {
+        return new AsyncTaskLoader<List<FlightSearchResult>>(getActivity()) {
+            List<FlightSearchResult> mFlightData = null;
 
             @Override
             protected void onStartLoading() {
@@ -156,14 +160,14 @@ public class FlightListFragment extends Fragment implements
 
             @Nullable
             @Override
-            public List<Flight> loadInBackground() {
-                String[] arguments = new String[]{"SG", "SGD", "en-SG", "SFO-sky", "SIN-sky", "2019-11-01"};
+            public List<FlightSearchResult> loadInBackground() {
+                String[] arguments = new String[]{"US", "USD", "en-US", "LAX-sky", "SFO-sky", "2019-09-01"};
                 URL flightsRequestUrl = NetworkUtils.buildUrl("", "2019-12-01", arguments);
 //                URL flightsRequestUrl = NetworkUtils.buildUrl("", mReturnDate, arguments);
 
                 try {
                     String jsonFlightsResponse = NetworkUtils.getResponseFromHttpUrl(flightsRequestUrl);
-                    List<Flight> listFlightData = JsonUtils.getFlightsByPriceFromJson(jsonFlightsResponse);
+                    List<FlightSearchResult> listFlightData = JsonUtils.getFlightsByPriceFromJson(jsonFlightsResponse);
 
                     return listFlightData;
                 } catch (Exception e) {
@@ -172,7 +176,7 @@ public class FlightListFragment extends Fragment implements
                 }
             }
 
-            public void deliverResult(List<Flight> data) {
+            public void deliverResult(List<FlightSearchResult> data) {
                 mFlightData = data;
                 super.deliverResult(data);
             }
@@ -180,7 +184,7 @@ public class FlightListFragment extends Fragment implements
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<List<Flight>> loader, List<Flight> flights) {
+    public void onLoadFinished(@NonNull Loader<List<FlightSearchResult>> loader, List<FlightSearchResult> flights) {
         mLoadingIndicator.setVisibility(View.INVISIBLE);
         mFlights = flights;
         mFlightListAdapter.setFlightData(flights);
@@ -195,7 +199,7 @@ public class FlightListFragment extends Fragment implements
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<List<Flight>> loader) {
+    public void onLoaderReset(@NonNull Loader<List<FlightSearchResult>> loader) {
 
     }
 

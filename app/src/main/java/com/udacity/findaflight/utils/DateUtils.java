@@ -25,4 +25,15 @@ public final class DateUtils {
     public static Date getDateTimeFromString(String dateTimeString) throws ParseException {
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(dateTimeString);
     }
+
+    public static Date getDateTimeFromUnixTime(Long unixTime) {
+        Date date = new Date(unixTime*1000L);
+        return date;
+    }
+
+    public static String getDateTimeString(Date date) {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd|h:mm a");
+        return dateFormat.format(date);
+    }
 }
