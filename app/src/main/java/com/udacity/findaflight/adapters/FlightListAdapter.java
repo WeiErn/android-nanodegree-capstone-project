@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.udacity.findaflight.R;
+import com.udacity.findaflight.data.FlightRoute;
 import com.udacity.findaflight.data.FlightSearchResult;
 
 import java.util.List;
@@ -52,6 +53,8 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
         public TextView mInboundEndAirport;
         @BindView(R.id.inboundEndTime)
         public TextView mInboundEndTime;
+        @BindView(R.id.price)
+        public TextView mPrice;
 
         public FlightListAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +91,20 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
         holder.mOutboundStartAirport.setText(flightSelected.getDepartureAirport());
         holder.mOutboundEndTime.setText(flightSelected.getArrivalTime());
         holder.mOutboundEndAirport.setText(flightSelected.getArrivalAirport());
+        holder.mPrice.setText("$" + Integer.toString(flightSelected.getPrice()));
+
+        List<FlightRoute> inboundFlightRoutes = flightSelected.getInboundFlightRoutes();
+        if (!inboundFlightRoutes.isEmpty()) {
+            FlightRoute firstInboundFlight = inboundFlightRoutes.get(0);
+            FlightRoute lastInboundFlight = inboundFlightRoutes.get(inboundFlightRoutes.size() - 1);
+
+            holder.mInboundStartTime.setText(firstInboundFlight.getDepartureTime());
+            holder.mInboundStartAirport.setText(firstInboundFlight.getDepartureAirport());
+            holder.mInboundEndTime.setText(lastInboundFlight.getArrivalTime());
+            holder.mInboundEndAirport.setText(lastInboundFlight.getArrivalAirport());
+        } else {
+            // set return arrow to GONE
+        }
     }
 
     @Override

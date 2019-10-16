@@ -90,12 +90,12 @@ public class FlightRoute implements Parcelable {
 
     private void splitDateTime() {
         String departureDateTimeString = getDateTimeString(departureDateTime);
-        String[] departureDateTimeArray = departureDateTimeString.split("|");
+        String[] departureDateTimeArray = departureDateTimeString.split("\\|");
         departureDate = departureDateTimeArray[0];
         departureTime = departureDateTimeArray[1];
 
         String arrivalDateTimeString = getDateTimeString(arrivalDateTime);
-        String[] arrivalDateTimeArray = arrivalDateTimeString.split("|");
+        String[] arrivalDateTimeArray = arrivalDateTimeString.split("\\|");
         arrivalDate = arrivalDateTimeArray[0];
         arrivalTime = arrivalDateTimeArray[1];
     }
