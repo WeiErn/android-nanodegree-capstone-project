@@ -13,7 +13,7 @@ public class ParcelableArrayList extends ArrayList<String> implements Parcelable
     }
 
     protected ParcelableArrayList(Parcel in) {
-        in.readList(this, String.class.getClassLoader());
+        in.readStringList(this);
     }
 
     public static final Creator<ParcelableArrayList> CREATOR = new Creator<ParcelableArrayList>() {
@@ -35,6 +35,6 @@ public class ParcelableArrayList extends ArrayList<String> implements Parcelable
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeList(this);
+        dest.writeStringList(this);
     }
 }

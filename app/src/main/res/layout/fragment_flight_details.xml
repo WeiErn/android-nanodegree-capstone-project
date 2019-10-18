@@ -47,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:text="FROM - TO"
                     android:textColor="#FFFFFFFF"
                     android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
@@ -59,6 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="16dp"
+                    android:text="1 JAN - 31 DEC"
                     android:textColor="#FFE6F0F2"
                     app:layout_constraintStart_toStartOf="@id/flight_journey"
                     app:layout_constraintTop_toBottomOf="@id/flight_journey"
@@ -94,10 +96,10 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:contentDescription="Share"
-        app:srcCompat="@drawable/ic_add"
         app:elevation="2dp"
         app:fabSize="normal"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:pressedTranslationZ="6dp" />
+        app:pressedTranslationZ="6dp"
+        app:srcCompat="@drawable/ic_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
