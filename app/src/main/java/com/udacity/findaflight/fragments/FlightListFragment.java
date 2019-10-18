@@ -1,6 +1,7 @@
 package com.udacity.findaflight.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.udacity.findaflight.FlightDetailsActivity;
 import com.udacity.findaflight.R;
 import com.udacity.findaflight.adapters.FlightListAdapter;
 import com.udacity.findaflight.data.FlightSearchResult;
@@ -139,7 +141,12 @@ public class FlightListFragment extends Fragment implements
 
     @Override
     public void onFlightClick(FlightSearchResult flight) {
-        System.out.println("CLICKED");
+
+        Context context = getActivity();
+        Class destinationClass = FlightDetailsActivity.class;
+        Intent intentToStartFlightDetailsActivity = new Intent(context, destinationClass);
+        intentToStartFlightDetailsActivity.putExtra("flight", flight);
+        startActivity(intentToStartFlightDetailsActivity);
     }
 
     @NonNull
