@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -9,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="175dp"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:elevation="4dp">
@@ -17,7 +18,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginBottom="40dp"
             app:expandedTitleMarginEnd="40dp"
@@ -27,7 +28,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="175dp"
                 android:background="#FF1FCBF2"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax" />
@@ -37,9 +38,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:paddingStart="40dp"
+                android:paddingStart="16dp"
                 android:paddingTop="16dp"
-                android:paddingEnd="40dp">
+                android:paddingEnd="16dp">
 
                 <TextView
                     android:id="@+id/flight_journey"
@@ -49,6 +50,7 @@
                     android:layout_marginTop="24dp"
                     android:text="FROM - TO"
                     android:textColor="#FFFFFFFF"
+                    android:textSize="24sp"
                     android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -62,6 +64,7 @@
                     android:paddingBottom="16dp"
                     android:text="1 JAN - 31 DEC"
                     android:textColor="#FFE6F0F2"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@id/flight_journey"
                     app:layout_constraintTop_toBottomOf="@id/flight_journey"
                     tools:text="1 JAN - 31 DEC" />
@@ -75,6 +78,7 @@
                     android:layout_marginRight="16dp"
                     android:text="$539"
                     android:textColor="#FFFFFFFF"
+                    android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/flight_journey" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -89,6 +93,85 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/header_flights_outbound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Outbound Trip Details"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/from_to_airports"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="SIN - JFK"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/header_flights_outbound" />
+
+            <TextView
+                android:id="@+id/day_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday, October 1"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/from_to_airports" />
+
+            <TextView
+                android:id="@+id/duration_direct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14h 30m, direct"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/day_date" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/flight_routes_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/duration_direct" />
+
+            <!--<View-->
+                <!--android:id="@+id/divider"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginTop="16dp"-->
+                <!--android:background="#E6E6E6"-->
+                <!--android:fitsSystemWindows="true"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/header_flights_outbound" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/header_flights_inbound"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="16dp"-->
+                <!--android:text="Inbound Trip Details"-->
+                <!--android:textSize="16sp"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/divider" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/save_fab"
         android:layout_width="wrap_content"
@@ -102,4 +185,10 @@
         app:layout_anchorGravity="bottom|end"
         app:pressedTranslationZ="6dp"
         app:srcCompat="@drawable/ic_add" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
