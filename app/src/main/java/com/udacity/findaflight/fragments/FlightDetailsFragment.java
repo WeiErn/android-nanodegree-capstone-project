@@ -16,19 +16,30 @@ import com.udacity.findaflight.adapters.FlightRouteAdapter;
 import com.udacity.findaflight.data.FlightRoute;
 import com.udacity.findaflight.data.FlightSearchResult;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.udacity.findaflight.utils.DateUtils.getHoursMinutesFromSeconds;
+
 public class FlightDetailsFragment extends Fragment {
 
     @BindView(R.id.flight_routes_recyclerview_outbound)
     RecyclerView mOutboundRoutesRecyclerView;
-    @BindView(R.id.flight_routes_recyclerview_inbound)
-    RecyclerView mInboundRoutesRecyclerView;
+    @BindView(R.id.header_flights_outbound)
+    TextView mHeaderFlightsOutboundTextView;
+    @BindView(R.id.from_to_airports_outbound)
+    TextView mFromToAirportsOutboundTextView;
+    @BindView(R.id.day_date_outbound)
+    TextView mDayDateOutboundTextView;
+    @BindView(R.id.duration_direct_outbound)
+    TextView mDurationDirectOutboundTextView;
     @BindView(R.id.divider)
     View mDividerView;
+    @BindView(R.id.flight_routes_recyclerview_inbound)
+    RecyclerView mInboundRoutesRecyclerView;
     @BindView(R.id.header_flights_inbound)
     TextView mHeaderFlightsInboundTextView;
     @BindView(R.id.from_to_airports_inbound)
@@ -46,6 +57,8 @@ public class FlightDetailsFragment extends Fragment {
     private FlightSearchResult mFlightSearchResult;
     private List<FlightRoute> mOutboundFlightRoutes;
     private List<FlightRoute> mInboundFlightRoutes;
+    private boolean mIsDirectOutbound;
+    private boolean mIsDirectInbound;
 
     public FlightDetailsFragment() {}
 
@@ -64,12 +77,9 @@ public class FlightDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_flight_details, container, false);
         ButterKnife.bind(this, view);
 
-        mOutboundRoutesLayoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
-        mOutboundRoutesRecyclerView.setLayoutManager(mOutboundRoutesLayoutManager);
-        mOutboundRoutesRecyclerView.setHasFixedSize(true);
-        mOutboundRoutesAdapter = new FlightRouteAdapter(mOutboundFlightRoutes);
-        mOutboundRoutesRecyclerView.setAdapter(mOutboundRoutesAdapter);
+        handleOutboundViews();
 
+        // Inbound
         if (!mInboundFlightRoutes.isEmpty()) {
             showDividerAndInboundTripDetails();
             mInboundRoutesLayoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
@@ -79,6 +89,36 @@ public class FlightDetailsFragment extends Fragment {
             mInboundRoutesRecyclerView.setAdapter(mInboundRoutesAdapter);
         }
         return view;
+    }
+
+    private void handleOutboundViews() {
+        // RecyclerView
+        mOutboundRoutesLayoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
+        mOutboundRoutesRecyclerView.setLayoutManager(mOutboundRoutesLayoutManager);
+        mOutboundRoutesRecyclerView.setHasFixedSize(true);
+        mOutboundRoutesAdapter = new FlightRouteAdapter(mOutboundFlightRoutes);
+        mOutboundRoutesRecyclerView.setAdapter(mOutboundRoutesAdapter);
+
+        FlightRoute outboundDepartureFlight = mOutboundFlightRoutes.get(0);
+        FlightRoute outboundArrivalFlight = mOutboundFlightRoutes.get(mOutboundFlightRoutes.size() - 1);
+
+        if (mOutboundFlightRoutes.size() == 1) {
+            mIsDirectOutbound = true;
+        }
+
+        String outboundDepartureAirport = outboundDepartureFlight.getDepartureAirport();
+        String outboundDepartureCity = outboundDepartureFlight.getDepartureCity();
+        String outboundArrivalAirport = outboundArrivalFlight.getArrivalAirport();
+        String outboundArrivalCity = outboundArrivalFlight.getArrivalCity();
+        mFromToAirportsOutboundTextView.setText(
+                outboundDepartureCity + " (" + outboundDepartureAirport + ") \u2015 "
+                + outboundArrivalCity + " (" + outboundArrivalAirport + ")"
+        );
+
+        Date outboundDepartureDateTimeUTC = outboundDepartureFlight.getDepartureDateTimeUTC();
+        Date outboundArrivalDateTimeUTC = outboundArrivalFlight.getArrivalDateTimeUTC();
+        long msDifference = outboundArrivalDateTimeUTC.getTime() - outboundDepartureDateTimeUTC.getTime();
+        mDurationDirectOutboundTextView.setText(getHoursMinutesFromSeconds(msDifference/1000) + (mIsDirectOutbound ? ", direct" : ""));
     }
 
     private void showDividerAndInboundTripDetails() {
