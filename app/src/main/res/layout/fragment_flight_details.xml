@@ -113,61 +113,103 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/from_to_airports"
+                android:id="@+id/from_to_airports_outbound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="SIN - JFK"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/header_flights_outbound" />
+                app:layout_constraintTop_toBottomOf="@+id/header_flights_outbound"
+                tools:text="SIN - JFK" />
 
             <TextView
-                android:id="@+id/day_date"
+                android:id="@+id/day_date_outbound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tuesday, October 1"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/from_to_airports" />
+                app:layout_constraintTop_toBottomOf="@+id/from_to_airports_outbound"
+                tools:text="Tuesday, October 1"/>
 
             <TextView
-                android:id="@+id/duration_direct"
+                android:id="@+id/duration_direct_outbound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="14h 30m, direct"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/day_date" />
+                app:layout_constraintTop_toBottomOf="@+id/day_date_outbound"
+                tools:text="14h 30m, direct" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/flight_routes_recyclerview"
+                android:id="@+id/flight_routes_recyclerview_outbound"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/duration_direct" />
+                app:layout_constraintTop_toBottomOf="@+id/duration_direct_outbound" />
 
-            <!--<View-->
-                <!--android:id="@+id/divider"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:background="#E6E6E6"-->
-                <!--android:fitsSystemWindows="true"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toBottomOf="@id/header_flights_outbound" />-->
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#E6E6E6"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flight_routes_recyclerview_outbound" />
 
-            <!--<TextView-->
-                <!--android:id="@+id/header_flights_inbound"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="16dp"-->
-                <!--android:text="Inbound Trip Details"-->
-                <!--android:textSize="16sp"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toBottomOf="@id/divider" />-->
+            <TextView
+                android:id="@+id/header_flights_inbound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Inbound Trip Details"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+            <TextView
+                android:id="@+id/from_to_airports_inbound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/header_flights_inbound"
+                tools:text="JFK - SIN" />
+
+            <TextView
+                android:id="@+id/day_date_inbound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/from_to_airports_inbound"
+                tools:text="Thursday, October 31" />
+
+            <TextView
+                android:id="@+id/duration_direct_inbound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/day_date_inbound"
+                tools:text="14h 30m, direct" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/flight_routes_recyclerview_inbound"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/duration_direct_inbound" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -186,9 +228,4 @@
         app:pressedTranslationZ="6dp"
         app:srcCompat="@drawable/ic_add" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

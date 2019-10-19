@@ -19,6 +19,8 @@ public class FlightSearchResult implements Parcelable {
     private boolean hasAirportChange;
     private Date departureDateTime;
     private Date arrivalDateTime;
+    private Date departureDateTimeUTC;
+    private Date arrivalDateTimeUTC;
     private String departureDate;
     private String departureTime;
     private String arrivalDate;
@@ -36,7 +38,7 @@ public class FlightSearchResult implements Parcelable {
     private String inboundFlightDuration;
     private String link;
 
-    public FlightSearchResult(String[] flightIds, int price, List<FlightRoute> outboundFlightRoutes, List<FlightRoute> inboundFlightRoutes, List<String> airlines, List<String> transfers, boolean hasAirportChange, Date departureDateTime, Date arrivalDateTime, String departureAirport, String arrivalAirport, String departureCity, String arrivalCity, String departureCountryCode, String departureCountryName, String arrivalCountryCode, String arrivalCountryName, List<ParcelableArrayList> routes, String outboundFlightDuration, String inboundFlightDuration, String link) {
+    public FlightSearchResult(String[] flightIds, int price, List<FlightRoute> outboundFlightRoutes, List<FlightRoute> inboundFlightRoutes, List<String> airlines, List<String> transfers, boolean hasAirportChange, Date departureDateTime, Date arrivalDateTime, Date departureDateTimeUTC, Date arrivalDateTimeUTC, String departureAirport, String arrivalAirport, String departureCity, String arrivalCity, String departureCountryCode, String departureCountryName, String arrivalCountryCode, String arrivalCountryName, List<ParcelableArrayList> routes, String outboundFlightDuration, String inboundFlightDuration, String link) {
         this.flightIds = flightIds;
         this.price = price;
         this.outboundFlightRoutes = outboundFlightRoutes;
@@ -47,6 +49,8 @@ public class FlightSearchResult implements Parcelable {
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
         splitDateTime();
+        this.departureDateTimeUTC = departureDateTimeUTC;
+        this.arrivalDateTimeUTC = arrivalDateTimeUTC;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureCity = departureCity;
@@ -83,6 +87,8 @@ public class FlightSearchResult implements Parcelable {
         hasAirportChange = in.readInt() == 1;
         departureDateTime = new Date(in.readLong());
         arrivalDateTime = new Date(in.readLong());
+        departureDateTimeUTC = new Date(in.readLong());
+        arrivalDateTimeUTC = new Date(in.readLong());
         departureDate = in.readString();
         departureTime = in.readString();
         arrivalDate = in.readString();
@@ -129,6 +135,8 @@ public class FlightSearchResult implements Parcelable {
         dest.writeInt(hasAirportChange ? 1 : 0);
         dest.writeLong(departureDateTime.getTime());
         dest.writeLong(arrivalDateTime.getTime());
+        dest.writeLong(departureDateTimeUTC.getTime());
+        dest.writeLong(arrivalDateTimeUTC.getTime());
         dest.writeString(departureDate);
         dest.writeString(departureTime);
         dest.writeString(arrivalDate);
@@ -181,6 +189,14 @@ public class FlightSearchResult implements Parcelable {
 
     public Date getArrivalDateTime() {
         return arrivalDateTime;
+    }
+
+    public Date getDepartureDateTimeUTC() {
+        return departureDateTimeUTC;
+    }
+
+    public Date getArrivalDateTimeUTC() {
+        return arrivalDateTimeUTC;
     }
 
     public String getDepartureDate() {

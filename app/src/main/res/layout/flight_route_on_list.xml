@@ -1,6 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/top_orb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_orb" />
+
+    <View
+        android:id="@+id/top_vertical_line"
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        app:layout_constraintStart_toStartOf="@id/top_orb"
+        app:layout_constraintTop_toBottomOf="@id/top_orb"
+        app:layout_constraintEnd_toEndOf="@id/top_orb"
+        android:background="#1FCBF2"
+        />
+
+    <ImageView
+        android:id="@+id/middle_orb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_orb_hollow"
+        app:layout_constraintStart_toStartOf="@id/top_orb"
+        app:layout_constraintTop_toBottomOf="@+id/top_vertical_line"
+        app:layout_constraintEnd_toEndOf="@id/top_orb"/>
+
+    <View
+        android:id="@+id/bottom_vertical_line"
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        app:layout_constraintStart_toStartOf="@id/middle_orb"
+        app:layout_constraintTop_toBottomOf="@id/middle_orb"
+        app:layout_constraintEnd_toEndOf="@id/middle_orb"
+        android:background="#1FCBF2"
+        />
+
+    <ImageView
+        android:id="@+id/bottom_orb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/middle_orb"
+        app:layout_constraintTop_toBottomOf="@id/bottom_vertical_line"
+        app:layout_constraintEnd_toEndOf="@id/middle_orb"
+        app:srcCompat="@drawable/ic_orb"
+        />
+
+    <TextView
+        android:id="@+id/departure_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/top_orb"
+        app:layout_constraintStart_toEndOf="@+id/top_orb"
+        app:layout_constraintTop_toTopOf="@+id/top_orb"
+        tools:text="1 Oct 2019" />
+
+    <TextView
+        android:id="@+id/departure_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginLeft="96dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/departure_date"
+        app:layout_constraintStart_toStartOf="@+id/departure_date"
+        app:layout_constraintTop_toTopOf="@+id/departure_date"
+        tools:text="8:30 AM" />
+
+    <TextView
+        android:id="@+id/flight_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintTop_toTopOf="@id/middle_orb"
+        app:layout_constraintBottom_toBottomOf="@id/middle_orb"
+        app:layout_constraintEnd_toEndOf="@+id/departure_time"
+        app:layout_constraintStart_toStartOf="@+id/departure_date"
+        tools:text="14h 30m"/>
+
+    <TextView
+        android:id="@+id/arrival_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_orb"
+        app:layout_constraintStart_toStartOf="@+id/departure_date"
+        app:layout_constraintTop_toTopOf="@+id/bottom_orb"
+        tools:text="31 Oct 2019"/>
+
+    <TextView
+        android:id="@+id/arrival_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/arrival_date"
+        app:layout_constraintStart_toStartOf="@+id/departure_time"
+        app:layout_constraintTop_toTopOf="@+id/arrival_date"
+        tools:text="12:45 PM"/>
+
+    <TextView
+        android:id="@+id/departure_airport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/departure_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/departure_time"
+        app:layout_constraintTop_toTopOf="@+id/departure_time"
+        tools:text="Singapore Changi Airport (SIN)" />
+
+    <TextView
+        android:id="@+id/arrival_airport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/arrival_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/departure_airport"
+        app:layout_constraintTop_toTopOf="@+id/arrival_time"
+        tools:text="John F. Kennedy International (JFK)" />
+
+    <TextView
+        android:id="@+id/flight_operating_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/flight_duration"
+        app:layout_constraintStart_toStartOf="@+id/departure_airport"
+        app:layout_constraintTop_toTopOf="@+id/flight_duration"
+        tools:text="SQ 37" />
 </androidx.constraintlayout.widget.ConstraintLayout>

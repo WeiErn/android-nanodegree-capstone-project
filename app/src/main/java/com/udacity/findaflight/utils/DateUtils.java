@@ -1,5 +1,7 @@
 package com.udacity.findaflight.utils;
 
+import android.content.Intent;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,5 +37,14 @@ public final class DateUtils {
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd|h:mm a");
         return dateFormat.format(date);
+    }
+
+    public static String getHoursMinutesFromSeconds(long seconds) {
+        long hours = seconds / 3600;
+        long minutes = (seconds / 60) % 60;
+
+        String hoursString = Long.toString(hours);
+        String minutesString = String.valueOf(minutes);
+        return hoursString + "h " + minutesString + "m";
     }
 }

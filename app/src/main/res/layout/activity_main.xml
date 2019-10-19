@@ -177,7 +177,7 @@
             android:id="@+id/leftRadioGroupDivider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#FF1FCBF2"
+            android:background="#1FCBF2"
             android:visibility="visible" />
 
         <RadioButton

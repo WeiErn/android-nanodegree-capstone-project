@@ -35,6 +35,7 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
 
     public class FlightListAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @BindView(R.id.airlines)
         public TextView mAirline;
         public ImageView airlineIcon;
         @BindView(R.id.outboundStartAirport)
@@ -84,14 +85,20 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
     @Override
     public void onBindViewHolder(@NonNull FlightListAdapterViewHolder holder, int position) {
         FlightSearchResult flightSelected = mFlightData.get(position);
-//        holder.mAirline.setText(flightSelected.getArrivalAirport());
-        String departureTime = flightSelected.getDepartureTime();
-        String arrivalTime = flightSelected.getArrivalTime();
+
         holder.mOutboundStartTime.setText(flightSelected.getDepartureTime());
         holder.mOutboundStartAirport.setText(flightSelected.getDepartureAirport());
         holder.mOutboundEndTime.setText(flightSelected.getArrivalTime());
         holder.mOutboundEndAirport.setText(flightSelected.getArrivalAirport());
         holder.mPrice.setText("$" + Integer.toString(flightSelected.getPrice()));
+
+        String airlines = "";
+        List<String> airlinesList = flightSelected.getAirlines();
+        for (String airline : airlinesList) {
+            airlines += airline + ",";
+        }
+        airlines = airlines.substring(0, airlines.length() - 1);
+        holder.mAirline.setText(airlines);
 
         List<FlightRoute> inboundFlightRoutes = flightSelected.getInboundFlightRoutes();
         if (!inboundFlightRoutes.isEmpty()) {

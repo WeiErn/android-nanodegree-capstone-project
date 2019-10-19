@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +14,10 @@ import com.udacity.findaflight.data.FlightRoute;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.udacity.findaflight.utils.DateUtils.getHoursMinutesFromSeconds;
 
 public class FlightRouteAdapter extends RecyclerView.Adapter<FlightRouteAdapter.FlightRouteAdapterViewHolder> {
 
@@ -25,6 +29,23 @@ public class FlightRouteAdapter extends RecyclerView.Adapter<FlightRouteAdapter.
     }
 
     public class FlightRouteAdapterViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.departure_date)
+        public TextView mDepartureDate;
+        @BindView(R.id.departure_time)
+        public TextView mDepartureTime;
+        @BindView(R.id.flight_duration)
+        public TextView mFlightDuration;
+        @BindView(R.id.arrival_date)
+        public TextView mArrivalDate;
+        @BindView(R.id.arrival_time)
+        public TextView mArrivalTime;
+        @BindView(R.id.departure_airport)
+        public TextView mDepartureAirport;
+        @BindView(R.id.flight_operating_number)
+        public TextView mFlightOperatingNumber;
+        @BindView(R.id.arrival_airport)
+        public TextView mArrivalAirport;
 
         public FlightRouteAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -47,16 +68,20 @@ public class FlightRouteAdapter extends RecyclerView.Adapter<FlightRouteAdapter.
     public void onBindViewHolder(FlightRouteAdapterViewHolder holder, int position) {
         FlightRoute flightRoute = mFlightRouteData.get(position);
 
-        String departureDate = flightRoute.getDepartureDate();
-        String departureTime = flightRoute.getDepartureTime();
-        String departureAirport = flightRoute.getDepartureAirport();
+        holder.mDepartureDate.setText(flightRoute.getDepartureDate());
+        holder.mDepartureTime.setText(flightRoute.getDepartureTime());
+        holder.mDepartureAirport.setText(flightRoute.getDepartureAirport());
 
-        String arrivalDate = flightRoute.getArrivalDate();
-        String arrivalTime = flightRoute.getArrivalTime();
-        String arrivalAirport = flightRoute.getArrivalAirport();
+        holder.mArrivalDate.setText(flightRoute.getArrivalDate());
+        holder.mArrivalTime.setText(flightRoute.getArrivalTime());
+        holder.mArrivalAirport.setText(flightRoute.getArrivalAirport());
 
         String operatingCarrier = flightRoute.getOperatingCarrier();
         String operatingFlightNum = flightRoute.getOperatingFlightNum();
+        holder.mFlightOperatingNumber.setText(operatingCarrier + " " + operatingFlightNum);
+
+        long msDifference = flightRoute.getArrivalDateTimeUTC().getTime() - flightRoute.getDepartureDateTimeUTC().getTime();
+        holder.mFlightDuration.setText(getHoursMinutesFromSeconds(msDifference/1000));
     }
 
     @Override

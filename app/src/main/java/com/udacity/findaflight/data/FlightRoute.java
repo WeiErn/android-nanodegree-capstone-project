@@ -12,6 +12,8 @@ public class FlightRoute implements Parcelable {
     private String id;
     private Date departureDateTime;
     private Date arrivalDateTime;
+    private Date departureDateTimeUTC;
+    private Date arrivalDateTimeUTC;
     private String departureDate;
     private String arrivalDate;
     private String departureTime;
@@ -33,11 +35,13 @@ public class FlightRoute implements Parcelable {
 
     private boolean isReturnRoute;
 
-    public FlightRoute(String id, Date departureDateTime, Date arrivalDateTime, String departureCity, String arrivalCity, String departureAirport, String arrivalAirport, String airline, String operatingCarrier, int flightNum, String operatingFlightNum, String fareClasses, String fareBasis, String fareFamily, String fareCategory, boolean isReturnRoute) {
+    public FlightRoute(String id, Date departureDateTime, Date arrivalDateTime, Date departureDateTimeUTC, Date arrivalDateTimeUTC, String departureCity, String arrivalCity, String departureAirport, String arrivalAirport, String airline, String operatingCarrier, int flightNum, String operatingFlightNum, String fareClasses, String fareBasis, String fareFamily, String fareCategory, boolean isReturnRoute) {
         this.id = id;
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
         splitDateTime();
+        this.departureDateTimeUTC = departureDateTimeUTC;
+        this.arrivalDateTimeUTC = arrivalDateTimeUTC;
         this.departureCity = departureCity;
         this.arrivalCity = arrivalCity;
         this.departureAirport = departureAirport;
@@ -57,6 +61,8 @@ public class FlightRoute implements Parcelable {
         id = in.readString();
         departureDateTime = new Date(in.readLong());
         arrivalDateTime = new Date(in.readLong());
+        departureDateTimeUTC = new Date(in.readLong());
+        arrivalDateTimeUTC = new Date(in.readLong());
         departureDate = in.readString();
         arrivalDate = in.readString();
         departureTime = in.readString();
@@ -110,6 +116,14 @@ public class FlightRoute implements Parcelable {
 
     public Date getArrivalDateTime() {
         return arrivalDateTime;
+    }
+
+    public Date getDepartureDateTimeUTC() {
+        return departureDateTimeUTC;
+    }
+
+    public Date getArrivalDateTimeUTC() {
+        return arrivalDateTimeUTC;
     }
 
     public String getDepartureDate() {
@@ -190,6 +204,8 @@ public class FlightRoute implements Parcelable {
         dest.writeString(id);
         dest.writeLong(departureDateTime.getTime());
         dest.writeLong(arrivalDateTime.getTime());
+        dest.writeLong(departureDateTimeUTC.getTime());
+        dest.writeLong(arrivalDateTimeUTC.getTime());
         dest.writeString(departureDate);
         dest.writeString(arrivalDate);
         dest.writeString(departureTime);

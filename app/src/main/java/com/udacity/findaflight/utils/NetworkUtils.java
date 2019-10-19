@@ -40,7 +40,7 @@ public final class NetworkUtils {
 
         builder
                 .appendQueryParameter("fly_from", "airport:SIN")    // origin
-                .appendQueryParameter("fly_to", "airport:LAX")      // destination
+                .appendQueryParameter("fly_to", "airport:HND")      // destination
                 .appendQueryParameter("v", "3")
                 .appendQueryParameter("date_from", "01/11/2019")    // departDate
                 .appendQueryParameter("date_to", "01/11/2019")      // departDate
@@ -54,7 +54,7 @@ public final class NetworkUtils {
                 .appendQueryParameter("partner_market", "sg")       // comment out?
                 .appendQueryParameter("curr", "SGD")                // change to USD?
                 .appendQueryParameter("locale", "en")
-                .appendQueryParameter("max_stopovers", "0")         // comment out?
+//                .appendQueryParameter("max_stopovers", "0")         // comment out?
                 .appendQueryParameter("select_airlines", "SQ")      // comment out?
                 .appendQueryParameter("vehicle_type", "aircraft")
                 .appendQueryParameter("limit", "5")                 // comment out? change limit?

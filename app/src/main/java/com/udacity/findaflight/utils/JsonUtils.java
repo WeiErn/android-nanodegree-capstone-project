@@ -28,7 +28,7 @@ public final class JsonUtils {
             JSONObject flight = flights.getJSONObject(i);
 
             String idsString = flight.getString("id");
-            String[] ids = idsString.split("|");
+            String[] ids = idsString.split("\\|");
 
             int price = flight.getInt("price");
 
@@ -43,6 +43,9 @@ public final class JsonUtils {
                 // Unix Time
                 Date departureDateTime = getDateTimeFromUnixTime(route.getLong("dTime"));
                 Date arrivalDateTime = getDateTimeFromUnixTime(route.getLong("aTime"));
+
+                Date departureDateTimeUTC = getDateTimeFromUnixTime(route.getLong("dTimeUTC"));
+                Date arrivalDateTimeUTC = getDateTimeFromUnixTime(route.getLong("aTimeUTC"));
 
                 String arrivalCity = route.getString("cityTo");
                 String departureCity = route.getString("cityFrom");
@@ -64,6 +67,7 @@ public final class JsonUtils {
 
                 FlightRoute flightRoute = new FlightRoute(routeId,
                         departureDateTime, arrivalDateTime,
+                        departureDateTimeUTC, arrivalDateTimeUTC,
                         departureCity, arrivalCity,
                         departureAirport, arrivalAirport,
                         airline, operatingCarrier,
@@ -94,6 +98,9 @@ public final class JsonUtils {
             // unix time in the time zone of the departure airport
             Date departureDateTime = getDateTimeFromUnixTime(flight.getLong("dTime"));
             Date arrivalDateTime = getDateTimeFromUnixTime(flight.getLong("aTime"));
+
+            Date departureDateTimeUTC = getDateTimeFromUnixTime(flight.getLong("dTimeUTC"));
+            Date arrivalDateTimeUTC = getDateTimeFromUnixTime(flight.getLong("aTimeUTC"));
 
             // IATA code of airport
             String departureAirport = flight.getString("flyFrom");
@@ -128,6 +135,7 @@ public final class JsonUtils {
                     outboundRoutes, inboundRoutes,
                     airlinesList, transfersList, hasAirportChange,
                     departureDateTime, arrivalDateTime,
+                    departureDateTimeUTC, arrivalDateTimeUTC,
                     departureAirport, arrivalAirport,
                     departureCity, arrivalCity,
                     countryFromCode, countryFromName,
