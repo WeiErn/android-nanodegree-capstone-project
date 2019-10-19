@@ -30,14 +30,14 @@ public class FlightRouteAdapter extends RecyclerView.Adapter<FlightRouteAdapter.
 
     public class FlightRouteAdapterViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.departure_date)
-        public TextView mDepartureDate;
+//        @BindView(R.id.departure_date)
+//        public TextView mDepartureDate;
         @BindView(R.id.departure_time)
         public TextView mDepartureTime;
         @BindView(R.id.flight_duration)
         public TextView mFlightDuration;
-        @BindView(R.id.arrival_date)
-        public TextView mArrivalDate;
+//        @BindView(R.id.arrival_date)
+//        public TextView mArrivalDate;
         @BindView(R.id.arrival_time)
         public TextView mArrivalTime;
         @BindView(R.id.departure_airport)
@@ -68,13 +68,17 @@ public class FlightRouteAdapter extends RecyclerView.Adapter<FlightRouteAdapter.
     public void onBindViewHolder(FlightRouteAdapterViewHolder holder, int position) {
         FlightRoute flightRoute = mFlightRouteData.get(position);
 
-        holder.mDepartureDate.setText(flightRoute.getDepartureDate());
+//        holder.mDepartureDate.setText(flightRoute.getDepartureDate());
         holder.mDepartureTime.setText(flightRoute.getDepartureTime());
-        holder.mDepartureAirport.setText(flightRoute.getDepartureAirport());
+        holder.mDepartureAirport.setText(
+                flightRoute.getDepartureCity() + " (" +
+                flightRoute.getDepartureAirport() + ")");
 
-        holder.mArrivalDate.setText(flightRoute.getArrivalDate());
+//        holder.mArrivalDate.setText(flightRoute.getArrivalDate());
         holder.mArrivalTime.setText(flightRoute.getArrivalTime());
-        holder.mArrivalAirport.setText(flightRoute.getArrivalAirport());
+        holder.mArrivalAirport.setText(
+                flightRoute.getArrivalCity() + " (" +
+                flightRoute.getArrivalAirport() + ")");
 
         String operatingCarrier = flightRoute.getOperatingCarrier();
         String operatingFlightNum = flightRoute.getOperatingFlightNum();
