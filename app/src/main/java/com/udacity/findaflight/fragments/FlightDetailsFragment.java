@@ -22,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.udacity.findaflight.utils.DateUtils.getDayofweekMonthDay;
 import static com.udacity.findaflight.utils.DateUtils.getHoursMinutesFromSeconds;
 
 public class FlightDetailsFragment extends Fragment {
@@ -60,7 +61,8 @@ public class FlightDetailsFragment extends Fragment {
     private boolean mIsDirectOutbound;
     private boolean mIsDirectInbound;
 
-    public FlightDetailsFragment() {}
+    public FlightDetailsFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,14 +113,21 @@ public class FlightDetailsFragment extends Fragment {
         String outboundArrivalAirport = outboundArrivalFlight.getArrivalAirport();
         String outboundArrivalCity = outboundArrivalFlight.getArrivalCity();
         mFromToAirportsOutboundTextView.setText(
-                outboundDepartureCity + " (" + outboundDepartureAirport + ") \u2015 "
-                + outboundArrivalCity + " (" + outboundArrivalAirport + ")"
+                outboundDepartureCity +
+                        " \u2015 " +
+                        outboundArrivalCity
+        );
+
+        mDayDateOutboundTextView.setText(
+                getDayofweekMonthDay(outboundDepartureFlight.getDepartureDateTime()) +
+                        " \u2015 " +
+                        getDayofweekMonthDay(outboundArrivalFlight.getArrivalDateTime())
         );
 
         Date outboundDepartureDateTimeUTC = outboundDepartureFlight.getDepartureDateTimeUTC();
         Date outboundArrivalDateTimeUTC = outboundArrivalFlight.getArrivalDateTimeUTC();
         long msDifference = outboundArrivalDateTimeUTC.getTime() - outboundDepartureDateTimeUTC.getTime();
-        mDurationDirectOutboundTextView.setText(getHoursMinutesFromSeconds(msDifference/1000) + (mIsDirectOutbound ? ", direct" : ""));
+        mDurationDirectOutboundTextView.setText(getHoursMinutesFromSeconds(msDifference / 1000) + (mIsDirectOutbound ? ", direct" : ""));
     }
 
     private void showDividerAndInboundTripDetails() {

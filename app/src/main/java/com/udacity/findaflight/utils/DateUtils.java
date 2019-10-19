@@ -47,4 +47,9 @@ public final class DateUtils {
         String minutesString = String.valueOf(minutes);
         return hoursString + "h " + minutesString + "m";
     }
+
+    public static String getDayofweekMonthDay(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d");
+        return dateFormat.format(date);
+    }
 }

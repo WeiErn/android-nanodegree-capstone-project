@@ -121,7 +121,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/header_flights_outbound"
-                tools:text="SIN - JFK" />
+                tools:text="SIN \u2015 JFK" />
 
             <TextView
                 android:id="@+id/day_date_outbound"
@@ -130,7 +130,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/from_to_airports_outbound"
-                tools:text="Tuesday, Oct 1" />
+                tools:text="Tuesday, October 1"/>
 
             <TextView
                 android:id="@+id/duration_direct_outbound"
