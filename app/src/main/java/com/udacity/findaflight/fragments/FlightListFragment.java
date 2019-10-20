@@ -93,17 +93,7 @@ public class FlightListFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_flight_list, container, false);
         ButterKnife.bind(this, view);
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mFlightListToolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("TEST");
-        mFlightListToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        mFlightListToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        setupActionBar();
 
         mLayoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
 
@@ -122,6 +112,20 @@ public class FlightListFragment extends Fragment implements
         }
 
         return view;
+    }
+
+    private void setupActionBar() {
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mFlightListToolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mDepartureAirport + " \u2015 " + mReturnAirport);
+        mFlightListToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        mFlightListToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     private void retrieveAndAssignFlightInfo(Bundle bundle) {
@@ -184,9 +188,9 @@ public class FlightListFragment extends Fragment implements
             @Nullable
             @Override
             public List<FlightSearchResult> loadInBackground() {
-                String[] arguments = new String[]{"US", "USD", "en-US", "LAX-sky", "SFO-sky", "2019-09-01"};
-                URL flightsRequestUrl = NetworkUtils.buildUrl("", "2019-12-01", arguments);
+//                String[] arguments = new String[]{"US", "USD", "en-US", "LAX-sky", "SFO-sky", "2019-09-01"};
 //                URL flightsRequestUrl = NetworkUtils.buildUrl("", mReturnDate, arguments);
+                URL flightsRequestUrl = NetworkUtils.buildUrl(mDepartureAirport, mReturnAirport, mDepartureDate, mReturnDate, mFlightOption);
 
                 try {
                     String jsonFlightsResponse = NetworkUtils.getResponseFromHttpUrl(flightsRequestUrl);

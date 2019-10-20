@@ -170,7 +170,7 @@
             android:checked="true"
             android:gravity="center"
             android:padding="18dp"
-            android:text="DATES"
+            android:text="DATE"
             android:textColor="@color/button_selector_state" />
 
         <View
@@ -189,7 +189,7 @@
             android:button="@android:color/transparent"
             android:gravity="center"
             android:padding="18dp"
-            android:text="PRICES"
+            android:text="PRICE"
             android:textColor="@color/button_selector_state" />
 
         <View
@@ -208,7 +208,7 @@
             android:button="@android:color/transparent"
             android:gravity="center"
             android:padding="18dp"
-            android:text="ROUTES"
+            android:text="DURATION"
             android:textColor="@color/button_selector_state" />
 
     </RadioGroup>

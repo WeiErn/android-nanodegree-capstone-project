@@ -17,7 +17,7 @@ public final class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    public static URL buildUrl(String urlString, String returnDate, String[] arguments) {
+    public static URL buildUrl(String departureAirport, String returnAirport, String departureDate, String returnDate, String flightOption) {
         Uri.Builder builder = new Uri.Builder();
 //        builder.scheme("https")
 //                .authority("skyscanner-skyscanner-flight-search-v1.p.rapidapi.com")
@@ -33,34 +33,48 @@ public final class NetworkUtils {
 //        if (returnDate != null) {
 //            builder.appendQueryParameter("inboundpartialdate", returnDate);
 //        }
+        departureAirport = "SIN";
+        returnAirport = "HND";
+        departureDate = "01/11/2019";
+        returnDate = "01/12/2019";
+        flightOption = "price";
 
         builder.scheme("https")
                 .authority("api.skypicker.com")
                 .appendPath("flights");
 
         builder
-                .appendQueryParameter("fly_from", "airport:SIN")    // origin
-                .appendQueryParameter("fly_to", "airport:HND")      // destination
+                .appendQueryParameter("fly_from", "airport:" + departureAirport)    // origin
+//                .appendQueryParameter("fly_from", "airport:SIN")
+                .appendQueryParameter("fly_to", "airport:" + returnAirport)      // destination
+//                .appendQueryParameter("fly_to", "airport:HND")
                 .appendQueryParameter("v", "3")
-                .appendQueryParameter("date_from", "01/11/2019")    // departDate
-                .appendQueryParameter("date_to", "01/11/2019")      // departDate
-                .appendQueryParameter("return_from", "01/12/2019")  // returnDate
-                .appendQueryParameter("return_to", "01/12/2019")    // returnDate
-                .appendQueryParameter("flight_type", "round") // oneway; if no returnDate
+                .appendQueryParameter("date_from", departureDate)    // departDate
+//                .appendQueryParameter("date_from", "01/11/2019")    // departDate
+                .appendQueryParameter("date_to", departureDate)      // departDate
+//                .appendQueryParameter("date_to", "01/12/2019")      // departDate
                 .appendQueryParameter("selected_cabins", "M") // economy
                 .appendQueryParameter("adult_hold_bag", "1")
                 .appendQueryParameter("adult_hand_bag", "1")
                 .appendQueryParameter("partner", "picky")
-                .appendQueryParameter("partner_market", "sg")       // comment out?
-                .appendQueryParameter("curr", "SGD")                // change to USD?
+                .appendQueryParameter("curr", "USD")
                 .appendQueryParameter("locale", "en")
-//                .appendQueryParameter("max_stopovers", "0")         // comment out?
-                .appendQueryParameter("select_airlines", "SQ")      // comment out?
+//                .appendQueryParameter("partner_market", "sg")
+//                .appendQueryParameter("max_stopovers", "0")
+                .appendQueryParameter("limit", "5")
+//                .appendQueryParameter("select_airlines", "SQ")
                 .appendQueryParameter("vehicle_type", "aircraft")
-                .appendQueryParameter("limit", "5")                 // comment out? change limit?
-                .appendQueryParameter("sort", "price")              // give options?
-                .appendQueryParameter("asc", "0");                  // 0: descending order
+                .appendQueryParameter("sort", flightOption)              // give options?
+                .appendQueryParameter("asc", "1");                  // 0: descending order
 
+        if (returnDate != null) {
+            builder
+                    .appendQueryParameter("return_from", returnDate)  // returnDate
+                    .appendQueryParameter("return_to", returnDate)    // returnDate
+                    .appendQueryParameter("flight_type", "round"); // oneway; if no returnDate
+        } else {
+            builder.appendQueryParameter("flight_type", "oneway");
+        }
         Uri builtUri = builder.build();
 
         URL url = null;

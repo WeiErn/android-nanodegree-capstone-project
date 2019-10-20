@@ -34,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.udacity.findaflight.utils.DateUtils.getDateInDayMonthFormat;
+import static com.udacity.findaflight.utils.DateUtils.getDateInDayMonthYearFormat;
 
 public class MainActivity extends AppCompatActivity implements
         AirportAdapter.AirportAdapterOnClickHandler {
@@ -94,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void setupAirportAdapter(int editTextId) {
-        String[] airportsIataArray = {"SIN", "JFK", "LAX", "SEA", "BOS"};
-        String[] airportsCountryArray = {"SINGAPORE", "USA", "USA", "USA", "USA"};
+        String[] airportsIataArray = {"SIN", "JFK", "LAX", "SEA", "BOS", "HND"};
+        String[] airportsCountryArray = {"SINGAPORE", "USA", "USA", "USA", "USA", "JAPAN"};
         List<Airport> airportsList = new ArrayList<>();
 
         for (int i = 0; i < airportsIataArray.length; i++) {
@@ -261,27 +262,25 @@ public class MainActivity extends AppCompatActivity implements
                     String dayMonth = null;
                     String dayInWeek = null;
 
-                    try {
-                        selectedDate = getDateInDayMonthFormat(dayOfMonth, monthOfYear + 1, year);
-                        String[] dateTokens = selectedDate.split(",");
-                        dayMonth = dateTokens[0];
-                        dayInWeek = dateTokens[1];
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    selectedDate = getDateInDayMonthFormat(dayOfMonth, monthOfYear + 1, year);
+                    String[] dateTokens = selectedDate.split(",");
+                    dayMonth = dateTokens[0];
+                    dayInWeek = dateTokens[1];
 
                     switch (v.getId()) {
                         case R.id.editTextDepartDate:
                             ((EditText) v).setText(dayMonth);
                             ((EditText) v).setTextColor(Color.parseColor("#323232"));
                             departDay.setText(dayInWeek);
-                            mDepartureDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+//                            mDepartureDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                            mDepartureDate = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
                             break;
                         case R.id.editTextReturnDate:
                             ((EditText) v).setText(dayMonth);
                             ((EditText) v).setTextColor(Color.parseColor("#323232"));
                             returnDay.setText(dayInWeek);
-                            mReturnDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+//                            mReturnDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                            mReturnDate = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
                             break;
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -299,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements
         if (mChosenDepartAirport != null) {
             intent.putExtra("departureAirport", mChosenDepartAirport.getIataCode());
         }
-        if (mChosenReturnAirport != null ) {
+        if (mChosenReturnAirport != null) {
             intent.putExtra("returnAirport", mChosenReturnAirport.getIataCode());
         }
         int selectedFlightSearchOptionId = flightSearchOptionsRadioGroup.getCheckedRadioButtonId();

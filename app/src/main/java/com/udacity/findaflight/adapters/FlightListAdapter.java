@@ -110,7 +110,6 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
             FlightRoute firstInboundFlight = inboundFlightRoutes.get(0);
             FlightRoute lastInboundFlight = inboundFlightRoutes.get(inboundFlightRoutes.size() - 1);
             travelPeriod += " \u2015 " + getDateMonthYear(lastInboundFlight.getArrivalDateTime());
-            holder.mTravelPeriod.setText(travelPeriod);
 
             makeInboundDetailsVisible(holder);
             holder.mInboundStartTime.setText(firstInboundFlight.getDepartureTime());
@@ -118,15 +117,16 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
             holder.mInboundEndTime.setText(lastInboundFlight.getArrivalTime());
             holder.mInboundEndAirport.setText(lastInboundFlight.getArrivalAirport());
         }
+        holder.mTravelPeriod.setText(travelPeriod);
     }
 
     private void setAirlinesText(@NonNull FlightListAdapterViewHolder holder, FlightSearchResult flightSelected) {
         String airlines = "";
         List<String> airlinesList = flightSelected.getAirlines();
         for (String airline : airlinesList) {
-            airlines += airline + ",";
+            airlines += airline + ", ";
         }
-        airlines = airlines.substring(0, airlines.length() - 1);
+        airlines = airlines.substring(0, airlines.length() - 2);
         holder.mAirline.setText(airlines);
     }
 

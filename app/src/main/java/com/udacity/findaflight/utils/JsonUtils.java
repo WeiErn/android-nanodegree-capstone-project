@@ -128,7 +128,10 @@ public final class JsonUtils {
             }
 
             String outboundFlightDuration = flight.getString("fly_duration");
-            String inboundFlightDuration = flight.getString("return_duration");
+            String inboundFlightDuration = null;
+            if (flight.has("return_duration")) {
+                 inboundFlightDuration = flight.getString("return_duration");
+            }
 
             String linkToKiwi = flight.getString("deep_link");
             searchResults.add(new FlightSearchResult(ids, price,

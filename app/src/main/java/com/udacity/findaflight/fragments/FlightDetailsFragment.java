@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.udacity.findaflight.R;
+import com.udacity.findaflight.RecyclerViewMargin;
 import com.udacity.findaflight.adapters.FlightRouteAdapter;
 import com.udacity.findaflight.data.FlightRoute;
 import com.udacity.findaflight.data.FlightSearchResult;
@@ -162,6 +163,7 @@ public class FlightDetailsFragment extends Fragment {
         mOutboundRoutesRecyclerView.setHasFixedSize(true);
         mOutboundRoutesAdapter = new FlightRouteAdapter(mOutboundFlightRoutes);
         mOutboundRoutesRecyclerView.setAdapter(mOutboundRoutesAdapter);
+//        mOutboundRoutesRecyclerView.addItemDecoration(new RecyclerViewMargin(24, 1));
 
         FlightRoute outboundDepartureFlight = mOutboundFlightRoutes.get(0);
         FlightRoute outboundArrivalFlight = mOutboundFlightRoutes.get(mOutboundFlightRoutes.size() - 1);
