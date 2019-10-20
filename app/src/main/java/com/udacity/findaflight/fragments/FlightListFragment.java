@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
@@ -39,6 +40,8 @@ public class FlightListFragment extends Fragment implements
         FlightListAdapter.FlightListAdapterOnClickHandler,
         LoaderManager.LoaderCallbacks<List<FlightSearchResult>> {
 
+    @BindView(R.id.flight_list_toolbar)
+    Toolbar mFlightListToolbar;
     @BindView(R.id.list_flights)
     RecyclerView mFlightListRecyclerView;
     @BindView(R.id.no_internet_connection_message_display)
@@ -90,6 +93,18 @@ public class FlightListFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_flight_list, container, false);
         ButterKnife.bind(this, view);
 
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mFlightListToolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("TEST");
+        mFlightListToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        mFlightListToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
         mLayoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
 
         mFlightListRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
@@ -98,6 +113,7 @@ public class FlightListFragment extends Fragment implements
         mFlightListRecyclerView.setHasFixedSize(true);
         mFlightListAdapter = new FlightListAdapter(this);
         mFlightListRecyclerView.setAdapter(mFlightListAdapter);
+
 
         if (!isOnline(getActivity())) {
             showNoInternetConnectionMessage();

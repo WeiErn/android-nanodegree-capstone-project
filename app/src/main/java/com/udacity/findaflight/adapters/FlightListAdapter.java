@@ -19,6 +19,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.udacity.findaflight.utils.DateUtils.getDateMonthYear;
+
 public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.FlightListAdapterViewHolder> {
 
     public static final String TAG = FlightListAdapter.class.getSimpleName();
@@ -35,25 +37,28 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
 
     public class FlightListAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @BindView(R.id.travel_period)
+        public TextView mTravelPeriod;
         @BindView(R.id.airlines)
         public TextView mAirline;
-        public ImageView airlineIcon;
-        @BindView(R.id.outboundStartAirport)
+        @BindView(R.id.outbound_start_airport)
         public TextView mOutboundStartAirport;
-        @BindView(R.id.outboundStartTime)
+        @BindView(R.id.outbound_start_time)
         public TextView mOutboundStartTime;
-        @BindView(R.id.outboundEndAirport)
+        @BindView(R.id.outbound_end_airport)
         public TextView mOutboundEndAirport;
-        @BindView(R.id.outboundEndTime)
+        @BindView(R.id.outbound_end_time)
         public TextView mOutboundEndTime;
-        @BindView(R.id.inboundStartAirport)
+        @BindView(R.id.inbound_start_airport)
         public TextView mInboundStartAirport;
-        @BindView(R.id.inboundStartTime)
+        @BindView(R.id.inbound_start_time)
         public TextView mInboundStartTime;
-        @BindView(R.id.inboundEndAirport)
+        @BindView(R.id.inbound_end_airport)
         public TextView mInboundEndAirport;
-        @BindView(R.id.inboundEndTime)
+        @BindView(R.id.inbound_end_time)
         public TextView mInboundEndTime;
+        @BindView(R.id.inbound_arrow)
+        public ImageView mInboundArrow;
         @BindView(R.id.price)
         public TextView mPrice;
 
@@ -86,12 +91,36 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
     public void onBindViewHolder(@NonNull FlightListAdapterViewHolder holder, int position) {
         FlightSearchResult flightSelected = mFlightData.get(position);
 
+        String travelPeriod = getDateMonthYear(flightSelected.getDepartureDateTime());
+
+        // Set airlines
+        setAirlinesText(holder, flightSelected);
+
+        // Set outbound details
         holder.mOutboundStartTime.setText(flightSelected.getDepartureTime());
         holder.mOutboundStartAirport.setText(flightSelected.getDepartureAirport());
         holder.mOutboundEndTime.setText(flightSelected.getArrivalTime());
         holder.mOutboundEndAirport.setText(flightSelected.getArrivalAirport());
+
         holder.mPrice.setText("$" + Integer.toString(flightSelected.getPrice()));
 
+        // Set inbound details
+        List<FlightRoute> inboundFlightRoutes = flightSelected.getInboundFlightRoutes();
+        if (!inboundFlightRoutes.isEmpty()) {
+            FlightRoute firstInboundFlight = inboundFlightRoutes.get(0);
+            FlightRoute lastInboundFlight = inboundFlightRoutes.get(inboundFlightRoutes.size() - 1);
+            travelPeriod += " \u2015 " + getDateMonthYear(lastInboundFlight.getArrivalDateTime());
+            holder.mTravelPeriod.setText(travelPeriod);
+
+            makeInboundDetailsVisible(holder);
+            holder.mInboundStartTime.setText(firstInboundFlight.getDepartureTime());
+            holder.mInboundStartAirport.setText(firstInboundFlight.getDepartureAirport());
+            holder.mInboundEndTime.setText(lastInboundFlight.getArrivalTime());
+            holder.mInboundEndAirport.setText(lastInboundFlight.getArrivalAirport());
+        }
+    }
+
+    private void setAirlinesText(@NonNull FlightListAdapterViewHolder holder, FlightSearchResult flightSelected) {
         String airlines = "";
         List<String> airlinesList = flightSelected.getAirlines();
         for (String airline : airlinesList) {
@@ -99,19 +128,14 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
         }
         airlines = airlines.substring(0, airlines.length() - 1);
         holder.mAirline.setText(airlines);
+    }
 
-        List<FlightRoute> inboundFlightRoutes = flightSelected.getInboundFlightRoutes();
-        if (!inboundFlightRoutes.isEmpty()) {
-            FlightRoute firstInboundFlight = inboundFlightRoutes.get(0);
-            FlightRoute lastInboundFlight = inboundFlightRoutes.get(inboundFlightRoutes.size() - 1);
-
-            holder.mInboundStartTime.setText(firstInboundFlight.getDepartureTime());
-            holder.mInboundStartAirport.setText(firstInboundFlight.getDepartureAirport());
-            holder.mInboundEndTime.setText(lastInboundFlight.getArrivalTime());
-            holder.mInboundEndAirport.setText(lastInboundFlight.getArrivalAirport());
-        } else {
-            // set return arrow to GONE
-        }
+    private void makeInboundDetailsVisible(FlightListAdapterViewHolder holder) {
+        holder.mInboundStartTime.setVisibility(View.VISIBLE);
+        holder.mInboundStartAirport.setVisibility(View.VISIBLE);
+        holder.mInboundEndTime.setVisibility(View.VISIBLE);
+        holder.mInboundEndAirport.setVisibility(View.VISIBLE);
+        holder.mInboundArrow.setVisibility(View.VISIBLE);
     }
 
     @Override

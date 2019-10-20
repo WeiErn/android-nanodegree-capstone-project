@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/travel_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1 Oct 2019 \u2015 31 Oct 2019" />
 
     <ImageView
         android:id="@+id/ic_airlines"
@@ -13,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/travel_period"
         app:srcCompat="@drawable/art_plane_black" />
 
     <TextView
@@ -27,10 +37,10 @@
         app:layout_constraintBottom_toTopOf="@+id/ic_airlines"
         app:layout_constraintStart_toEndOf="@+id/ic_airlines"
         app:layout_constraintTop_toBottomOf="@+id/ic_airlines"
-        tools:text="Singapore Airlines"/>
+        tools:text="Singapore Airlines" />
 
     <TextView
-        android:id="@+id/outboundStartTime"
+        android:id="@+id/outbound_start_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -39,99 +49,104 @@
         tools:text="7:30p" />
 
     <TextView
-        android:id="@+id/outboundStartAirport"
+        android:id="@+id/outbound_start_airport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginLeft="70dp"
-        app:layout_constraintStart_toStartOf="@+id/outboundStartTime"
-        app:layout_constraintTop_toTopOf="@+id/outboundStartTime"
+        app:layout_constraintStart_toStartOf="@+id/outbound_start_time"
+        app:layout_constraintTop_toTopOf="@+id/outbound_start_time"
         tools:text="SIN" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/outbound_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/outboundStartAirport"
-        app:layout_constraintStart_toStartOf="@+id/outboundStartAirport"
-        app:layout_constraintTop_toTopOf="@+id/outboundStartAirport"
+        app:layout_constraintBottom_toBottomOf="@+id/outbound_start_airport"
+        app:layout_constraintStart_toStartOf="@+id/outbound_start_airport"
+        app:layout_constraintTop_toTopOf="@+id/outbound_start_airport"
         app:srcCompat="@drawable/ic_right_arrow" />
 
     <TextView
-        android:id="@+id/outboundEndTime"
+        android:id="@+id/outbound_end_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/outbound_arrow"
+        app:layout_constraintStart_toEndOf="@+id/outbound_arrow"
+        app:layout_constraintTop_toTopOf="@+id/outbound_arrow"
         tools:text="11:18p" />
 
     <TextView
-        android:id="@+id/outboundEndAirport"
+        android:id="@+id/outbound_end_airport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginLeft="70dp"
-        app:layout_constraintStart_toStartOf="@+id/outboundEndTime"
-        app:layout_constraintTop_toTopOf="@+id/outboundEndTime"
+        app:layout_constraintStart_toStartOf="@+id/outbound_end_time"
+        app:layout_constraintTop_toTopOf="@+id/outbound_end_time"
         tools:text="LAX" />
 
     <TextView
-        android:id="@+id/inboundEndTime"
+        android:id="@+id/inbound_end_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/outboundStartTime"
-        app:layout_constraintTop_toBottomOf="@+id/outboundStartTime"
+        app:layout_constraintStart_toStartOf="@+id/outbound_start_time"
+        app:layout_constraintTop_toBottomOf="@+id/outbound_start_time"
         tools:text="11:00a" />
 
+    <TextView
+        android:id="@+id/inbound_end_airport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/inbound_end_time"
+        app:layout_constraintTop_toTopOf="@+id/inbound_end_time"
+        tools:text="SIN" />
+
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/inbound_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:rotation="180"
-        app:layout_constraintBottom_toBottomOf="@+id/inboundEndAirport"
-        app:layout_constraintStart_toStartOf="@+id/inboundEndAirport"
-        app:layout_constraintTop_toTopOf="@+id/inboundEndAirport"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/inbound_end_airport"
+        app:layout_constraintStart_toStartOf="@+id/inbound_end_airport"
+        app:layout_constraintTop_toTopOf="@+id/inbound_end_airport"
         app:srcCompat="@drawable/ic_right_arrow" />
 
     <TextView
-        android:id="@+id/inboundEndAirport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginLeft="70dp"
-        app:layout_constraintStart_toStartOf="@+id/inboundEndTime"
-        app:layout_constraintTop_toTopOf="@+id/inboundEndTime"
-        tools:text="SIN" />
-
-    <TextView
-        android:id="@+id/inboundStartTime"
+        android:id="@+id/inbound_start_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/inbound_arrow"
+        app:layout_constraintStart_toEndOf="@+id/inbound_arrow"
+        app:layout_constraintTop_toTopOf="@+id/inbound_arrow"
         tools:text="11:09p" />
 
     <TextView
-        android:id="@+id/inboundStartAirport"
+        android:id="@+id/inbound_start_airport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginLeft="70dp"
-        app:layout_constraintStart_toStartOf="@+id/inboundStartTime"
-        app:layout_constraintTop_toTopOf="@+id/inboundStartTime"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/inbound_start_time"
+        app:layout_constraintTop_toTopOf="@+id/inbound_start_time"
         tools:text="LAX" />
 
     <TextView
@@ -140,9 +155,10 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/inboundStartAirport"
+        app:layout_constraintBottom_toBottomOf="@+id/inbound_start_airport"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="@+id/outboundEndAirport"
-        app:layout_constraintTop_toTopOf="@+id/outboundEndAirport" />
+        app:layout_constraintStart_toStartOf="@+id/outbound_end_airport"
+        app:layout_constraintTop_toTopOf="@+id/outbound_end_airport" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

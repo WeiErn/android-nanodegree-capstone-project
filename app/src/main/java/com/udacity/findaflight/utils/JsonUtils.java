@@ -143,6 +143,7 @@ public final class JsonUtils {
                     routesList,
                     outboundFlightDuration, inboundFlightDuration, linkToKiwi));
         }
+        System.out.println("NUMBER OF SEARCH RESULTS: " +searchResults.size());
         return searchResults;
     }
 }

@@ -48,8 +48,13 @@ public final class DateUtils {
         return hoursString + "h " + minutesString + "m";
     }
 
-    public static String getDayofweekMonthDay(Date date) {
+    public static String getDayOfWeekMonthDay(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, MMMM d");
+        return dateFormat.format(date);
+    }
+
+    public static String getDateMonthYear(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy");
         return dateFormat.format(date);
     }
 }
