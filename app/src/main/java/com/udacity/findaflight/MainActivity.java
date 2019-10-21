@@ -435,6 +435,7 @@ public class MainActivity extends AppCompatActivity implements
                             returnDate.setTextColor(Color.parseColor("#1FCBF2"));
                             mReturnDayString = "ONE-WAY";
                             returnDay.setText(mReturnDayString);
+                            mReturnDate = null;
                             mReturnDateString = null;
                             alertDialog.dismiss();
                         }
