@@ -312,45 +312,6 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
-//    private void openDatePickerDialog(View v) {
-//        // Get Current Date
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-//                (view, year, monthOfYear, dayOfMonth) -> {
-//                    String selectedDate = null;
-//                    String dayMonth = null;
-//                    String dayInWeek = null;
-//
-//                    selectedDate = getDateInDayMonthFormat(dayOfMonth, monthOfYear + 1, year);
-//                    String[] dateTokens = selectedDate.split(",");
-//                    dayMonth = dateTokens[0];
-//                    dayInWeek = dateTokens[1];
-//
-//                    switch (v.getId()) {
-//                        case R.id.depart_date_edit_text:
-//                        case R.id.plane_depart_image_view:
-////                            ((EditText) v).setText(dayMonth);
-////                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
-//                            departDate.setText(dayMonth);
-//                            departDate.setTextColor(Color.parseColor("#323232"));
-//                            departDay.setText(dayInWeek);
-//                            mDepartureDateString = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
-//                            break;
-//                        case R.id.return_date_edit_text:
-//                        case R.id.plane_return_image_view:
-////                            ((EditText) v).setText(dayMonth);
-////                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
-//                            returnDate.setText(dayMonth);
-//                            returnDate.setTextColor(Color.parseColor("#323232"));
-//                            returnDay.setText(dayInWeek);
-//                            mReturnDateString = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
-//                            break;
-//                    }
-//                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-//
-//        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-//        datePickerDialog.show();
-//    }
-
     private void openDatePickerDialog(View v) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MyDatePickerDialogTheme);     // Reference: https://stackoverflow.com/questions/41456444/extra-padding-margin-added-to-datepicker-on-android-7-1-1
         final View dialogView = getLayoutInflater().inflate(R.layout.custom_date_picker_dialog, null);
