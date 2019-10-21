@@ -38,8 +38,13 @@ public final class DateUtils {
         }
     }
 
-    public static Date getDateFromString(String dateString) throws ParseException {
-        return new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+    public static Date getDateFromString(String dateString) {
+        try {
+            return new SimpleDateFormat("yyyy-M-d").parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static Date getDateTimeFromString(String dateTimeString) throws ParseException {

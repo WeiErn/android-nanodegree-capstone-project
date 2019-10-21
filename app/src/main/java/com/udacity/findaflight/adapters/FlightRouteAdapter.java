@@ -74,9 +74,9 @@ public class FlightRouteAdapter extends RecyclerView.Adapter<FlightRouteAdapter.
                 flightRoute.getArrivalCity() + " (" +
                 flightRoute.getArrivalAirport() + ")");
 
-        String operatingCarrier = flightRoute.getOperatingCarrier();
+        String airline = flightRoute.getAirline();
         String operatingFlightNum = flightRoute.getOperatingFlightNum();
-        holder.mFlightOperatingNumber.setText(operatingCarrier + " " + operatingFlightNum);
+        holder.mFlightOperatingNumber.setText(airline + " " + operatingFlightNum);
 
         long msDifference = flightRoute.getArrivalDateTimeUTC().getTime() - flightRoute.getDepartureDateTimeUTC().getTime();
         holder.mFlightDuration.setText(getHoursMinutesFromSeconds(msDifference/1000));

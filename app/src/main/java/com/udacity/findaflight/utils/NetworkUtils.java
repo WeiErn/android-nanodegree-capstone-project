@@ -33,11 +33,12 @@ public final class NetworkUtils {
 //        if (returnDate != null) {
 //            builder.appendQueryParameter("inboundpartialdate", returnDate);
 //        }
-        departureAirport = "SIN";
-        returnAirport = "HND";
-        departureDate = "01/11/2019";
-        returnDate = "01/12/2019";
-        flightOption = "price";
+
+//        departureAirport = "SIN";
+//        returnAirport = "HND";
+//        departureDate = "01/11/2019";
+//        returnDate = "01/12/2019";
+//        flightOption = "price";
 
         builder.scheme("https")
                 .authority("api.skypicker.com")
@@ -45,14 +46,10 @@ public final class NetworkUtils {
 
         builder
                 .appendQueryParameter("fly_from", "airport:" + departureAirport)    // origin
-//                .appendQueryParameter("fly_from", "airport:SIN")
                 .appendQueryParameter("fly_to", "airport:" + returnAirport)      // destination
-//                .appendQueryParameter("fly_to", "airport:HND")
                 .appendQueryParameter("v", "3")
                 .appendQueryParameter("date_from", departureDate)    // departDate
-//                .appendQueryParameter("date_from", "01/11/2019")    // departDate
                 .appendQueryParameter("date_to", departureDate)      // departDate
-//                .appendQueryParameter("date_to", "01/12/2019")      // departDate
                 .appendQueryParameter("selected_cabins", "M") // economy
                 .appendQueryParameter("adult_hold_bag", "1")
                 .appendQueryParameter("adult_hand_bag", "1")
@@ -61,7 +58,7 @@ public final class NetworkUtils {
                 .appendQueryParameter("locale", "en")
 //                .appendQueryParameter("partner_market", "sg")
 //                .appendQueryParameter("max_stopovers", "0")
-                .appendQueryParameter("limit", "5")
+                .appendQueryParameter("limit", "10")
 //                .appendQueryParameter("select_airlines", "SQ")
                 .appendQueryParameter("vehicle_type", "aircraft")
                 .appendQueryParameter("sort", flightOption)              // give options?

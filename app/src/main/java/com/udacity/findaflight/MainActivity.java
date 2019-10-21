@@ -6,61 +6,79 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.udacity.findaflight.adapters.AirportAdapter;
 import com.udacity.findaflight.data.Airport;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.udacity.findaflight.utils.DateUtils.getDateFromString;
 import static com.udacity.findaflight.utils.DateUtils.getDateInDayMonthFormat;
 import static com.udacity.findaflight.utils.DateUtils.getDateInDayMonthYearFormat;
 
 public class MainActivity extends AppCompatActivity implements
         AirportAdapter.AirportAdapterOnClickHandler {
-    @BindView(R.id.editTextReturnDate)
+    @BindView(R.id.return_date_group_linear_layout)
+    LinearLayout returnDateGroup;
+    @BindView(R.id.plane_return_image_view)
+    ImageView returnPlaneImage;
+    @BindView(R.id.return_date_edit_text)
     EditText returnDate;
-    @BindView(R.id.textViewReturnDay)
-    TextView returnDay;
-    @BindView(R.id.editTextDepartDate)
+    @BindView(R.id.return_day_text_view)
+    EditText returnDay;
+    @BindView(R.id.depart_date_group_linear_layout)
+    LinearLayout departDateGroup;
+    @BindView(R.id.plane_depart_image_view)
+    ImageView departPlaneImage;
+    @BindView(R.id.depart_date_edit_text)
     EditText departDate;
-    @BindView(R.id.textViewDepartDay)
-    TextView departDay;
-    @BindView(R.id.editTextDepartAirport)
+    @BindView(R.id.depart_day_text_view)
+    EditText departDay;
+    @BindView(R.id.depart_airport_edit_text)
     EditText departAirport;
-    @BindView(R.id.editTextReturnAirport)
+    @BindView(R.id.return_airport_edit_text)
     EditText returnAirport;
-    @BindView(R.id.editTextDepartCountry)
+    @BindView(R.id.depart_country_edit_text)
     EditText departCountry;
-    @BindView(R.id.editTextReturnCountry)
+    @BindView(R.id.return_country_edit_text)
     EditText returnCountry;
-    @BindView(R.id.flightSearchOptions)
+    @BindView(R.id.flight_search_options_radio_group)
     RadioGroup flightSearchOptionsRadioGroup;
 
     Calendar calendar = Calendar.getInstance();
 
-    String mDepartureDate;
-    String mReturnDate;
+    String mFlightSearchOption;
+
+    Date mDepartureDate;
+    Date mReturnDate;
+    String mDepartureDateString;
+    String mReturnDateString;
+    String mDepartureDayString;
+    String mReturnDayString;
 
     Airport mSelectedDepartAirport;
     Airport mSelectedReturnAirport;
@@ -78,17 +96,34 @@ public class MainActivity extends AppCompatActivity implements
     AirportAdapter mDepartAirportAdapter;
     AirportAdapter mReturnAirportAdapter;
 
+    boolean mIsOneWayFlight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mDepartureDateString = savedInstanceState.getString("departureDate");
+            mReturnDateString = savedInstanceState.getString("returnDate");
+            mFlightSearchOption = savedInstanceState.getString("flightSearchOption");
+            mChosenDepartAirport = savedInstanceState.getParcelable("departAirport");
+            mChosenReturnAirport = savedInstanceState.getParcelable("returnAirport");
+            mIsOneWayFlight = savedInstanceState.getBoolean("isOneWayFlight");
+        }
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setOnClickListenerToDate(departDate);
-        setOnClickListenerToDate(returnDate);
+//        TODO: Figure how to set onClickListener on LinearLayout consisting of ImageView and EditText
+//        setOnClickListenerToDate(departDateGroup);
+//        setOnClickListenerToDate(returnDateGroup);
 
-        setupAirportAdapter(R.id.editTextDepartAirport);
-        setupAirportAdapter(R.id.editTextReturnAirport);
+        setOnClickListenerToDate(departDate);
+        setOnClickListenerToDate(departPlaneImage);
+        setOnClickListenerToDate(returnDate);
+        setOnClickListenerToDate(returnPlaneImage);
+
+        setupAirportAdapter(R.id.depart_airport_edit_text);
+        setupAirportAdapter(R.id.return_airport_edit_text);
 
         setOnClickListenerToAirport(departAirport);
         setOnClickListenerToAirport(returnAirport);
@@ -106,13 +141,26 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         switch (editTextId) {
-            case R.id.editTextDepartAirport:
+            case R.id.depart_airport_edit_text:
                 mDepartAirportAdapter = new AirportAdapter(editTextId, airportsList, this);
                 break;
-            case R.id.editTextReturnAirport:
+            case R.id.return_airport_edit_text:
                 mReturnAirportAdapter = new AirportAdapter(editTextId, airportsList, this);
                 break;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("departureDate", mDepartureDateString);
+        outState.putString("returnDate", mReturnDateString);
+        outState.putString("departureDay", mDepartureDayString);
+        outState.putString("returnDay", mReturnDayString);
+        outState.putString("flightSearchOption", mFlightSearchOption);
+        outState.putParcelable("departAirport", mChosenDepartAirport);
+        outState.putParcelable("returnAirport", mChosenReturnAirport);
+        outState.putBoolean("isOneWayFlight", mIsOneWayFlight);
     }
 
     private void setOnClickListenerToAirport(EditText airport) {
@@ -130,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements
                     @Override
                     public void onClick(View v) {
                         switch (v.getId()) {
-                            case R.id.btn_positive:
+                            case R.id.positive_button:
                                 if (mDepartClickCount != 0) {
                                     mChosenDepartAirport = mSelectedDepartAirport;
                                     mChosenDepartAirportPosition = mSelectedDepartAirportPosition;
@@ -139,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements
                                     departCountry.setText(mChosenDepartAirport.getCountry());
                                 }
                                 break;
-                            case R.id.btn_negative:
+                            case R.id.negative_button:
                                 mDepartAirportAdapter.setCheckedPosition(mChosenDepartAirportPosition);
                                 break;
                         }
@@ -154,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements
                     @Override
                     public void onClick(View v) {
                         switch (v.getId()) {
-                            case R.id.btn_positive:
+                            case R.id.positive_button:
                                 if (mReturnClickCount != 0) {
                                     mChosenReturnAirport = mSelectedReturnAirport;
                                     mChosenReturnAirportPosition = mSelectedReturnAirportPosition;
@@ -163,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements
                                     returnCountry.setText(mChosenReturnAirport.getCountry());
                                 }
                                 break;
-                            case R.id.btn_negative:
+                            case R.id.negative_button:
                                 mReturnAirportAdapter.setCheckedPosition(mChosenReturnAirportPosition);
                                 break;
                         }
@@ -178,20 +226,17 @@ public class MainActivity extends AppCompatActivity implements
         dialogBuilder.setView(dialogView);
         AlertDialog alertDialog = dialogBuilder.create();
 
-        Button buttonPositive = dialogView.findViewById(R.id.btn_positive);
-        Button buttonNegative = dialogView.findViewById(R.id.btn_negative);
+        Button buttonPositive = dialogView.findViewById(R.id.positive_button);
+        Button buttonNegative = dialogView.findViewById(R.id.negative_button);
 
-        RecyclerView airportOptions = dialogView.findViewById(R.id.recyclerview_airports);
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+        RecyclerView airportOptions = dialogView.findViewById(R.id.airports_recycler_view);
         airportOptions.setHasFixedSize(true);
 
-        // use a linear layout manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         airportOptions.setLayoutManager(layoutManager);
 
         switch (v.getId()) {
-            case R.id.editTextDepartAirport:
+            case R.id.depart_airport_edit_text:
                 mDepartClickCount = 0;
                 mChosenDepartAirportPosition = mDepartAirportAdapter.getCheckPosition();
                 airportOptions.setAdapter(mDepartAirportAdapter);
@@ -207,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements
                 });
 
                 break;
-            case R.id.editTextReturnAirport:
+            case R.id.return_airport_edit_text:
                 mReturnClickCount = 0;
                 mChosenReturnAirportPosition = mReturnAirportAdapter.getCheckPosition();
                 airportOptions.setAdapter(mReturnAirportAdapter);
@@ -232,18 +277,22 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onAirportClick(Airport airport, int adapterPosition, int editTextAirportId) {
         switch (editTextAirportId) {
-            case R.id.editTextDepartAirport:
+            case R.id.depart_airport_edit_text:
                 mDepartClickCount++;
                 mSelectedDepartAirport = airport;
                 mSelectedDepartAirportPosition = adapterPosition;
                 break;
-            case R.id.editTextReturnAirport:
+            case R.id.return_airport_edit_text:
                 mReturnClickCount++;
                 mSelectedReturnAirport = airport;
                 mSelectedReturnAirportPosition = adapterPosition;
                 break;
         }
     }
+
+//    TODO: Figure if this is okay so that the two ClickListener handlers below can be replaced
+//    private void setOnClickListenerToDate(View view) {
+//        view.setOnClickListener(new View.OnClickListener() {
 
     private void setOnClickListenerToDate(EditText date) {
         date.setOnClickListener(new View.OnClickListener() {
@@ -254,57 +303,209 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
+    private void setOnClickListenerToDate(ImageView image) {
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDatePickerDialog(v);
+            }
+        });
+    }
+
+//    private void openDatePickerDialog(View v) {
+//        // Get Current Date
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+//                (view, year, monthOfYear, dayOfMonth) -> {
+//                    String selectedDate = null;
+//                    String dayMonth = null;
+//                    String dayInWeek = null;
+//
+//                    selectedDate = getDateInDayMonthFormat(dayOfMonth, monthOfYear + 1, year);
+//                    String[] dateTokens = selectedDate.split(",");
+//                    dayMonth = dateTokens[0];
+//                    dayInWeek = dateTokens[1];
+//
+//                    switch (v.getId()) {
+//                        case R.id.depart_date_edit_text:
+//                        case R.id.plane_depart_image_view:
+////                            ((EditText) v).setText(dayMonth);
+////                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
+//                            departDate.setText(dayMonth);
+//                            departDate.setTextColor(Color.parseColor("#323232"));
+//                            departDay.setText(dayInWeek);
+//                            mDepartureDateString = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
+//                            break;
+//                        case R.id.return_date_edit_text:
+//                        case R.id.plane_return_image_view:
+////                            ((EditText) v).setText(dayMonth);
+////                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
+//                            returnDate.setText(dayMonth);
+//                            returnDate.setTextColor(Color.parseColor("#323232"));
+//                            returnDay.setText(dayInWeek);
+//                            mReturnDateString = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
+//                            break;
+//                    }
+//                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+//
+//        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+//        datePickerDialog.show();
+//    }
+
     private void openDatePickerDialog(View v) {
-        // Get Current Date
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                (view, year, monthOfYear, dayOfMonth) -> {
-                    String selectedDate = null;
-                    String dayMonth = null;
-                    String dayInWeek = null;
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.MyDatePickerDialogTheme);     // Reference: https://stackoverflow.com/questions/41456444/extra-padding-margin-added-to-datepicker-on-android-7-1-1
+        final View dialogView = getLayoutInflater().inflate(R.layout.custom_date_picker_dialog, null);
+        dialogBuilder.setView(dialogView);
+        AlertDialog alertDialog = dialogBuilder.create();
 
-                    selectedDate = getDateInDayMonthFormat(dayOfMonth, monthOfYear + 1, year);
-                    String[] dateTokens = selectedDate.split(",");
-                    dayMonth = dateTokens[0];
-                    dayInWeek = dateTokens[1];
+        final DatePicker datePicker = dialogView.findViewById(R.id.date_picker);
+        CheckBox oneWayFlightCheckBox = dialogView.findViewById(R.id.one_way_flight_checkbox);
+        if (mIsOneWayFlight) {
+            oneWayFlightCheckBox.setChecked(true);
+        }
+        Button buttonPositive = dialogView.findViewById(R.id.positive_button);
+        Button buttonNegative = dialogView.findViewById(R.id.negative_button);
 
-                    switch (v.getId()) {
-                        case R.id.editTextDepartDate:
-                            ((EditText) v).setText(dayMonth);
-                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
-                            departDay.setText(dayInWeek);
-//                            mDepartureDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                            mDepartureDate = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
-                            break;
-                        case R.id.editTextReturnDate:
-                            ((EditText) v).setText(dayMonth);
-                            ((EditText) v).setTextColor(Color.parseColor("#323232"));
-                            returnDay.setText(dayInWeek);
-//                            mReturnDate = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-                            mReturnDate = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
-                            break;
+        buttonNegative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        datePicker.setMinDate(calendar.getTimeInMillis());
+
+        switch (v.getId()) {
+            case R.id.depart_date_edit_text:
+            case R.id.plane_depart_image_view:
+                oneWayFlightCheckBox.setVisibility(View.INVISIBLE);
+                buttonPositive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int dayOfMonth = datePicker.getDayOfMonth();
+                        int monthOfYear = datePicker.getMonth();
+                        int year = datePicker.getYear();
+                        String selectedDate = getDateInDayMonthFormat(datePicker.getDayOfMonth(),
+                                datePicker.getMonth() + 1, datePicker.getYear());
+                        String[] dateTokens = selectedDate.split(",");
+                        String dayMonth = dateTokens[0];
+                        mDepartureDayString = dateTokens[1];
+                        departDate.setText(dayMonth);
+                        departDate.setTextColor(Color.parseColor("#323232"));
+                        departDay.setText(mDepartureDayString);
+                        mDepartureDate = getDateFromString(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                        mDepartureDateString = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
+                        alertDialog.dismiss();
                     }
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-        datePickerDialog.show();
+                });
+                break;
+            case R.id.return_date_edit_text:
+            case R.id.plane_return_image_view:
+                oneWayFlightCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+//                            datePicker.setMinDate(System.currentTimeMillis());
+//                            datePicker.setMaxDate(System.currentTimeMillis());
+                            mIsOneWayFlight = true;
+                        } else {
+                            mIsOneWayFlight = false;
+                        }
+                    }
+                });
+                buttonPositive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!oneWayFlightCheckBox.isChecked()) {
+                            int dayOfMonth = datePicker.getDayOfMonth();
+                            int monthOfYear = datePicker.getMonth();
+                            int year = datePicker.getYear();
+                            String selectedDate = getDateInDayMonthFormat(datePicker.getDayOfMonth(),
+                                    datePicker.getMonth() + 1, datePicker.getYear());
+                            String[] dateTokens = selectedDate.split(",");
+                            String dayMonth = dateTokens[0];
+                            mReturnDayString = dateTokens[1];
+                            returnDate.setText(dayMonth);
+                            returnDate.setTextColor(Color.parseColor("#323232"));
+                            returnDay.setText(mReturnDayString);
+                            mReturnDate = getDateFromString(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            mReturnDateString = getDateInDayMonthYearFormat(dayOfMonth, monthOfYear + 1, year);
+                            alertDialog.dismiss();
+                        } else {
+                            returnDate.setText("SELECT");
+                            returnDate.setTextColor(Color.parseColor("#1FCBF2"));
+                            mReturnDayString = "ONE-WAY";
+                            returnDay.setText(mReturnDayString);
+                            mReturnDateString = null;
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+                break;
+        }
+        alertDialog.show();
     }
 
     public void onSearchButtonClick(View v) {
+        boolean hasErrors = false;
+        List errorMessageList = new ArrayList();
+
         Intent intent = new Intent(this, SearchResultsActivity.class);
 
 //        TODO: Check if values are null
-        intent.putExtra("departureDate", mDepartureDate);
-        intent.putExtra("returnDate", mReturnDate);
+        if (mDepartureDateString != null) {
+            intent.putExtra("departureDate", mDepartureDateString);
+        } else {
+            hasErrors = true;
+            errorMessageList.add("Departure date is missing");
+        }
+
+        if (mReturnDate != null && mReturnDate.before(mDepartureDate)) {
+            hasErrors = true;
+            errorMessageList.add("Departure date falls after return date");
+        } else {
+            intent.putExtra("returnDate", mReturnDateString);
+        }
+
         if (mChosenDepartAirport != null) {
             intent.putExtra("departureAirport", mChosenDepartAirport.getIataCode());
+        } else {
+            hasErrors = true;
+            errorMessageList.add("Departure airport is missing");
         }
+
         if (mChosenReturnAirport != null) {
             intent.putExtra("returnAirport", mChosenReturnAirport.getIataCode());
+        } else {
+            hasErrors = true;
+            errorMessageList.add("Arrival airport is missing");
         }
+
+        if (hasErrors) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            final View errorDialogView = getLayoutInflater().inflate(R.layout.error_dialog, null);
+            dialogBuilder.setView(errorDialogView);
+            AlertDialog errorAlertDialog = dialogBuilder.create();
+
+            ArrayAdapter errorAdapter = new ArrayAdapter<String>(this,
+                    R.layout.error_list_item, errorMessageList);
+            ListView errorMessageListView = errorDialogView.findViewById(R.id.error_list_view);
+            errorMessageListView.setAdapter(errorAdapter);
+
+            Button button = errorDialogView.findViewById(R.id.positive_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    errorAlertDialog.dismiss();
+                }
+            });
+            errorAlertDialog.show();
+            return;
+        }
+
         int selectedFlightSearchOptionId = flightSearchOptionsRadioGroup.getCheckedRadioButtonId();
         RadioButton selectedFlightSearchOptionButton = (RadioButton) findViewById(selectedFlightSearchOptionId);
-        String selectedFlightSearchOption = ((String) selectedFlightSearchOptionButton.getText()).toLowerCase();
-        intent.putExtra("flightOption", selectedFlightSearchOption);
+        mFlightSearchOption = ((String) selectedFlightSearchOptionButton.getText()).toLowerCase();
+        intent.putExtra("flightOption", mFlightSearchOption);
 
         startActivity(intent);
     }

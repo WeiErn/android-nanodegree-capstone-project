@@ -9,8 +9,20 @@
         <item name="buttonStyle">@style/MyButton</item>
     </style>
 
+    <!--    Reference: https://stackoverflow.com/questions/30511743/android-how-to-change-the-color-of-the-dateselector-in-datepicker-widget-->
+    <style name="MyDatePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorAccent">#1FCBF2</item>
+    </style>
+
     <style name="MyButton" parent="Widget.AppCompat.Button">
         <item name="android:textAllCaps">false</item>
     </style>
 
+
+    <!--    Reference: https://stackoverflow.com/questions/5854047/how-to-change-the-color-of-a-checkbox-->
+    <style name="MyCheckBoxStyle" parent="@style/Theme.AppCompat.Light">
+        <item name="colorAccent">#1FCBF2</item>
+    </style>
 </resources>

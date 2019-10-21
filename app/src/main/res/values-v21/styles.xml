@@ -11,9 +11,9 @@
         <!--<item name="android:alertDialogTheme">@style/MyAlertDialogTheme</item>-->
     </style>
 
-    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:colorAccent">@color/date_picker_header_bg_color</item>
-    </style>
+<!--    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">-->
+<!--        <item name="android:colorAccent">@color/date_picker_header_bg_color</item>-->
+<!--    </style>-->
 
     <!--<style name="MyAlertDialogTheme">-->
         <!--<item name="android:background">-->

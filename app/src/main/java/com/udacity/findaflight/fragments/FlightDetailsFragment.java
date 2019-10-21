@@ -163,7 +163,6 @@ public class FlightDetailsFragment extends Fragment {
         mOutboundRoutesRecyclerView.setHasFixedSize(true);
         mOutboundRoutesAdapter = new FlightRouteAdapter(mOutboundFlightRoutes);
         mOutboundRoutesRecyclerView.setAdapter(mOutboundRoutesAdapter);
-//        mOutboundRoutesRecyclerView.addItemDecoration(new RecyclerViewMargin(24, 1));
 
         FlightRoute outboundDepartureFlight = mOutboundFlightRoutes.get(0);
         FlightRoute outboundArrivalFlight = mOutboundFlightRoutes.get(mOutboundFlightRoutes.size() - 1);
