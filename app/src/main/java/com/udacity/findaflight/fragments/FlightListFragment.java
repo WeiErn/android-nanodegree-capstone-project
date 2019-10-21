@@ -64,6 +64,11 @@ public class FlightListFragment extends Fragment implements
     public static final String ARG_FLIGHT_LAYOUT_ID = "flight_layout";
     private int mFlightLayoutId;
     private List<FlightSearchResult> mFlights;
+    OnFlightResultClickListener mCallback;
+
+    public interface OnFlightResultClickListener {
+        void onFlightResultClick(FlightSearchResult flight);
+    }
 
     public FlightListFragment() {
     }
@@ -146,6 +151,12 @@ public class FlightListFragment extends Fragment implements
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        try {
+            mCallback = (OnFlightResultClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + "must implement listener");
+        }
     }
 
     @Override
@@ -161,12 +172,7 @@ public class FlightListFragment extends Fragment implements
 
     @Override
     public void onFlightClick(FlightSearchResult flight) {
-
-        Context context = getActivity();
-        Class destinationClass = FlightDetailsActivity.class;
-        Intent intentToStartFlightDetailsActivity = new Intent(context, destinationClass);
-        intentToStartFlightDetailsActivity.putExtra("flight", flight);
-        startActivity(intentToStartFlightDetailsActivity);
+        mCallback.onFlightResultClick(flight);
     }
 
     @NonNull
