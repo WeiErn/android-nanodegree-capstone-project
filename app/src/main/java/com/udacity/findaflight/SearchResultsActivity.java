@@ -12,10 +12,16 @@ import com.udacity.findaflight.fragments.FlightListFragment;
 
 public class SearchResultsActivity extends AppCompatActivity implements FlightListFragment.OnFlightResultClickListener {
 
+    private boolean mIsTwoPane;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+        System.out.println("Search Results Activity CREATED");
+        if (findViewById(R.id.flight_details_fragment_container) != null) {
+            mIsTwoPane = true;
+        }
 
         Bundle bundle = getIntent().getExtras();
 
@@ -30,9 +36,22 @@ public class SearchResultsActivity extends AppCompatActivity implements FlightLi
 
     @Override
     public void onFlightResultClick(FlightSearchResult flight) {
-        Class destinationClass = FlightDetailsActivity.class;
-        Intent intentToStartFlightDetailsActivity = new Intent(this, destinationClass);
-        intentToStartFlightDetailsActivity.putExtra("flight", flight);
-        startActivity(intentToStartFlightDetailsActivity);
+        if (mIsTwoPane) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("flight", flight);
+
+            FlightListFragment flightListFragment = new FlightListFragment();
+            flightListFragment.setArguments(bundle);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.flight_details_fragment_container, flightListFragment)
+                    .commit();
+        } else {
+            Class destinationClass = FlightDetailsActivity.class;
+            Intent intentToStartFlightDetailsActivity = new Intent(this, destinationClass);
+            intentToStartFlightDetailsActivity.putExtra("flight", flight);
+            startActivity(intentToStartFlightDetailsActivity);
+        }
     }
 }
