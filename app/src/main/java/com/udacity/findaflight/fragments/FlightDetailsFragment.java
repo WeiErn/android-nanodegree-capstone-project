@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.udacity.findaflight.R;
 import com.udacity.findaflight.RecyclerViewMargin;
 import com.udacity.findaflight.adapters.FlightRouteAdapter;
@@ -67,6 +68,8 @@ public class FlightDetailsFragment extends Fragment {
     TextView mDayDateInboundTextView;
     @BindView(R.id.duration_direct_inbound)
     TextView mDurationDirectInboundTextView;
+    @BindView(R.id.save_fab)
+    FloatingActionButton mSaveFAB;
 
     private FlightRouteAdapter mOutboundRoutesAdapter;
     private GridLayoutManager mOutboundRoutesLayoutManager;
@@ -112,13 +115,7 @@ public class FlightDetailsFragment extends Fragment {
 
         handleExpandedToolbarViews();
 
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        handleNavigationOnToolbar();
 
         mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShown = true;
@@ -141,6 +138,16 @@ public class FlightDetailsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void handleNavigationOnToolbar() {
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     private void handleExpandedToolbarViews() {
