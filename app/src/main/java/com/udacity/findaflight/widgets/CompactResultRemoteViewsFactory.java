@@ -2,6 +2,7 @@ package com.udacity.findaflight.widgets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -47,7 +48,28 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(),
                 R.layout.widget_compact_result_on_list);
-        rv.setTextViewText(text1, mCompactResults.get(position));
+        CompactResult compactResult = mCompactResults.get(position);
+
+        List<String> airlines = compactResult.getAirlines();
+        String airlinesString = "";
+        for (String airline : airlines) {
+            airlinesString += airline + ", ";
+        }
+        rv.setTextViewText(R.id.airlines, airlinesString.substring(0, airlinesString.length() - 2));
+        rv.setTextViewText(R.id.travel_period, compactResult.getTravelPeriod());
+        rv.setTextViewText(R.id.price, Integer.toString(compactResult.getPrice()));
+        rv.setTextViewText(R.id.outbound_start_time, compactResult.getOutboundStartTime());
+        rv.setTextViewText(R.id.outbound_start_airport, compactResult.getOutboundStartAirport());
+        rv.setTextViewText(R.id.outbound_end_time, compactResult.getOutboundEndTime());
+        rv.setTextViewText(R.id.outbound_end_airport, compactResult.getOutboundEndAirport());
+
+        if (!compactResult.getInboundEndTime().isEmpty()) {
+            rv.setViewVisibility(R.id.fourth_row_relative_layout, View.VISIBLE);
+            rv.setTextViewText(R.id.inbound_end_time, compactResult.getInboundEndTime());
+            rv.setTextViewText(R.id.inbound_end_airport, compactResult.getInboundEndAirport());
+            rv.setTextViewText(R.id.inbound_start_time, compactResult.getInboundStartTime());
+            rv.setTextViewText(R.id.inbound_start_airport, compactResult.getInboundStartAirport());
+        }
         return rv;
     }
 
