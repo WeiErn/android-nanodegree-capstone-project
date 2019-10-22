@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/first_row_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/plane_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/art_plane_black" />
+
+        <TextView
+            android:id="@+id/airlines"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            tools:text="3k, VJ, BL" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/second_row_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/travel_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1 November 2019 \u2015 1 December 2019" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="24dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="$5999" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/third_row_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/outbound_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            tools:text="7:30p" />
+
+        <TextView
+            android:id="@+id/outbound_start_airport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/outbound_start_time"
+            android:layout_alignLeft="@+id/outbound_start_time"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
+            tools:text="SIN" />
+
+        <ImageView
+            android:id="@+id/outbound_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/outbound_start_airport"
+            app:srcCompat="@drawable/ic_right_arrow" />
+
+        <TextView
+            android:id="@+id/outbound_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/outbound_arrow"
+            android:textStyle="bold"
+            tools:text="11:18p" />
+
+        <TextView
+            android:id="@+id/outbound_end_airport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/outbound_end_time"
+            android:layout_alignLeft="@id/outbound_end_time"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
+            tools:text="LAX" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fourth_row_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/inbound_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            tools:text="7:30p" />
+
+        <TextView
+            android:id="@+id/inbound_end_airport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/inbound_end_time"
+            android:layout_alignLeft="@+id/inbound_end_time"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
+            tools:text="SIN" />
+
+        <ImageView
+            android:id="@+id/inbound_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/inbound_end_airport"
+            android:rotation="180"
+            app:srcCompat="@drawable/ic_right_arrow" />
+
+        <TextView
+            android:id="@+id/inbound_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/inbound_arrow"
+            android:textStyle="bold"
+            tools:text="11:18p" />
+
+        <TextView
+            android:id="@+id/inbound_start_airport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/inbound_start_time"
+            android:layout_alignLeft="@id/inbound_start_time"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
+            tools:text="LAX" />
+
+    </RelativeLayout>
+</LinearLayout>
