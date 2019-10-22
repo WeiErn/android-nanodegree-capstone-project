@@ -19,9 +19,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.udacity.findaflight.R;
 import com.udacity.findaflight.RecyclerViewMargin;
 import com.udacity.findaflight.adapters.FlightRouteAdapter;
+import com.udacity.findaflight.data.CompactResult;
 import com.udacity.findaflight.data.FlightRoute;
 import com.udacity.findaflight.data.FlightSearchResult;
+import com.udacity.findaflight.database.AppDatabase;
+import com.udacity.findaflight.database.AppExecutors;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +81,7 @@ public class FlightDetailsFragment extends Fragment {
     private GridLayoutManager mInboundRoutesLayoutManager;
 
     private FlightSearchResult mFlightSearchResult;
+    private CompactResult mCompactResult;
     private List<FlightRoute> mOutboundFlightRoutes;
     private List<FlightRoute> mInboundFlightRoutes;
     private boolean mIsDirectOutbound;
@@ -86,6 +91,8 @@ public class FlightDetailsFragment extends Fragment {
     private String mFlightJourney;
     private Date mOutboundDepartureDateTime;
     private Date mInboundArrivalDateTime;
+
+    private AppDatabase mDb;
 
     public FlightDetailsFragment() {
     }
@@ -102,6 +109,7 @@ public class FlightDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         retrieveAndAssignFlightSearchResultDetails(bundle);
+        retrieveAndAssignCompactResultDetails();
         View view = inflater.inflate(R.layout.fragment_flight_details, container, false);
         ButterKnife.bind(this, view);
 
@@ -117,6 +125,62 @@ public class FlightDetailsFragment extends Fragment {
 
         handleNavigationOnToolbar();
 
+        handleAppBarOnScroll();
+        
+        handleSaveFloatingActionButton();
+
+        return view;
+    }
+
+    private void retrieveAndAssignCompactResultDetails() {
+
+        List airlines = mFlightSearchResult.getAirlines();
+        String travelPeriod = getDateMonthYear(mFlightSearchResult.getDepartureDateTime());
+        String outboundStartTime = mFlightSearchResult.getDepartureTime();
+        String outboundStartAirport = mFlightSearchResult.getDepartureAirport();
+        String outboundEndTime = mFlightSearchResult.getArrivalTime();
+        String outboundEndAirport = mFlightSearchResult.getArrivalAirport();
+        String inboundEndTime = "";
+        String inboundEndAirport = "";
+        String inboundStartTime = "";
+        String inboundStartAirport = "";
+        int price = mFlightSearchResult.getPrice();
+
+        if (mIsReturn) {
+            FlightRoute firstInboundFlight = mInboundFlightRoutes.get(0);
+            FlightRoute lastInboundFlight = mInboundFlightRoutes.get(mInboundFlightRoutes.size() - 1);
+
+            travelPeriod += " \u2015 " + getDateMonthYear(lastInboundFlight.getArrivalDateTime());
+            inboundEndTime = lastInboundFlight.getArrivalTime();
+            inboundEndAirport = lastInboundFlight.getArrivalAirport();
+            inboundStartTime = firstInboundFlight.getDepartureTime();
+            inboundStartAirport = firstInboundFlight.getDepartureAirport();
+
+        }
+
+        mCompactResult = new CompactResult(airlines, travelPeriod,
+                outboundStartTime, outboundStartAirport, outboundEndTime, outboundEndAirport,
+                inboundEndTime, inboundEndAirport, inboundStartTime, inboundStartAirport,
+                price);
+    }
+
+    private void handleSaveFloatingActionButton() {
+        mSaveFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDb = AppDatabase.getInstance(getContext());
+
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDb.compactResultDao().insertCompactResult(mCompactResult);
+                    }
+                });
+            }
+        });
+    }
+
+    private void handleAppBarOnScroll() {
         mAppBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShown = true;
             int scrollRange = -1;
@@ -136,8 +200,6 @@ public class FlightDetailsFragment extends Fragment {
                 }
             }
         });
-
-        return view;
     }
 
     private void handleNavigationOnToolbar() {

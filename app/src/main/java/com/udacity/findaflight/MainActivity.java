@@ -413,6 +413,7 @@ public class MainActivity extends AppCompatActivity implements
 
         Intent intent = new Intent(this, SearchResultsActivity.class);
 
+
 //        TODO: Check if values are null
         if (mDepartureDateString != null) {
             intent.putExtra("departureDate", mDepartureDateString);
@@ -462,6 +463,10 @@ public class MainActivity extends AppCompatActivity implements
             });
             errorAlertDialog.show();
             return;
+        }
+
+        if (mReturnDate == null) {
+            returnDay.setText("ONE-WAY");
         }
 
         int selectedFlightSearchOptionId = flightSearchOptionsRadioGroup.getCheckedRadioButtonId();
