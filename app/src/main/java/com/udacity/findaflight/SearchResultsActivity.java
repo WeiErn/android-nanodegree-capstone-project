@@ -24,7 +24,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FlightLi
 
         FlightListFragment flightListFragment = new FlightListFragment();
         flightListFragment.setArguments(bundle);
-        fragmentTransaction.add(R.id.flight_list_fragment_container, flightListFragment);
+        fragmentTransaction.replace(R.id.flight_list_fragment_container, flightListFragment);
         fragmentTransaction.commit();
     }
 

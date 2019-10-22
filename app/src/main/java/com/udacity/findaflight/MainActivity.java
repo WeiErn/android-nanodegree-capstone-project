@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements
     AirportAdapter mReturnAirportAdapter;
 
     boolean mIsOneWayFlight;
+    boolean mIsWideScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if (findViewById(R.id.main_activity_banner) != null) {
+            mIsWideScreen = true;
+        }
 //        TODO: Figure how to set onClickListener on LinearLayout consisting of ImageView and EditText
 //        setOnClickListenerToDate(departDateGroup);
 //        setOnClickListenerToDate(returnDateGroup);
@@ -270,7 +275,18 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         airportOptions.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
         alertDialog.show();
+
+        handleAlertDialogInWideScreen(alertDialog);
+    }
+
+    private void handleAlertDialogInWideScreen(AlertDialog alertDialog) {
+        if (mIsWideScreen) {
+            WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
+            params.width = 900;
+            alertDialog.getWindow().setAttributes(params);
+        }
     }
 
     @SuppressLint("ResourceType")
@@ -462,6 +478,7 @@ public class MainActivity extends AppCompatActivity implements
                 }
             });
             errorAlertDialog.show();
+            handleAlertDialogInWideScreen(errorAlertDialog);
             return;
         }
 

@@ -33,7 +33,6 @@ public class LoadSavedCompactResultsTask extends AsyncTask<Void, Void, List<Comp
     protected void onPostExecute(List<CompactResult> compactResults) {
 
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_compact_results_provider);
-        views.
 
 
         mWidgetManager.updateAppWidget(mWidgetId, views);

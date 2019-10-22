@@ -2,39 +2,41 @@ package com.udacity.findaflight.widgets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.udacity.findaflight.R;
 import com.udacity.findaflight.data.CompactResult;
+import com.udacity.findaflight.database.AppDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CompactResultRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
+
     List<CompactResult> mCompactResults;
     Context mContext = null;
 
-    public CompactResultRemoteViewsFactory(Context context, Intent intent, List<CompactResult> compactResults) {
+    public CompactResultRemoteViewsFactory(Context context, Intent intent) {
         mContext = context;
-        mCompactResults = compactResults;
     }
 
     @Override
     public void onCreate() {
+        getAsyncTask().execute();
     }
 
     @Override
     public void onDataSetChanged() {
+        getAsyncTask().execute();
     }
 
     @Override
     public void onDestroy() {
-        if (mCompactResults != null) {
-            mCompactResults.clear();
-        }
     }
 
     @Override
@@ -70,6 +72,16 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
             rv.setTextViewText(R.id.inbound_start_time, compactResult.getInboundStartTime());
             rv.setTextViewText(R.id.inbound_start_airport, compactResult.getInboundStartAirport());
         }
+
+        // Next, set a fill-intent, which will be used to fill in the pending intent template
+        // that is set on the collection view in StackWidgetProvider.
+        Bundle extras = new Bundle();
+        extras.putInt(CompactResultsWidgetProvider.POSITION, position);
+        Intent fillInIntent = new Intent();
+        fillInIntent.putExtras(extras);
+        // Make it possible to distinguish the individual on-click
+        // action of a given item
+        rv.setOnClickFillInIntent(R.id.compact_result_container, fillInIntent);
         return rv;
     }
 
@@ -93,4 +105,21 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
         return true;
     }
 
+    private AsyncTask<Void, Void, List<CompactResult>> getAsyncTask() {
+        return new AsyncTask<Void, Void, List<CompactResult>>() {
+
+            @Override
+            protected List<CompactResult> doInBackground(Void... voids) {
+                AppDatabase appDatabase = AppDatabase.getInstance(mContext);
+                List<CompactResult> compactResults = appDatabase.compactResultDao().loadAllCompactResults();
+                return compactResults;
+            }
+
+            @Override
+            protected void onPostExecute(List<CompactResult> compactResults) {
+                super.onPostExecute(compactResults);
+                mCompactResults = compactResults;
+            }
+        };
+    }
 }

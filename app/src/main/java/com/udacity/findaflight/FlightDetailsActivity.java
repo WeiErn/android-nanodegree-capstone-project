@@ -22,7 +22,7 @@ public class FlightDetailsActivity extends AppCompatActivity {
 
         FlightDetailsFragment flightDetailsFragment = new FlightDetailsFragment();
         flightDetailsFragment.setArguments(bundle);
-        fragmentTransaction.add(R.id.flight_details_fragment_container, flightDetailsFragment);
+        fragmentTransaction.replace(R.id.flight_details_fragment_container, flightDetailsFragment);
         fragmentTransaction.commit();
     }
 }
