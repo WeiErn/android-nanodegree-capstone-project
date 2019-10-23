@@ -33,6 +33,8 @@ public class ClickIntentService extends IntentService {
                     CompactResult compactResult = (CompactResult) bundle.getParcelable(CompactResultsWidgetProvider.COMPACT_RESULT);
                     AppDatabase appDatabase = AppDatabase.getInstance(this);
                     appDatabase.compactResultDao().deleteCompactResult(compactResult);
+                    // Issues with this, but not in FlightDetailsFragment
+//                    CompactResultsWidgetProvider.sendRefreshBroadcast(this);
                 }
             }
         }

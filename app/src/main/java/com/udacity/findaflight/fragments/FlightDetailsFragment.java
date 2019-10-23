@@ -24,6 +24,7 @@ import com.udacity.findaflight.data.FlightRoute;
 import com.udacity.findaflight.data.FlightSearchResult;
 import com.udacity.findaflight.database.AppDatabase;
 import com.udacity.findaflight.database.AppExecutors;
+import com.udacity.findaflight.widgets.CompactResultsWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -181,6 +182,7 @@ public class FlightDetailsFragment extends Fragment {
                     @Override
                     public void run() {
                         mDb.compactResultDao().insertCompactResult(mCompactResult);
+                        CompactResultsWidgetProvider.sendRefreshBroadcast(getContext());
                     }
                 });
             }

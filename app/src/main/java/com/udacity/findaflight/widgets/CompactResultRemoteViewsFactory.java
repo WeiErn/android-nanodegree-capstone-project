@@ -84,14 +84,10 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
 //        rv.setOnClickFillInIntent(R.id.compact_result_container, fillInIntent);
 
         Bundle extras = new Bundle();
-        int id = compactResult.getId();
-        extras.putInt("id", id);
-        extras.putString("STRING", "STRING");
         extras.putParcelable(CompactResultsWidgetProvider.COMPACT_RESULT, (Parcelable) compactResult);
 
         Intent fillInIntent = new Intent();
         fillInIntent.putExtras(extras);
-//        fillInIntent.putExtra(CompactResultsWidgetProvider.COMPACT_RESULT, compactResult.getId());
         rv.setOnClickFillInIntent(R.id.cross_button, fillInIntent);
         return rv;
     }

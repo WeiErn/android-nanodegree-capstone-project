@@ -38,16 +38,12 @@ public class CompactResultsWidgetProvider extends AppWidgetProvider {
             views.setRemoteAdapter(R.id.compact_results_list, intent);
 
 
-//            Reference: https://stackoverflow.com/questions/32741454/how-to-start-a-service-from-app-widget-in-android
+            // Reference: https://stackoverflow.com/questions/32741454/how-to-start-a-service-from-app-widget-in-android
+
             Intent clickIntentTemplate = new Intent(context, ClickIntentService.class);
-//            PendingIntent clickPendingIntentTemplate = TaskStackBuilder.create(context)
-//                    .addNextIntentWithParentStack(clickIntentTemplate)
-//                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-//            views.setPendingIntentTemplate(R.id.compact_results_list, clickPendingIntentTemplate);
             clickIntentTemplate.setAction(ClickIntentService.ACTION_CLICK);
             PendingIntent clickPendingIntentTemplate = PendingIntent.getService(context, 0, clickIntentTemplate, 0);
             views.setPendingIntentTemplate(R.id.compact_results_list, clickPendingIntentTemplate);
-
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
