@@ -127,6 +127,9 @@ public class FlightDetailsFragment extends Fragment {
 
         if (!mIsTwoPane) {
             handleNavigationOnToolbar();
+            mCollapsingToolbar.setTitleEnabled(true);
+        } else {
+            mCollapsingToolbar.setTitleEnabled(false);
         }
 
         handleAppBarOnScroll();

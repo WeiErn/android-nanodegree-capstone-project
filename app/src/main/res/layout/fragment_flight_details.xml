@@ -160,9 +160,9 @@
                 android:layout_height="1dp"
                 android:background="#E6E6E6"
                 android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/flight_routes_recyclerview_outbound"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/flight_routes_recyclerview_outbound" />
 
             <TextView
                 android:id="@+id/header_flights_inbound"
