@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.udacity.findaflight.data.CompactResult;
+import com.udacity.findaflight.database.AppDatabase;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -24,19 +25,15 @@ public class ClickIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        System.out.println("HANDLED");
         if (intent != null) {
             final String action = intent.getAction();
-            Bundle bundle = intent.getExtras();
-            if (bundle.containsKey(CompactResultsWidgetProvider.COMPACT_RESULT)) {
-                int id = bundle.getInt("id");
-                String string = bundle.getString("STRING");
-                CompactResult compactResult = (CompactResult) bundle.getParcelable(CompactResultsWidgetProvider.COMPACT_RESULT);
-//                System.out.println(compactResult.getOutboundEndAirport());
-                System.out.println("TEST");
-            }
             if (ACTION_CLICK.equals(action)) {
-                System.out.println("CROSS CLICKED ON WIDGET LIST");
+                Bundle bundle = intent.getExtras();
+                if (bundle.containsKey(CompactResultsWidgetProvider.COMPACT_RESULT)) {
+                    CompactResult compactResult = (CompactResult) bundle.getParcelable(CompactResultsWidgetProvider.COMPACT_RESULT);
+                    AppDatabase appDatabase = AppDatabase.getInstance(this);
+                    appDatabase.compactResultDao().deleteCompactResult(compactResult);
+                }
             }
         }
     }
@@ -47,15 +44,6 @@ public class ClickIntentService extends IntentService {
      */
     private void handleActionFoo(String param1, String param2) {
         // TODO: Handle action Foo
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    /**
-     * Handle action Baz in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleActionBaz(String param1, String param2) {
-        // TODO: Handle action Baz
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }
