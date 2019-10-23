@@ -147,20 +147,22 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/flight_routes_recyclerview_outbound"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/duration_direct_outbound" />
 
             <View
                 android:id="@+id/divider"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#E6E6E6"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/flight_routes_recyclerview_outbound" />
+                app:layout_constraintTop_toBottomOf="@id/flight_routes_recyclerview_outbound"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:id="@+id/header_flights_inbound"
@@ -209,12 +211,13 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/flight_routes_recyclerview_inbound"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="32dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/duration_direct_inbound" />
 

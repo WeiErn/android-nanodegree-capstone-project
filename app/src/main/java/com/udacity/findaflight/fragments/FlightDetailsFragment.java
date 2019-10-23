@@ -93,6 +93,7 @@ public class FlightDetailsFragment extends Fragment {
     private Date mInboundArrivalDateTime;
 
     private AppDatabase mDb;
+    private boolean mIsTwoPane;
 
     public FlightDetailsFragment() {
     }
@@ -124,7 +125,9 @@ public class FlightDetailsFragment extends Fragment {
 
         handleExpandedToolbarViews();
 
-        handleNavigationOnToolbar();
+        if (!mIsTwoPane) {
+            handleNavigationOnToolbar();
+        }
 
         handleAppBarOnScroll();
         
@@ -222,6 +225,7 @@ public class FlightDetailsFragment extends Fragment {
 
     private void retrieveAndAssignFlightSearchResultDetails(Bundle bundle) {
         mFlightSearchResult = bundle.getParcelable("flight");
+        mIsTwoPane = bundle.getBoolean("twoPane");
         mOutboundFlightRoutes = mFlightSearchResult.getOutboundFlightRoutes();
         mInboundFlightRoutes = mFlightSearchResult.getInboundFlightRoutes();
     }

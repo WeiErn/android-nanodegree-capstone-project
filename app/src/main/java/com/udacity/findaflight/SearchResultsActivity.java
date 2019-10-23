@@ -9,13 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.udacity.findaflight.data.FlightSearchResult;
+import com.udacity.findaflight.fragments.FlightDetailsFragment;
 import com.udacity.findaflight.fragments.FlightListFragment;
 
 public class SearchResultsActivity extends AppCompatActivity implements FlightListFragment.OnFlightResultClickListener {
 
     private boolean mIsTwoPane;
-    private Fragment mFlightListFragment;
-    private static final String FRAGMENT_TAG = "flightListFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +25,7 @@ public class SearchResultsActivity extends AppCompatActivity implements FlightLi
             mIsTwoPane = true;
         }
 
-        if (savedInstanceState == null) {
-            setupFragment();
-        } else {
-            FlightListFragment fragment = (FlightListFragment) getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_TAG);
-            changeFragment(fragment);
-//            mFlightListFragment = (FlightListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-        }
-    }
-
-    private void changeFragment(FlightListFragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.flight_list_fragment_container, fragment, FRAGMENT_TAG)
-                .commit();
+        setupFragment();
     }
 
     private void setupFragment() {
@@ -50,18 +36,8 @@ public class SearchResultsActivity extends AppCompatActivity implements FlightLi
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flight_list_fragment_container, flightListFragment, FRAGMENT_TAG)
+                .replace(R.id.flight_list_fragment_container, flightListFragment)
                 .commit();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        FlightListFragment fragment = (FlightListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-        if (fragment != null) {
-            getSupportFragmentManager().putFragment(outState, FRAGMENT_TAG, fragment);
-        }
-
     }
 
     @Override
@@ -71,11 +47,12 @@ public class SearchResultsActivity extends AppCompatActivity implements FlightLi
 
             Bundle bundle = new Bundle();
             bundle.putParcelable("flight", flight);
+            bundle.putBoolean("twoPane", mIsTwoPane);
 
-            FlightListFragment flightListFragment = new FlightListFragment();
-            flightListFragment.setArguments(bundle);
+            FlightDetailsFragment flightDetailsFragment = new FlightDetailsFragment();
+            flightDetailsFragment.setArguments(bundle);
             fragmentManager.beginTransaction()
-                    .replace(R.id.flight_details_fragment_container, flightListFragment)
+                    .replace(R.id.flight_details_fragment_container, flightDetailsFragment)
                     .commit();
         } else {
             Class destinationClass = FlightDetailsActivity.class;

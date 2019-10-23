@@ -100,16 +100,31 @@ public class MainActivity extends AppCompatActivity implements
     boolean mIsOneWayFlight;
     boolean mIsWideScreen;
 
+    private static final String DEPARTURE_DATE_STRING = "departureDateString";
+    private static final String DEPARTURE_DAY_STRING = "departureDayString";
+    private static final String DEPARTURE_AIRPORT = "departureAirport";
+    private static final String DEPARTURE_DATE = "departureDate";
+    private static final String RETURN_DATE_STRING = "returnDateString";
+    private static final String RETURN_DAY_STRING = "returnDayString";
+    private static final String RETURN_AIRPORT = "returnAirport";
+    private static final String RETURN_DATE = "returnDate";
+    private static final String FLIGHT_SEARCH_OPTION = "flightSearchOption";
+    private static final String IS_ONE_WAY_FLIGHT = "isOneWayFlight";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            mDepartureDateString = savedInstanceState.getString("departureDate");
-            mReturnDateString = savedInstanceState.getString("returnDate");
-            mFlightSearchOption = savedInstanceState.getString("flightSearchOption");
-            mChosenDepartAirport = savedInstanceState.getParcelable("departAirport");
-            mChosenReturnAirport = savedInstanceState.getParcelable("returnAirport");
-            mIsOneWayFlight = savedInstanceState.getBoolean("isOneWayFlight");
+            mDepartureDateString = savedInstanceState.getString(DEPARTURE_DATE_STRING);
+            mDepartureDayString = savedInstanceState.getString(DEPARTURE_DAY_STRING);
+            mChosenDepartAirport = savedInstanceState.getParcelable(DEPARTURE_AIRPORT);
+            mDepartureDate = (Date) savedInstanceState.getSerializable(DEPARTURE_DATE);
+            mReturnDateString = savedInstanceState.getString(RETURN_DATE_STRING);
+            mReturnDayString = savedInstanceState.getString(RETURN_DAY_STRING);
+            mChosenReturnAirport = savedInstanceState.getParcelable(RETURN_AIRPORT);
+            mReturnDate = (Date) savedInstanceState.getSerializable(RETURN_DATE);
+            mFlightSearchOption = savedInstanceState.getString(FLIGHT_SEARCH_OPTION);
+            mIsOneWayFlight = savedInstanceState.getBoolean(IS_ONE_WAY_FLIGHT);
         }
 
         setContentView(R.layout.activity_main);
@@ -158,14 +173,17 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("departureDate", mDepartureDateString);
-        outState.putString("returnDate", mReturnDateString);
-        outState.putString("departureDay", mDepartureDayString);
-        outState.putString("returnDay", mReturnDayString);
-        outState.putString("flightSearchOption", mFlightSearchOption);
-        outState.putParcelable("departAirport", mChosenDepartAirport);
-        outState.putParcelable("returnAirport", mChosenReturnAirport);
-        outState.putBoolean("isOneWayFlight", mIsOneWayFlight);
+
+        outState.putString(DEPARTURE_DATE_STRING, mDepartureDateString);
+        outState.putString(DEPARTURE_DAY_STRING, mDepartureDayString);
+        outState.putParcelable(DEPARTURE_AIRPORT, mChosenDepartAirport);
+        outState.putSerializable(DEPARTURE_DATE, mDepartureDate);
+        outState.putString(RETURN_DATE_STRING, mReturnDateString);
+        outState.putString(RETURN_DAY_STRING, mReturnDayString);
+        outState.putParcelable(RETURN_AIRPORT, mChosenReturnAirport);
+        outState.putSerializable(RETURN_DATE, mReturnDate);
+        outState.putString(FLIGHT_SEARCH_OPTION, mFlightSearchOption);
+        outState.putBoolean(IS_ONE_WAY_FLIGHT, mIsOneWayFlight);
     }
 
     private void setOnClickListenerToAirport(EditText airport) {
