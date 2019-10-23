@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/compact_result_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/compact_result_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/first_row_linear_layout"
+    <RelativeLayout
+        android:id="@+id/first_row_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginTop="8dp">
 
         <ImageView
             android:id="@+id/plane_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:background="@drawable/art_plane_black" />
@@ -30,10 +32,19 @@
             android:id="@+id/airlines"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/plane_image_view"
             android:textSize="16sp"
             tools:text="3k, VJ, BL" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/cross_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ic_close_turquoise"/>
+
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -50,6 +61,7 @@
             android:id="@+id/travel_period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             tools:text="1 November 2019 \u2015 1 December 2019" />
 
         <TextView
@@ -89,8 +101,8 @@
             android:layout_alignStart="@+id/outbound_start_time"
             android:layout_alignLeft="@+id/outbound_start_time"
             android:layout_centerVertical="true"
-            android:layout_marginStart="56dp"
-            android:layout_marginLeft="56dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginLeft="70dp"
             tools:text="SIN" />
 
         <ImageView
@@ -101,7 +113,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/outbound_start_airport"
-            app:srcCompat="@drawable/ic_right_arrow" />
+            android:background="@drawable/ic_right_arrow" />
 
         <TextView
             android:id="@+id/outbound_end_time"
@@ -121,8 +133,8 @@
             android:layout_alignStart="@id/outbound_end_time"
             android:layout_alignLeft="@id/outbound_end_time"
             android:layout_centerVertical="true"
-            android:layout_marginStart="56dp"
-            android:layout_marginLeft="56dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginLeft="70dp"
             tools:text="LAX" />
 
     </RelativeLayout>
@@ -153,8 +165,8 @@
             android:layout_alignStart="@+id/inbound_end_time"
             android:layout_alignLeft="@+id/inbound_end_time"
             android:layout_centerVertical="true"
-            android:layout_marginStart="56dp"
-            android:layout_marginLeft="56dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginLeft="70dp"
             tools:text="SIN" />
 
         <ImageView
@@ -165,8 +177,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/inbound_end_airport"
-            android:rotation="180"
-            app:srcCompat="@drawable/ic_right_arrow" />
+            android:background="@drawable/ic_right_arrow"
+            android:rotation="180" />
 
         <TextView
             android:id="@+id/inbound_start_time"
@@ -186,8 +198,8 @@
             android:layout_alignStart="@id/inbound_start_time"
             android:layout_alignLeft="@id/inbound_start_time"
             android:layout_centerVertical="true"
-            android:layout_marginStart="56dp"
-            android:layout_marginLeft="56dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginLeft="70dp"
             tools:text="LAX" />
 
     </RelativeLayout>

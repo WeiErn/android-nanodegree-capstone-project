@@ -4,7 +4,7 @@
     android:initialLayout="@layout/widget_compact_results_provider"
     android:minWidth="350dp"
     android:minHeight="200dp"
-    android:previewImage="@drawable/art_plane_turquoise"
+    android:previewImage="@drawable/art_plane_turquoise_widget"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen">

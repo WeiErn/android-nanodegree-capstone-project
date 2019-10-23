@@ -109,7 +109,6 @@ public class FlightDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         retrieveAndAssignFlightSearchResultDetails(bundle);
-        retrieveAndAssignCompactResultDetails();
         View view = inflater.inflate(R.layout.fragment_flight_details, container, false);
         ButterKnife.bind(this, view);
 
@@ -120,6 +119,8 @@ public class FlightDetailsFragment extends Fragment {
             showDividerAndInboundTripDetails();
             handleInboundViews();
         }
+
+        retrieveAndAssignCompactResultDetails();
 
         handleExpandedToolbarViews();
 

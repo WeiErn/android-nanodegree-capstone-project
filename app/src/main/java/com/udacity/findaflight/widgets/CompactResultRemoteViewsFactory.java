@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -12,7 +13,6 @@ import com.udacity.findaflight.R;
 import com.udacity.findaflight.data.CompactResult;
 import com.udacity.findaflight.database.AppDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CompactResultRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
@@ -59,7 +59,7 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
         }
         rv.setTextViewText(R.id.airlines, airlinesString.substring(0, airlinesString.length() - 2));
         rv.setTextViewText(R.id.travel_period, compactResult.getTravelPeriod());
-        rv.setTextViewText(R.id.price, Integer.toString(compactResult.getPrice()));
+        rv.setTextViewText(R.id.price, "$" + Integer.toString(compactResult.getPrice()));
         rv.setTextViewText(R.id.outbound_start_time, compactResult.getOutboundStartTime());
         rv.setTextViewText(R.id.outbound_start_airport, compactResult.getOutboundStartAirport());
         rv.setTextViewText(R.id.outbound_end_time, compactResult.getOutboundEndTime());
@@ -75,13 +75,24 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
 
         // Next, set a fill-intent, which will be used to fill in the pending intent template
         // that is set on the collection view in StackWidgetProvider.
-        Bundle extras = new Bundle();
-        extras.putInt(CompactResultsWidgetProvider.POSITION, position);
-        Intent fillInIntent = new Intent();
-        fillInIntent.putExtras(extras);
+//        Bundle extras = new Bundle();
+//        extras.putInt(CompactResultsWidgetProvider.COMPACT_RESULT, position);
+//        Intent fillInIntent = new Intent();
+//        fillInIntent.putExtras(extras);
         // Make it possible to distinguish the individual on-click
         // action of a given item
-        rv.setOnClickFillInIntent(R.id.compact_result_container, fillInIntent);
+//        rv.setOnClickFillInIntent(R.id.compact_result_container, fillInIntent);
+
+        Bundle extras = new Bundle();
+        int id = compactResult.getId();
+        extras.putInt("id", id);
+        extras.putString("STRING", "STRING");
+        extras.putParcelable(CompactResultsWidgetProvider.COMPACT_RESULT, (Parcelable) compactResult);
+
+        Intent fillInIntent = new Intent();
+        fillInIntent.putExtras(extras);
+//        fillInIntent.putExtra(CompactResultsWidgetProvider.COMPACT_RESULT, compactResult.getId());
+        rv.setOnClickFillInIntent(R.id.cross_button, fillInIntent);
         return rv;
     }
 

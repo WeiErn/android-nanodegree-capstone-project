@@ -14,6 +14,7 @@ import com.udacity.findaflight.R;
 import com.udacity.findaflight.data.FlightRoute;
 import com.udacity.findaflight.data.FlightSearchResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,7 +25,7 @@ import static com.udacity.findaflight.utils.DateUtils.getDateMonthYear;
 public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.FlightListAdapterViewHolder> {
 
     public static final String TAG = FlightListAdapter.class.getSimpleName();
-    private List<FlightSearchResult> mFlightData;
+    private ArrayList<FlightSearchResult> mFlightData;
     private final FlightListAdapterOnClickHandler mClickHandler;
 
     public interface FlightListAdapterOnClickHandler {
@@ -144,7 +145,7 @@ public class FlightListAdapter extends RecyclerView.Adapter<FlightListAdapter.Fl
         return mFlightData.size();
     }
 
-    public void setFlightData(List<FlightSearchResult> flightData) {
+    public void setFlightData(ArrayList<FlightSearchResult> flightData) {
         mFlightData = flightData;
         notifyDataSetChanged();
     }

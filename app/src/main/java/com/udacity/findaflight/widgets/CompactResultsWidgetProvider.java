@@ -13,11 +13,12 @@ import androidx.core.app.TaskStackBuilder;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.udacity.findaflight.MainActivity;
 import com.udacity.findaflight.R;
 
 public class CompactResultsWidgetProvider extends AppWidgetProvider {
 
-    public static final String POSITION = "position";
+    public static final String COMPACT_RESULT = "compactResult";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -26,14 +27,27 @@ public class CompactResultsWidgetProvider extends AppWidgetProvider {
                     context.getPackageName(),
                     R.layout.widget_compact_results_provider
             );
+
+            // click event handler for the title, launches the app when the user clicks on title
+            Intent titleIntent = new Intent(context, MainActivity.class);
+            PendingIntent titlePendingIntent = PendingIntent.getActivity(context, 0, titleIntent, 0);
+            views.setOnClickPendingIntent(R.id.saved_flights_header_text_view, titlePendingIntent);
+
+
             Intent intent = new Intent(context, CompactResultRemoteViewsService.class);
             views.setRemoteAdapter(R.id.compact_results_list, intent);
 
-//            Intent clickIntentTemplate = new Intent(context, DetailsActivity.class);
+
+//            Reference: https://stackoverflow.com/questions/32741454/how-to-start-a-service-from-app-widget-in-android
+            Intent clickIntentTemplate = new Intent(context, ClickIntentService.class);
 //            PendingIntent clickPendingIntentTemplate = TaskStackBuilder.create(context)
 //                    .addNextIntentWithParentStack(clickIntentTemplate)
 //                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 //            views.setPendingIntentTemplate(R.id.compact_results_list, clickPendingIntentTemplate);
+            clickIntentTemplate.setAction(ClickIntentService.ACTION_CLICK);
+            PendingIntent clickPendingIntentTemplate = PendingIntent.getService(context, 0, clickIntentTemplate, 0);
+            views.setPendingIntentTemplate(R.id.compact_results_list, clickPendingIntentTemplate);
+
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }

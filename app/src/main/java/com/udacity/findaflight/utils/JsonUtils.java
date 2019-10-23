@@ -18,8 +18,8 @@ import static com.udacity.findaflight.utils.DateUtils.getDateTimeFromUnixTime;
 
 public final class JsonUtils {
 
-    public static List getFlightsByPriceFromJson(String jsonStr) throws JSONException, ParseException {
-        List searchResults = new ArrayList();
+    public static ArrayList getFlightsByPriceFromJson(String jsonStr) throws JSONException, ParseException {
+        ArrayList searchResults = new ArrayList();
 
         JSONObject searchResult = new JSONObject(jsonStr);
         JSONArray flights = searchResult.getJSONArray("data");

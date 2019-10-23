@@ -29,6 +29,7 @@ import com.udacity.findaflight.utils.JsonUtils;
 import com.udacity.findaflight.utils.NetworkUtils;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,7 +39,7 @@ import static com.udacity.findaflight.utils.NetworkUtils.isOnline;
 
 public class FlightListFragment extends Fragment implements
         FlightListAdapter.FlightListAdapterOnClickHandler,
-        LoaderManager.LoaderCallbacks<List<FlightSearchResult>> {
+        LoaderManager.LoaderCallbacks<ArrayList<FlightSearchResult>> {
 
     @BindView(R.id.flight_list_toolbar)
     Toolbar mFlightListToolbar;
@@ -63,7 +64,7 @@ public class FlightListFragment extends Fragment implements
     public static final int FLIGHT_LOADER_ID = 0;
     public static final String ARG_FLIGHT_LAYOUT_ID = "flight_layout";
     private int mFlightLayoutId;
-    private List<FlightSearchResult> mFlights;
+    private ArrayList<FlightSearchResult> mFlights;
     OnFlightResultClickListener mCallback;
 
     public interface OnFlightResultClickListener {
@@ -79,6 +80,15 @@ public class FlightListFragment extends Fragment implements
         args.putString(ARG_FLIGHT_LAYOUT_ID, flightLayoutId);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            //Restore the fragment's state here
+            mFlights = savedInstanceState.getParcelableArrayList("flights");
+        }
     }
 
     @Override
@@ -120,10 +130,10 @@ public class FlightListFragment extends Fragment implements
     }
 
     private void setupActionBar() {
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mFlightListToolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(mDepartureAirport + " \u2015 " + mReturnAirport);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mFlightListToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(mDepartureAirport + " \u2015 " + mReturnAirport);
         mFlightListToolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         mFlightListToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +153,7 @@ public class FlightListFragment extends Fragment implements
 
     private void initLoader() {
         int loaderId = FLIGHT_LOADER_ID;
-        LoaderManager.LoaderCallbacks<List<FlightSearchResult>> callback = this;
+        LoaderManager.LoaderCallbacks<ArrayList<FlightSearchResult>> callback = this;
         Bundle bundleForLoader = new Bundle();
         getLoaderManager().initLoader(loaderId, bundleForLoader, callback);
     }
@@ -168,6 +178,7 @@ public class FlightListFragment extends Fragment implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("flights", mFlights);
     }
 
     @Override
@@ -177,9 +188,9 @@ public class FlightListFragment extends Fragment implements
 
     @NonNull
     @Override
-    public Loader<List<FlightSearchResult>> onCreateLoader(int id, @Nullable Bundle args) {
-        return new AsyncTaskLoader<List<FlightSearchResult>>(getActivity()) {
-            List<FlightSearchResult> mFlightData = null;
+    public Loader<ArrayList<FlightSearchResult>> onCreateLoader(int id, @Nullable Bundle args) {
+        return new AsyncTaskLoader<ArrayList<FlightSearchResult>>(getActivity()) {
+            ArrayList<FlightSearchResult> mFlightData = null;
 
             @Override
             protected void onStartLoading() {
@@ -193,14 +204,14 @@ public class FlightListFragment extends Fragment implements
 
             @Nullable
             @Override
-            public List<FlightSearchResult> loadInBackground() {
+            public ArrayList<FlightSearchResult> loadInBackground() {
 //                String[] arguments = new String[]{"US", "USD", "en-US", "LAX-sky", "SFO-sky", "2019-09-01"};
 //                URL flightsRequestUrl = NetworkUtils.buildUrl("", mReturnDate, arguments);
                 URL flightsRequestUrl = NetworkUtils.buildUrl(mDepartureAirport, mReturnAirport, mDepartureDate, mReturnDate, mFlightOption);
 
                 try {
                     String jsonFlightsResponse = NetworkUtils.getResponseFromHttpUrl(flightsRequestUrl);
-                    List<FlightSearchResult> listFlightData = JsonUtils.getFlightsByPriceFromJson(jsonFlightsResponse);
+                    ArrayList<FlightSearchResult> listFlightData = JsonUtils.getFlightsByPriceFromJson(jsonFlightsResponse);
 
                     return listFlightData;
                 } catch (Exception e) {
@@ -209,7 +220,7 @@ public class FlightListFragment extends Fragment implements
                 }
             }
 
-            public void deliverResult(List<FlightSearchResult> data) {
+            public void deliverResult(ArrayList<FlightSearchResult> data) {
                 mFlightData = data;
                 super.deliverResult(data);
             }
@@ -217,7 +228,7 @@ public class FlightListFragment extends Fragment implements
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<List<FlightSearchResult>> loader, List<FlightSearchResult> flights) {
+    public void onLoadFinished(@NonNull Loader<ArrayList<FlightSearchResult>> loader, ArrayList<FlightSearchResult> flights) {
         mLoadingIndicator.setVisibility(View.INVISIBLE);
         mFlights = flights;
         mFlightListAdapter.setFlightData(flights);
@@ -232,9 +243,10 @@ public class FlightListFragment extends Fragment implements
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<List<FlightSearchResult>> loader) {
+    public void onLoaderReset(@NonNull Loader<ArrayList<FlightSearchResult>> loader) {
 
     }
+
 
     private void showFlightListView() {
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
