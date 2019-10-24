@@ -18,21 +18,24 @@ import java.util.List;
 public class CompactResultRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
 
-    List<CompactResult> mCompactResults;
-    Context mContext = null;
+    private List<CompactResult> mCompactResults;
+    private Context mContext = null;
+    private AppDatabase appDatabase;
 
     public CompactResultRemoteViewsFactory(Context context, Intent intent) {
         mContext = context;
     }
 
+    // Reference: https://www.reddit.com/r/androiddev/comments/998z2c/help_getting_widget_to_populate_with_livedata_and/
+    // Reference: https://github.com/DeFBeD/LifeNotes/blob/master/app/src/main/java/com/example/jburgos/life_notes/widget/WidgetService.java
     @Override
     public void onCreate() {
-        getAsyncTask().execute();
+        appDatabase = AppDatabase.getInstance(mContext);
     }
 
     @Override
     public void onDataSetChanged() {
-        getAsyncTask().execute();
+        mCompactResults = appDatabase.compactResultDao().loadAllCompactResults();
     }
 
     @Override
@@ -73,21 +76,16 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
             rv.setTextViewText(R.id.inbound_start_airport, compactResult.getInboundStartAirport());
         }
 
-        // Next, set a fill-intent, which will be used to fill in the pending intent template
-        // that is set on the collection view in StackWidgetProvider.
-//        Bundle extras = new Bundle();
-//        extras.putInt(CompactResultsWidgetProvider.COMPACT_RESULT, position);
-//        Intent fillInIntent = new Intent();
-//        fillInIntent.putExtras(extras);
-        // Make it possible to distinguish the individual on-click
-        // action of a given item
-//        rv.setOnClickFillInIntent(R.id.compact_result_container, fillInIntent);
 
         Bundle extras = new Bundle();
         extras.putParcelable(CompactResultsWidgetProvider.COMPACT_RESULT, (Parcelable) compactResult);
 
+        // Next, set a fill-intent, which will be used to fill in the pending intent template
+        // that is set on the collection view in StackWidgetProvider.
         Intent fillInIntent = new Intent();
         fillInIntent.putExtras(extras);
+        // Make it possible to distinguish the individual on-click
+        // action of a given item
         rv.setOnClickFillInIntent(R.id.cross_button, fillInIntent);
         return rv;
     }

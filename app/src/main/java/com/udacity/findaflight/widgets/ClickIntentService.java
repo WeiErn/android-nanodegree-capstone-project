@@ -28,24 +28,19 @@ public class ClickIntentService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_CLICK.equals(action)) {
-                Bundle bundle = intent.getExtras();
-                if (bundle.containsKey(CompactResultsWidgetProvider.COMPACT_RESULT)) {
-                    CompactResult compactResult = (CompactResult) bundle.getParcelable(CompactResultsWidgetProvider.COMPACT_RESULT);
-                    AppDatabase appDatabase = AppDatabase.getInstance(this);
-                    appDatabase.compactResultDao().deleteCompactResult(compactResult);
-                    // Issues with this, but not in FlightDetailsFragment
-//                    CompactResultsWidgetProvider.sendRefreshBroadcast(this);
-                }
+                handleActionClick(intent);
             }
         }
     }
 
-    /**
-     * Handle action Foo in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleActionFoo(String param1, String param2) {
-        // TODO: Handle action Foo
-        throw new UnsupportedOperationException("Not yet implemented");
+    private void handleActionClick(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        if (bundle.containsKey(CompactResultsWidgetProvider.COMPACT_RESULT)) {
+            CompactResult compactResult = (CompactResult) bundle.getParcelable(CompactResultsWidgetProvider.COMPACT_RESULT);
+            AppDatabase appDatabase = AppDatabase.getInstance(this);
+            appDatabase.compactResultDao().deleteCompactResult(compactResult);
+            // Issues with this, but not in FlightDetailsFragment
+            CompactResultsWidgetProvider.sendRefreshBroadcast(this);
+        }
     }
 }
