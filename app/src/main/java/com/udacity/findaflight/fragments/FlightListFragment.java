@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crashlytics.android.Crashlytics;
 import com.udacity.findaflight.FlightDetailsActivity;
 import com.udacity.findaflight.R;
 import com.udacity.findaflight.adapters.FlightListAdapter;
@@ -165,6 +166,7 @@ public class FlightListFragment extends Fragment implements
         try {
             mCallback = (OnFlightResultClickListener) context;
         } catch (ClassCastException e) {
+            Crashlytics.logException(e);
             throw new ClassCastException(context.toString() + "must implement listener");
         }
     }
@@ -215,6 +217,7 @@ public class FlightListFragment extends Fragment implements
 
                     return listFlightData;
                 } catch (Exception e) {
+                    Crashlytics.logException(e);
                     e.printStackTrace();
                     return null;
                 }

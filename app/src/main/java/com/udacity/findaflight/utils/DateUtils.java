@@ -2,6 +2,8 @@ package com.udacity.findaflight.utils;
 
 import android.content.Intent;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +23,7 @@ public final class DateUtils {
             return formattedDate;
         } catch (ParseException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
             return null;
         }
     }
@@ -33,6 +36,7 @@ public final class DateUtils {
             date = originalFormat.parse(originalDate);
             return targetFormat.format(date);
         } catch (ParseException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
             return null;
         }
@@ -42,6 +46,7 @@ public final class DateUtils {
         try {
             return new SimpleDateFormat("yyyy-M-d").parse(dateString);
         } catch (ParseException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
             return null;
         }
@@ -78,6 +83,11 @@ public final class DateUtils {
 
     public static String getDateMonthYear(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy");
+        return dateFormat.format(date);
+    }
+
+    public static String getYearMonthDate(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(date);
     }
 }

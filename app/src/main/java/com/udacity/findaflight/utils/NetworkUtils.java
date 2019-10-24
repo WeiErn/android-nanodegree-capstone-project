@@ -6,6 +6,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -79,6 +81,7 @@ public final class NetworkUtils {
             url = new URL(builtUri.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            Crashlytics.logException(e);
         }
 
         Log.v(TAG, "Built URI: " + url);

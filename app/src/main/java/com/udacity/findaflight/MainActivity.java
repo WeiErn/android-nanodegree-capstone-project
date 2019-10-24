@@ -26,6 +26,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.udacity.findaflight.adapters.AirportAdapter;
 import com.udacity.findaflight.data.Airport;
 
@@ -36,10 +38,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.fabric.sdk.android.Fabric;
 
 import static com.udacity.findaflight.utils.DateUtils.getDateFromString;
 import static com.udacity.findaflight.utils.DateUtils.getDateInDayMonthFormat;
 import static com.udacity.findaflight.utils.DateUtils.getDateInDayMonthYearFormat;
+import static com.udacity.findaflight.utils.DateUtils.getYearMonthDate;
 
 public class MainActivity extends AppCompatActivity implements
         AirportAdapter.AirportAdapterOnClickHandler {
@@ -111,9 +115,18 @@ public class MainActivity extends AppCompatActivity implements
     private static final String FLIGHT_SEARCH_OPTION = "flightSearchOption";
     private static final String IS_ONE_WAY_FLIGHT = "isOneWayFlight";
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize Crashlytics
+        Fabric.with(this, new Crashlytics());
+
+        // Initialize Firebase Analytics
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         if (savedInstanceState != null) {
             mDepartureDateString = savedInstanceState.getString(DEPARTURE_DATE_STRING);
             mDepartureDayString = savedInstanceState.getString(DEPARTURE_DAY_STRING);
@@ -500,6 +513,8 @@ public class MainActivity extends AppCompatActivity implements
             return;
         }
 
+        logSearchEventToFirebaseAnalytics();
+
         if (mReturnDate == null) {
             returnDay.setText("ONE-WAY");
         }
@@ -510,5 +525,15 @@ public class MainActivity extends AppCompatActivity implements
         intent.putExtra("flightOption", mFlightSearchOption);
 
         startActivity(intent);
+    }
+
+    private void logSearchEventToFirebaseAnalytics() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SEARCH_TERM, mFlightSearchOption);
+        bundle.putString(FirebaseAnalytics.Param.START_DATE, getYearMonthDate(mDepartureDate));
+        bundle.putString(FirebaseAnalytics.Param.END_DATE, (mReturnDate != null ? getYearMonthDate(mReturnDate) : ""));
+        bundle.putString(FirebaseAnalytics.Param.ORIGIN, mChosenDepartAirport.getCountry());
+        bundle.putString(FirebaseAnalytics.Param.DESTINATION, mChosenReturnAirport.getCountry());
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SEARCH, bundle);
     }
 }
