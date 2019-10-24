@@ -28,6 +28,7 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
 
     // Reference: https://www.reddit.com/r/androiddev/comments/998z2c/help_getting_widget_to_populate_with_livedata_and/
     // Reference: https://github.com/DeFBeD/LifeNotes/blob/master/app/src/main/java/com/example/jburgos/life_notes/widget/WidgetService.java
+    // Reference: (not directly referenced, but relevant) https://stackoverflow.com/questions/51973927/android-how-to-access-room-database-from-widget/52792651
     @Override
     public void onCreate() {
         appDatabase = AppDatabase.getInstance(mContext);
