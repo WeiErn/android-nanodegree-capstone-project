@@ -10,9 +10,10 @@
         android:layout_height="wrap_content"
         android:background="#FF0000"
         android:paddingLeft="24dp"
+        android:paddingStart="24dp"
         android:paddingTop="24dp"
         android:paddingBottom="24dp"
-        android:text="Invalid search"
+        android:text="@string/error_dialog_header"
         android:textColor="#FFFFFFFF"
         android:textSize="28sp" />
 
@@ -36,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:text="OK"
+            android:text="@string/dialog_ok_button"
             android:textColor="#FF0000"
             android:textSize="16sp" />
     </LinearLayout>

@@ -1,5 +1,6 @@
 package com.udacity.findaflight.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -13,6 +14,9 @@ import java.util.List;
 @Dao
 public interface CompactResultDao {
 
+//    @Query("SELECT * FROM compact_result ORDER BY id")
+//    LiveData<List<CompactResult>> loadAllCompactResults();
+//
     @Query("SELECT * FROM compact_result ORDER BY id")
     List<CompactResult> loadAllCompactResults();
 

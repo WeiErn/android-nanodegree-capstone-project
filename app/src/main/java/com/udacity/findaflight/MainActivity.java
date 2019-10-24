@@ -466,12 +466,12 @@ public class MainActivity extends AppCompatActivity implements
             intent.putExtra("departureDate", mDepartureDateString);
         } else {
             hasErrors = true;
-            errorMessageList.add("Departure date is missing");
+            errorMessageList.add(getResources().getString(R.string.error_message_missing_departure_date));
         }
 
         if (mReturnDate != null && mReturnDate.before(mDepartureDate)) {
             hasErrors = true;
-            errorMessageList.add("Departure date falls after return date");
+            errorMessageList.add(getResources().getString(R.string.error_message_departure_after_return_date));
         } else {
             intent.putExtra("returnDate", mReturnDateString);
         }
@@ -480,14 +480,14 @@ public class MainActivity extends AppCompatActivity implements
             intent.putExtra("departureAirport", mChosenDepartAirport.getIataCode());
         } else {
             hasErrors = true;
-            errorMessageList.add("Departure airport is missing");
+            errorMessageList.add(getResources().getString(R.string.error_message_missing_departure_airport));
         }
 
         if (mChosenReturnAirport != null) {
             intent.putExtra("returnAirport", mChosenReturnAirport.getIataCode());
         } else {
             hasErrors = true;
-            errorMessageList.add("Arrival airport is missing");
+            errorMessageList.add(getResources().getString(R.string.error_message_missing_arrival_airport));
         }
 
         if (hasErrors) {

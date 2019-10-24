@@ -2,4 +2,27 @@
     <string name="app_name">FindAFlight</string>
     <string name="no_internet_connection_message">No internet connection.</string>
     <string name="error_message">An error has occurred.</string>
+    <string name="depart_header_text">DEPART ON</string>
+    <string name="date_edit_text">SELECT</string>
+    <string name="return_header_text">RETURN ON</string>
+    <string name="search_option_date">DATE</string>
+    <string name="search_option_price">PRICE</string>
+    <string name="search_option_duration">DURATION</string>
+    <string name="search_button">Search</string>
+    <string name="from_header">FROM</string>
+    <string name="select_airport">SELECT</string>
+    <string name="to_header">TO</string>
+    <string name="dialog_cancel_button">Cancel</string>
+    <string name="dialog_ok_button">OK</string>
+    <string name="error_dialog_header">Invalid search</string>
+    <string name="header_flights_outbound">Outbound Trip Details</string>
+    <string name="header_flights_inbound">Inbound Trip Details</string>
+    <string name="add_fab_content_desc">Add</string>
+    <string name="widget_header">Saved flights</string>
+    <string name="airports_dialog_header">Choose airport</string>
+    <string name="one_way_checkbox_text">One-way</string>
+    <string name="error_message_missing_departure_date">Departure date is missing</string>
+    <string name="error_message_departure_after_return_date">Departure date falls after return date</string>
+    <string name="error_message_missing_departure_airport">Departure airport is missing</string>
+    <string name="error_message_missing_arrival_airport">Arrival airport is missing</string>
 </resources>

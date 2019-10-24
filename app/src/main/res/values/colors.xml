@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#0086c3</color>
     <color name="colorAccent">#D81B60</color>
     <color name="date_picker_header_bg_color">#1FCBF2</color>
+    <color name="divider_color">#E6E6E6</color>
+    <color name="text_white_color">#FFFFFF</color>
 </resources>

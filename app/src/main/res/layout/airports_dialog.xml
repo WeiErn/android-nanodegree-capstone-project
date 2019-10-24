@@ -5,15 +5,16 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/error_dialog_header_text_view"
+        android:id="@+id/airports_dialog_header_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FF1FCBF2"
         android:elevation="4dp"
+        android:paddingStart="24dp"
         android:paddingLeft="24dp"
         android:paddingTop="24dp"
         android:paddingBottom="24dp"
-        android:text="Choose airport"
+        android:text="@string/airports_dialog_header"
         android:textColor="#FFFFFFFF"
         android:textSize="28sp" />
 
@@ -40,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:text="Cancel"
+            android:text="@string/dialog_cancel_button"
             android:textColor="#FF1FCBF2"
             android:textSize="16sp" />
 
@@ -49,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:text="OK"
+            android:text="@string/dialog_ok_button"
             android:textColor="#FF1FCBF2"
             android:textSize="16sp" />
     </LinearLayout>

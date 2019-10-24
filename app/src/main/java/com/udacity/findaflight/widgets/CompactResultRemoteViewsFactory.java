@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import androidx.lifecycle.LiveData;
+
 import com.udacity.findaflight.R;
 import com.udacity.findaflight.data.CompactResult;
 import com.udacity.findaflight.database.AppDatabase;
@@ -36,6 +38,7 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
 
     @Override
     public void onDataSetChanged() {
+//        final LiveData<List<CompactResult>> compactResults = appDatabase.compactResultDao().loadAllCompactResults();
         mCompactResults = appDatabase.compactResultDao().loadAllCompactResults();
     }
 
@@ -109,23 +112,5 @@ public class CompactResultRemoteViewsFactory implements RemoteViewsService.Remot
     @Override
     public boolean hasStableIds() {
         return true;
-    }
-
-    private AsyncTask<Void, Void, List<CompactResult>> getAsyncTask() {
-        return new AsyncTask<Void, Void, List<CompactResult>>() {
-
-            @Override
-            protected List<CompactResult> doInBackground(Void... voids) {
-                AppDatabase appDatabase = AppDatabase.getInstance(mContext);
-                List<CompactResult> compactResults = appDatabase.compactResultDao().loadAllCompactResults();
-                return compactResults;
-            }
-
-            @Override
-            protected void onPostExecute(List<CompactResult> compactResults) {
-                super.onPostExecute(compactResults);
-                mCompactResults = compactResults;
-            }
-        };
     }
 }

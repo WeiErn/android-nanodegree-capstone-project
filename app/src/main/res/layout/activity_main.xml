@@ -22,9 +22,9 @@
             android:id="@+id/depart_header_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="DEPART ON"
-            android:textSize="16sp"
+            android:layout_marginBottom="@dimen/header_vertical_margin"
+            android:text="@string/depart_header_text"
+            android:textSize="@dimen/text_view_text_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/depart_date_group_linear_layout"
             app:layout_constraintStart_toStartOf="@id/depart_date_group_linear_layout" />
@@ -57,8 +57,8 @@
                 android:clickable="false"
                 android:cursorVisible="false"
                 android:focusable="false"
-                android:text="SELECT"
-                android:textColor="#FF1FCBF2"
+                android:text="@string/date_edit_text"
+                android:textColor="@color/colorPrimary"
                 android:textSize="24sp"
                 tools:text="SELECT" />
 
@@ -74,7 +74,7 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:textColor="#646464"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_view_text_size"
             app:layout_constraintStart_toStartOf="@id/depart_date_group_linear_layout"
             app:layout_constraintTop_toBottomOf="@+id/depart_date_group_linear_layout"
             tools:text="DAY OF THE WEEK" />
@@ -83,9 +83,9 @@
             android:id="@+id/return_header_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="RETURN ON"
-            android:textSize="16sp"
+            android:layout_marginBottom="@dimen/header_vertical_margin"
+            android:text="@string/return_header_text"
+            android:textSize="@dimen/text_view_text_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/return_date_group_linear_layout"
             app:layout_constraintStart_toStartOf="@+id/return_date_group_linear_layout" />
@@ -120,8 +120,8 @@
                 android:clickable="false"
                 android:cursorVisible="false"
                 android:focusable="false"
-                android:text="SELECT"
-                android:textColor="#FF1FCBF2"
+                android:text="@string/date_edit_text"
+                android:textColor="@color/colorPrimary"
                 android:textSize="24sp"
                 tools:text="SELECT" />
         </LinearLayout>
@@ -130,13 +130,13 @@
             android:id="@+id/return_day_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/header_vertical_margin"
             android:background="@null"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
             android:textColor="#646464"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_view_text_size"
             app:layout_constraintStart_toStartOf="@id/return_date_group_linear_layout"
             app:layout_constraintTop_toBottomOf="@+id/return_date_group_linear_layout"
             tools:text="ONE WAY FLIGHT" />
@@ -145,11 +145,11 @@
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginStart="@dimen/main_activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/main_activity_horizontal_margin"
+            android:layout_marginTop="@dimen/main_activity_vertical_margin"
+            android:layout_marginEnd="@dimen/main_activity_horizontal_margin"
+            android:layout_marginRight="@dimen/main_activity_horizontal_margin"
             android:background="#E6E6E6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -161,11 +161,11 @@
             android:id="@+id/flight_search_options_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginStart="@dimen/main_activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/main_activity_horizontal_margin"
+            android:layout_marginTop="@dimen/main_activity_vertical_margin"
+            android:layout_marginEnd="@dimen/main_activity_horizontal_margin"
+            android:layout_marginRight="@dimen/main_activity_horizontal_margin"
             android:background="@drawable/radio_group_round_border"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -182,14 +182,14 @@
                 android:checked="true"
                 android:gravity="center"
                 android:padding="18dp"
-                android:text="DATE"
+                android:text="@string/search_option_date"
                 android:textColor="@color/button_selector_state" />
 
             <View
                 android:id="@+id/left_radio_group_divider_view"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="#1FCBF2"
+                android:background="@color/colorPrimary"
                 android:visibility="visible" />
 
             <RadioButton
@@ -201,14 +201,14 @@
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:padding="18dp"
-                android:text="PRICE"
+                android:text="@string/search_option_price"
                 android:textColor="@color/button_selector_state" />
 
             <View
                 android:id="@+id/right_radio_group_divider_view"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="#FF1FCBF2"
+                android:background="@color/colorPrimary"
                 android:visibility="visible" />
 
             <RadioButton
@@ -220,7 +220,7 @@
                 android:button="@android:color/transparent"
                 android:gravity="center"
                 android:padding="18dp"
-                android:text="DURATION"
+                android:text="@string/search_option_duration"
                 android:textColor="@color/button_selector_state" />
 
         </RadioGroup>
@@ -229,19 +229,19 @@
             android:id="@+id/search_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginStart="@dimen/main_activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/main_activity_horizontal_margin"
+            android:layout_marginTop="@dimen/main_activity_vertical_margin"
+            android:layout_marginEnd="@dimen/main_activity_horizontal_margin"
+            android:layout_marginRight="@dimen/main_activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/main_activity_vertical_margin"
             android:background="@drawable/search_button_round_border"
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
             android:onClick="onSearchButtonClick"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="Search"
+            android:text="@string/search_button"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"

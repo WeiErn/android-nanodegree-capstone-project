@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/plane_image_view"
+            android:layout_toEndOf="@id/plane_image_view"
             android:textSize="16sp"
             tools:text="3k, VJ, BL" />
 
@@ -41,7 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/ic_close_turquoise"/>
 
     </RelativeLayout>
@@ -69,7 +72,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginRight="24dp"
+            android:layout_marginEnd="24dp"
             android:textSize="16sp"
             android:textStyle="bold"
             tools:text="$5999" />
@@ -113,6 +118,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/outbound_start_airport"
+            android:layout_toEndOf="@id/outbound_start_airport"
             android:background="@drawable/ic_right_arrow" />
 
         <TextView
@@ -123,6 +129,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/outbound_arrow"
+            android:layout_toEndOf="@id/outbound_arrow"
             android:textStyle="bold"
             tools:text="11:18p" />
 
@@ -177,6 +184,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/inbound_end_airport"
+            android:layout_toEndOf="@id/inbound_end_airport"
             android:background="@drawable/ic_right_arrow"
             android:rotation="180" />
 
@@ -188,6 +196,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/inbound_arrow"
+            android:layout_toEndOf="@id/inbound_arrow"
             android:textStyle="bold"
             tools:text="11:18p" />
 
