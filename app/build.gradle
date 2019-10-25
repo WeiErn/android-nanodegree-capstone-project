@@ -5,9 +5,9 @@ android {
     signingConfigs {
         release {
             keyAlias 'upload'
-            keyPassword 'password123!'
+            storePassword 'password123!'
             storeFile file('../upload-keystore.jks')
-            storePassword '!123password'
+            keyPassword '!123password'
         }
     }
     compileSdkVersion 28
